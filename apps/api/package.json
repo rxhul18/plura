@@ -1,15 +1,23 @@
 {
   "name": "api",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "dev": "bun run --hot src/index.ts",
-    "start": "vercel dev",
-    "deploy": "vercel"
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "hono": "^4.6.9"
+    "hono": "^4.6.9",
+    "next": "15.0.2",
+    "react": "19.0.0-rc-02c0e824-20241028",
+    "react-dom": "19.0.0-rc-02c0e824-20241028"
   },
   "devDependencies": {
-    "@types/bun": "latest",
-    "vercel": "^37.14.0"
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18"
   }
 }
