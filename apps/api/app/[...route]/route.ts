@@ -13,7 +13,7 @@ app.get('/hello', (c) => {
 app.get('/:wild', (c) => {
   const wild = c.req.param('wild')
   return c.json({
-    message: `Hello from Hono on Vercel! You're now on /${wild}!`
+    message: `Hello from Hono on Vercel! You're now on /api/${wild}!`
   })
 })
 
