@@ -6,7 +6,8 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "start": "cd ./apps/api && npm run start"
+    "plura-api": "cd ./apps/api && pnpm run start",
+    "plura-web": "cd ./apps/www && pnpm run start"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
@@ -18,6 +19,8 @@
   },
   "packageManager": "pnpm@9.12.1",
   "dependencies": {
-    "hono": "^4.6.9"
+    "api": "^6.1.2",
+    "hono": "^4.6.9",
+    "next": "15.0.2"
   }
 }

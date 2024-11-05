@@ -1,17 +1,13 @@
 FROM node:20.12.0-alpine3.19
 
-WORKDIR /usr/src/app
+WORKDIR /usr/home/plura
 
 COPY package.json package-lock.json turbo.json tsconfig.json ./
 
-COPY apps ./apps
-COPY packages ./packages
+RUN pnpm install
 
-RUN npm install
+RUN pnpm run build
 
-RUN npm run build
+EXPOSE 3001
 
-WORKDIR /usr/src/app/apps/www
-
-
-CMD ["npm", "start"]
+CMD ["pnpm", "start"]
