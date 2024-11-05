@@ -5,7 +5,8 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "start": "cd ./apps/api && npm run start"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
@@ -15,11 +16,7 @@
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "bun@1.1.22",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "packageManager": "pnpm@9.12.1",
   "dependencies": {
     "hono": "^4.6.9"
   }
