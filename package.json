@@ -20,7 +20,9 @@
   "packageManager": "pnpm@9.12.1",
   "dependencies": {
     "api": "^6.1.2",
+    "class-variance-authority": "^0.7.0",
     "hono": "^4.6.9",
-    "next": "15.0.2"
+    "next": "15.0.2",
+    "www": "^0.0.0"
   }
 }
