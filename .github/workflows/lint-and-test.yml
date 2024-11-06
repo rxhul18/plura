@@ -56,8 +56,16 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
   
+      - name: Cache pnpm modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
       - name: Install dependencies
-        run: pnpm install 
+        run: pnpm install && pnpm db:generate
 
       - name: Test api code
         run: cd ./apps/api && pnpm test && cd ../..

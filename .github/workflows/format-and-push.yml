@@ -12,21 +12,32 @@ on:
       - 'feature/*'
       - 'bugfix/*'
 
+permissions:
+  contents: write 
+
 jobs:
   format:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '21.7.1'
+          node-version: '20.x'
 
       - name: Install pnpm
         run: npm install -g pnpm
+
+      - name: Cache pnpm modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
 
       - name: Install dependencies
         run: pnpm install
