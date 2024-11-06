@@ -1,12 +1,16 @@
-name: CI
+name: Run Test on Multiple Node Versions
 
 on:
-    push:
-      branches:
-        - 'tpn/*'
-    pull_request:
-      branches:
-        - 'tpn/*'
+  push:
+    branches:
+      - main
+      - 'feature/*'
+      - 'bugfix/*'
+  pull_request:
+    branches:
+      - main
+      - 'feature/*'
+      - 'bugfix/*'
 
 jobs:
   test:
