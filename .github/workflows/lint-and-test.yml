@@ -53,8 +53,11 @@ jobs:
         with:
           node-version: '21.7.1'
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+  
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install 
 
       # - name: Run tests
       #   run: pnpm test
