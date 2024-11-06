@@ -2,10 +2,9 @@ import { prisma } from "@repo/db";
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
 
-
 export const runtime = "nodejs";
 
-export const app = new Hono().basePath("/api");
+const app = new Hono().basePath("/api");
 
 app.get("/hello",async(c) => {
   const test = await prisma.user.findMany()
@@ -55,7 +54,9 @@ app.get("/health", async(c) => {
   });
 });
 
-export const GET = handle(app);
-export const POST = handle(app);
-export const PATCH = handle(app);
-export const DELETE = handle(app);
+const GET = handle(app);
+const POST = handle(app);
+const PATCH = handle(app);
+const DELETE = handle(app);
+
+export {GET, PATCH, POST, DELETE}

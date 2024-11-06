@@ -5,7 +5,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-        "test": "vitest"
+    "test": "vitest",
+    "db:generate": "prisma generate"
   },
   "dependencies": {
     "@repo/db": "workspace:*",
