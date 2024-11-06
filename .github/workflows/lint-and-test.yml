@@ -65,7 +65,7 @@ jobs:
             ${{ runner.os }}-pnpm-
 
       - name: Install dependencies
-        run: pnpm install && pnpm db:generate
+        run: pnpm install
 
       - name: Test api code
         run: cd ./apps/api && pnpm test && cd ../..
