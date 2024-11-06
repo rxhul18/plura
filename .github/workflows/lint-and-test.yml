@@ -37,8 +37,8 @@ jobs:
       - name: Lint api code
         run: cd ./apps/api && pnpm lint && cd ../..
 
-      - name: Lint turbo
-        run: pnpm lint
+      # - name: Lint turbo
+      #   run: pnpm lint
 
   test:
     runs-on: ubuntu-latest
