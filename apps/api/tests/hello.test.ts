@@ -39,7 +39,9 @@ describe("API Routes", () => {
     const mockUsers = [{ id: "123", name: "New User" }];
     prisma.user.findMany.mockResolvedValue(mockUsers);
 
-    const req = new Request("http:/localhost:3000/api/hello", { method: "GET" });
+    const req = new Request("http:/localhost:3000/api/hello", {
+      method: "GET",
+    });
     const res = await GET(req);
 
     expect(res.status).toBe(200);
@@ -68,7 +70,9 @@ describe("API Routes", () => {
     const deletedUser = { id: "2", name: "Deleted User" };
     prisma.user.delete.mockResolvedValue(deletedUser);
 
-    const req = new Request("http:/localhost:3000/api/hello", { method: "DELETE" });
+    const req = new Request("http:/localhost:3000/api/hello", {
+      method: "DELETE",
+    });
     const res = await DELETE(req);
 
     expect(res.status).toBe(200);
@@ -77,7 +81,9 @@ describe("API Routes", () => {
   });
 
   it("GET /api/health should return health status", async () => {
-    const req = new Request("http:/localhost:3000/api/health", { method: "GET" });
+    const req = new Request("http:/localhost:3000/api/health", {
+      method: "GET",
+    });
     const res = await GET(req);
 
     expect(res.status).toBe(200);
