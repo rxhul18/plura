@@ -35,9 +35,9 @@ jobs:
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-
-              
+
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --shamefully-hoist
 
       - name: Run Lint
         run: pnpm lint

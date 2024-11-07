@@ -23,9 +23,7 @@
     "test": "turbo run test --force",
     "typecheck": "turbo run typecheck",
     "format:write": "turbo run format:write",
-    "format:check": "turbo run format:check",
-    "plura-api": "cd ./apps/api && pnpm run start",
-    "plura-web": "cd ./apps/www && pnpm run start"
+    "format:check": "turbo run format:check"
   },
   "devDependencies": {
     "@types/node": "^22.9.0",
