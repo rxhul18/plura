@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Component() {
   return (
-    <div className="w-64 border-l border-border bg-background p-6 overflow-y-auto h-screen">
+    <div className="w-64 border-l border-border bg-background p-6 overflow-y-auto  scrollbar-hidden h-full -mt-10">
       <div className="space-y-4">
         <h2 className="text-lg font-semibold text-foreground mt-10">
           On This Page

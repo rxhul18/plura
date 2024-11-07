@@ -1,11 +1,11 @@
 export default function Usagehome() {
   return (
-    <div className=" h-full  flex flex-col  items-center justify-center  w-full">
+    <div className=" h-fit  flex flex-col  items-center justify-center  w-[100%] overflow-x-hidden mt-10">
       <h1 className="font-semibold text-3xl text-white top-0 flex justify-start items-center w-full h-12 ml-10 ">
         {" "}
         Introduction
       </h1>
-      <div className="w-full flex items-start justify-start  p-2 ml-6 tracking">
+      <div className="w-full flex items-start justify-start  p-2 ml-6 tracking ">
         <div className="container  font-normal   w-[24rem] text-base text-muted-foreground tracking-wide">
           Beautifully designed components that you can copy and paste into your
           apps. Accessible. Customizable. Open Source.

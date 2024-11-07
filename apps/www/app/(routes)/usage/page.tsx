@@ -4,17 +4,21 @@ import Usagehome from "@/components/ui/Usagehome";
 
 export default function Usagepage() {
   return (
-    <div className=" w-full h-screen  flex flex-row ">
-      <div className=" w-[16rem] p-6  ">
-        <Leftsidebar />
-      </div>
+    <div>
+      <div className="flex flex-row w-full h-screen  overflow-hidden overflow-x-hidden ">
+        <div className="w-[16rem] p-6 h-[]">
+          <Leftsidebar />
+        </div>
 
-      <div className="flex  w-8/12 ">
-        <Usagehome />
+        <div className="flex w-8/12 overflow-y-auto">
+          <Usagehome />
+        </div>
+
+        <div className="">
+          <Rightsidebar />
+        </div>
       </div>
-      <div className="">
-        <Rightsidebar />
-      </div>
+      <hr className="w-full  border " />
     </div>
   );
 }
