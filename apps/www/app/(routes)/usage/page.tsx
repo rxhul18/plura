@@ -18,7 +18,7 @@ export default function Usagepage() {
           <Rightsidebar />
         </div>
       </div>
-      <hr className="w-full  border " />
+      <hr className="w-full  border" />
     </div>
   );
 }
