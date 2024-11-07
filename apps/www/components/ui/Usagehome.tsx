@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Usagehome() {
   return (
-    <div className=" h-screen flex flex-col  items-center justify-center overflow-y-auto overflow-x-hidden w-full">
+    <div className=" h-full  flex flex-col  items-center justify-center  w-full">
       <h1 className="font-semibold text-3xl text-white top-0 flex justify-start items-center w-full h-12 ml-10 ">
         {" "}
         Introduction

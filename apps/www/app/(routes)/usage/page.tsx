@@ -4,12 +4,12 @@ import Usagehome from "@/components/ui/Usagehome";
 
 export default function Usagepage() {
   return (
-    <div className=" w-full h-full mt-5 flex flex-row ">
-      <div className=" w-[16rem]  ">
+    <div className=" w-full h-screen  flex flex-row ">
+      <div className=" w-[16rem] p-6  ">
         <Leftsidebar />
       </div>
 
-      <div className="flex items-center justify-center h-screen overflow-y-scroll w-8/12 ">
+      <div className="flex  w-8/12 ">
         <Usagehome />
       </div>
       <div className="">
