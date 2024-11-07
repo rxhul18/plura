@@ -41,9 +41,6 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
-
-      - name: Test api code
-        run: cd ./apps/api && pnpm test && cd ../..
-
-      # - name: Run tests
-      #   run: pnpm test
+        
+      - name: Run tests
+        run: pnpm test
