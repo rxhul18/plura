@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 export default function Usagehome() {
   return (
     <div className=" h-full  flex flex-col  items-center justify-center  w-full">
