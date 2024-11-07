@@ -1,4 +1,3 @@
-import { SiteFooter } from "../custom/site/footer";
 import { ScrollArea } from "./scroll-area";
 
 export default function LeftSidebar() {
@@ -9,6 +8,12 @@ export default function LeftSidebar() {
     { label: "Pricing" },
     { label: "FAQ" },
     { label: "Blog" },
+    { label: "Introduction" },
+    { label: "Getting Started" },
+    { label: "Features" },
+    { label: "Pricing" },
+    { label: "FAQ" },
+    { label: "Blog" },
     { label: "Contact Us" },
     { label: "Introduction" },
     { label: "Getting Started" },
@@ -17,17 +22,14 @@ export default function LeftSidebar() {
     { label: "FAQ" },
     { label: "Blog" },
     { label: "Contact Us" },
-    { label: "Pricing" },
-    { label: "FAQ" },
-    { label: "Blog" },
     { label: "Contact Us" },
   ];
 
   return (
-    <div className="flex flex-col h-full fixed left-0 top-8 w-[16rem] border-r border-border font-semibold text-sm p-4 ">
-      <ScrollArea className="w-[16rem]">
+    <div className="flex flex-col h-full w-full border-r border-border font-semibold text-sm   ">
+      <ScrollArea className="w-full">
         <div className="flex flex-col ml-4 w-full">
-          <h1 className="text-white h-12 w-full text-base flex items-center">
+          <h1 className="text-white h-12 w-full text-base flex items-center mt-3">
             Getting Started
           </h1>
           <div className="w-full h-full">
@@ -40,7 +42,6 @@ export default function LeftSidebar() {
               </div>
             ))}
           </div>
-          <SiteFooter />
         </div>
       </ScrollArea>
     </div>
