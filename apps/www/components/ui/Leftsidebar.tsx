@@ -26,7 +26,7 @@ export default function LeftSidebar() {
   ];
 
   return (
-    <div className="flex flex-col h-full w-full border-r border-border font-semibold text-sm   ">
+    <div className="hidden lg:flex lg:flex-col  border-r text-sm lg:items-start lg:justify-start lg:w-full lg:h-full lg:top-8 lg:sticky lg:border-border lg:font-semibold">
       <ScrollArea className="w-full">
         <div className="flex flex-col ml-4 w-full">
           <h1 className="text-white h-12 w-full text-base flex items-center mt-3">
