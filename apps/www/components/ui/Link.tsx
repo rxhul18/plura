@@ -3,10 +3,7 @@ import { ScrollArea } from "./scroll-area";
 
 export default function SidebarContent() {
   return (
-    <div
-      className="w-64 border-l border-border bg-background p-6 overflow-y-auto scrollbar-hidden h-full -mt-10"
-      role="complementary"
-    >
+    <div className="w-64 border-l border-border bg-background p-6 h-full -mt-10">
       <ScrollArea className="h-full w-full m-2">
         <div className="space-y-4">
           <h2
