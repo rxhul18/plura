@@ -1,24 +1,27 @@
-import Leftsidebar from "@/components/ui/Leftsidebar";
-import Rightsidebar from "@/components/ui/Rightsidebar";
-import Usagehome from "@/components/ui/Usagehome";
+import LeftSidebar from "@/components/ui/Leftsidebar";
+import RightSidebar from "@/components/ui/Rightsidebar";
+import UsageHome from "@/components/ui/Usagehome";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function Usagepage() {
   return (
     <div>
-      <div className="flex flex-row w-full h-screen  overflow-hidden overflow-x-hidden ">
-        <div className="w-[16rem] p-6 h-[]">
-          <Leftsidebar />
+      <div className="flex flex-col lg:flex-row w-full h-screen overflow-hidden">
+        <div className="w-full lg:w-[20rem] p-4 lg:p-6 hidden lg:block">
+          <LeftSidebar />
         </div>
-
-        <div className="flex w-8/12 overflow-y-auto">
-          <Usagehome />
-        </div>
-
-        <div className="">
-          <Rightsidebar />
+        <ScrollArea>
+          <div className="flex-1 w-full p-4 lg:p-0 ">
+            <UsageHome />
+            <UsageHome />
+            <UsageHome />
+          </div>
+        </ScrollArea>
+        <div className="w-full lg:w-[16rem] p-4 hidden lg:block">
+          <RightSidebar />
         </div>
       </div>
-      <hr className="w-full  border" />
+      <hr className="w-full border" />
     </div>
   );
 }
