@@ -1,9 +1,9 @@
-import SignUp from "../../../components/custom/Sign-up";
+import SignUpComponent from "@/components/custom/signupComponent"; 
 
 export default function page() {
   return (
     <div className="w-full h-screen flex items-center justify-center">
-      <SignUp />
+      <SignUpComponent />
     </div>
   );
 }

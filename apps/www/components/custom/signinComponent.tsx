@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -18,12 +17,11 @@ import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 
 const formSchema = z.object({
-  name: z.string(),
   email: z.string().email(),
   password: z.string().min(8),
 });
 
-export default function SignUp() {
+export default function SignInComponent() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -32,11 +30,11 @@ export default function SignUp() {
     },
   });
   const onSubmit = async (SignInData: z.infer<typeof formSchema>) => {
-    const { data, error } = await authClient.signUp.email(
+    const { data, error } = await authClient.signIn.email(
       {
-        name: SignInData.name,
         email: SignInData.email,
         password: SignInData.password,
+        callbackURL: "/dashboard",
       },
       {
         onRequest: (ctx) => {},
@@ -51,19 +49,6 @@ export default function SignUp() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>name</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <FormField
           control={form.control}
           name="email"
