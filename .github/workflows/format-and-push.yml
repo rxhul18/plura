@@ -42,8 +42,19 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Format code with Prettier
-        run: pnpm format
+      - name: Check formatting with Prettier
+        id: format_check
+        run: |
+          if pnpm format:check; then
+            echo "Formatting is correct"
+          else
+            echo "Formatting required"
+            echo "formatting_required=true" >> $GITHUB_ENV
+          fi
+
+      - name: Format code with Prettier if needed
+        if: env.formatting_required == 'true'
+        run: pnpm format:write
 
       - name: Check for changes and push if needed
         run: |

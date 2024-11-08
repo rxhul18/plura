@@ -1,15 +1,29 @@
 {
   "name": "plura",
   "private": true,
+  "author": {
+    "name": "saidevdhal",
+    "url": "https://twitter.com/SaidevDhal"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
-    "test": "turbo run test",
-    "test:watch": "turbo run test:watch",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "plura-api": "cd ./apps/api && pnpm run start",
-    "plura-web": "cd ./apps/www && pnpm run start"
+    "build:www": "turbo --filter=plura-www build",
+    "build:app": "turbo --filter=plura-app build",
+    "build:api": "turbo --filter=plura-api build",
+    "dev": "turbo run dev --parallel",
+    "dev:www": "turbo --filter=plura-www dev",
+    "dev:app": "turbo --filter=plura-app dev",
+    "dev:api": "turbo --filter=plura-api dev",
+    "lint": "turbo run lint --force",
+    "lint:fix": "turbo run lint:fix",
+    "test": "turbo run test --force",
+    "typecheck": "turbo run typecheck",
+    "format:write": "turbo run format:write",
+    "format:check": "turbo run format:check"
   },
   "devDependencies": {
     "@types/node": "^22.9.0",
@@ -37,6 +51,7 @@
     "supertest": "^7.0.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5",
+    "vite-tsconfig-paths": "^5.1.0",
     "vitest": "^2.1.4"
   }
 }
