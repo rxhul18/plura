@@ -5,6 +5,8 @@ import { ThemeProvider } from "@/hooks/theme-provider";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/custom/sidebar/sidebar";
 import { cookies } from "next/headers";
+import Infobar from "@/components/custom/infobar/infobar";
+import ProgressBar from "@/components/custom/progress.bar";
 
 export const metadata: Metadata = {
   title: "Plura",
@@ -34,6 +36,8 @@ async function RootLayout({
             <AppSidebar />
             <div className="p-2">
               {/* <SidebarTrigger/> */}
+              <ProgressBar />
+              <Infobar />
               {children}
             </div>
           </SidebarProvider>
