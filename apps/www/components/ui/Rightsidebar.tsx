@@ -2,8 +2,12 @@ import SidebarContent from "./Link";
 
 export default function Rightsidebar() {
   return (
-    <div className="hidden lg:flex flex-col items-start justify-start w-[16rem] h-full  lg:top-8 lg:sticky overflow-y-hidden">
+    <aside
+      role="complementary"
+      aria-label="Secondary navigation"
+      className="hidden lg:flex flex-col items-start justify-start w-[16rem] h-screen lg:top-8 lg:sticky overflow-y-auto"
+    >
       <SidebarContent />
-    </div>
+    </aside>
   );
 }
