@@ -1,6 +1,7 @@
+import UsageHome from "@/components/custom/usage-home";
 import LeftSidebar from "@/components/ui/Leftsidebar";
 import RightSidebar from "@/components/ui/Rightsidebar";
-import UsageHome from "@/components/ui/Usagehome";
+
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function UsagePage() {

@@ -1,4 +1,4 @@
-export default function Usagehome() {
+export default function UsageHome() {
   return (
     <div className=" w-full flex flex-col items-center overflow-x-hidden  px-4 sm:px-6 ">
       <h1 className="font-semibold text-2xl sm:text-3xl text-white flex justify-start items-center w-full h-12 mt-4 ml-4 sm:ml-6 lg:ml-10">
@@ -13,7 +13,7 @@ export default function Usagehome() {
       <div className="mt-8 sm:mt-10 flex flex-col items-start justify-start w-full">
         <div className="w-full flex flex-col items-start justify-start gap-y-6 sm:gap-y-8 lg:gap-y-10 px-4 sm:px-6 lg:px-10">
           <section className="font-normal text-start w-full text-base sm:text-lg text-white">
-            This is NOT a component library. It's a collection of re-usable
+            This is NOT a component library. It&apos; a collection of re-usable
             components that you can copy and paste into your apps.
           </section>
           <section className="font-normal text-start w-full text-base sm:text-lg text-white">
