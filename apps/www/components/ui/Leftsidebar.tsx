@@ -1,9 +1,4 @@
 import { ScrollArea } from "./scroll-area";
-
-// import Link from "next/link";
-// import { usePathname } from "next/navigation";
-// import { cn } from "@/lib/utils";
-
 export default function LeftSidebar() {
   const items = [
     { label: "Introduction" },
@@ -31,7 +26,7 @@ export default function LeftSidebar() {
 
   return (
     <div className="hidden lg:flex lg:flex-col md:mr-16 border-r text-sm lg:items-start lg:justify-start lg:w-full lg:h-full lg:top-8 lg:sticky lg:border-border lg:font-semibold">
-      <ScrollArea className="w-full">
+      <ScrollArea className="w-full h-full">
         <div className="flex flex-col ml-4 w-full">
           <h1 className="text-white h-12 w-full text-base flex items-center mt-3">
             Getting Started

@@ -3,7 +3,7 @@ import RightSidebar from "@/components/ui/Rightsidebar";
 import UsageHome from "@/components/ui/Usagehome";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-export default function Usagepage() {
+export default function UsagePage() {
   return (
     <div>
       <div className="flex flex-col lg:flex-row w-full h-screen overflow-hidden">
