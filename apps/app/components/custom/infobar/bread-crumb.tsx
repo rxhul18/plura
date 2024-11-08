@@ -4,7 +4,7 @@ import React from "react";
 export default function InfoBreadCrumb() {
   const page = usePathname();
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col w-full items-start justify-center mb-6">
       <div className="flex gap-5 items-center">
         <h2 className="text-3xl font-bold capitalize">
           {page.replace(/^\/+/, "")}
@@ -22,7 +22,7 @@ export default function InfoBreadCrumb() {
               </Loader>
             )} */}
       </div>
-      <p className="text-muted-foreground text-sm">
+      <p className="text-muted-foreground text-sm pl-0">
         {page == "settings"
           ? "Manage your account settings, preferences and integrations"
           : page == "dashboard"

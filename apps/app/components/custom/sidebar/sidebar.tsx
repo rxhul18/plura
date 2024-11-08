@@ -30,7 +30,7 @@ import {
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: "/home",
     icon: Home,
   },
   {
@@ -50,7 +50,7 @@ const items = [
   },
   {
     title: "Settings",
-    url: "#",
+    url: "/settings",
     icon: Settings,
   },
 ];
@@ -78,7 +78,6 @@ export function AppSidebar() {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              {/* {isExpanded && <SidebarTrigger className="hover:bg-transparent"/>} */}
             </div>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -104,9 +103,7 @@ export function AppSidebar() {
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>
-          <SidebarMenuItem>
-            {/* {!isExpanded && <SidebarTrigger/>} */}
-          </SidebarMenuItem>
+          <SidebarMenuItem></SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
     </Sidebar>

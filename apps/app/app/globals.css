@@ -25,6 +25,9 @@
     --ring: 240 10% 3.9%;
     --radius: 0.5rem;
 
+    --progress-background: hsl(var(--primary));
+    --progress-foreground: hsl(var(--primary-foreground));
+    
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
