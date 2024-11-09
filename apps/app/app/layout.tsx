@@ -35,7 +35,6 @@ async function RootLayout({
           <SidebarProvider defaultOpen={defaultOpen}>
             <AppSidebar />
             <div className="p-2">
-              {/* <SidebarTrigger/> */}
               <ProgressBar />
               <Infobar />
               {children}

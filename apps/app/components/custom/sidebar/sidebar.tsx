@@ -1,10 +1,16 @@
+"use client";
 import {
-  Calendar,
+  Webhook,
   ChevronDown,
-  Home,
-  Inbox,
-  Search,
+  Layers2,
+  Waypoints,
+  Mails,
   Settings,
+  Brain,
+  BrainCircuit,
+  FlaskConical,
+  ArchiveRestore,
+  Codepen,
 } from "lucide-react";
 
 import {
@@ -25,28 +31,29 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { usePathname } from "next/navigation";
 
 // Menu items.
 const items = [
   {
-    title: "Home",
+    title: "Dashboard",
     url: "/home",
-    icon: Home,
+    icon: Layers2,
   },
   {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
+    title: "Integrations",
+    url: "/integrations",
+    icon: Waypoints,
   },
   {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
+    title: "Events",
+    url: "/events",
+    icon: Webhook,
   },
   {
-    title: "Search",
+    title: "Mails",
     url: "#",
-    icon: Search,
+    icon: Mails,
   },
   {
     title: "Settings",
@@ -55,7 +62,38 @@ const items = [
   },
 ];
 
+// Playground items.
+const IntelItems = [
+  {
+    title: "Agents",
+    url: "/agents",
+    icon: Brain,
+  },
+  {
+    title: "Memory",
+    url: "/memory",
+    icon: BrainCircuit,
+  },
+  {
+    title: "Playground",
+    url: "/playground",
+    icon: FlaskConical,
+  },
+  {
+    title: "Components",
+    url: "/components",
+    icon: Codepen,
+  },
+  {
+    title: "Archives",
+    url: "/archives",
+    icon: ArchiveRestore,
+  },
+];
+
 export function AppSidebar() {
+  const path = usePathname();
+
   return (
     <Sidebar collapsible="icon" variant="floating">
       <SidebarHeader>
@@ -89,7 +127,28 @@ export function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton
+                    asChild
+                    tooltip={item.title}
+                    isActive={path === item.url}
+                  >
+                    <a href={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>Intelligence</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {IntelItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild tooltip={item.title}>
                     <a href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>

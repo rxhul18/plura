@@ -68,7 +68,7 @@ export default function Infobar() {
   return (
     <nav
       className={`flex flex-col w-full items-start sticky top-0 right-0 bg-background transition-all duration-200 ${
-        isScrolled ? "shadow-sm backdrop-blur-sm z-10" : ""
+        isScrolled ? "shadow-sm z-10" : ""
       }`}
     >
       <div className="flex flex-row items-center gap-2 py-3 w-full">
@@ -196,9 +196,6 @@ export default function Infobar() {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-      {isScrolled && (
-        <div className="h-px bg-gradient-to-r from-transparent via-foreground/10 to-transparent" />
-      )}
     </nav>
   );
 }
