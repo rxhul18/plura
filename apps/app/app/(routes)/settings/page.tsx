@@ -6,7 +6,7 @@ import React from "react";
 
 export default function SettingsPage() {
   return (
-    <div className="flex flex-col h-full w-full items-start overflow-hidden">
+    <div className="flex flex-col h-full w-full items-start overflow-hidden px-5 md:px-2">
       <InfoBreadCrumb />
       <div className="flex flex-col gap-10">
         <BillingSettings />

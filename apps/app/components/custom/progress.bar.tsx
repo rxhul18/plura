@@ -45,7 +45,6 @@ export default function ProgressBar() {
       clearInterval(interval);
     }, 800); // Total time for the progress to complete
 
-    // Cleanup timeouts and interval on unmount or rerender
     return () => {
       clearTimeout(complete);
       clearInterval(interval);
