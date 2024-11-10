@@ -1,4 +1,8 @@
 "use server";
+<<<<<<< HEAD
+=======
+import { auth } from "@repo/auth";
+>>>>>>> 5b4aadf (add better-auth in hono)
 import { headers } from "next/headers";
 
 export const getMultipleSessions = async () => {
@@ -13,4 +17,8 @@ export const getSession = async () => {
     headers: await headers(),
   });
   return res.json();
+<<<<<<< HEAD
 };
+=======
+}
+>>>>>>> 5b4aadf (add better-auth in hono)
