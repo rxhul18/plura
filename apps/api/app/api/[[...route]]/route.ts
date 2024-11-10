@@ -100,4 +100,4 @@ const PATCH = handle(app);
 const DELETE = handle(app);
 const OPTIONS = handle(app);
 
-export { GET, PATCH, POST, DELETE ,OPTIONS };
+export { GET, PATCH, POST, DELETE, OPTIONS };
