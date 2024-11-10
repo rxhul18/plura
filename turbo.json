@@ -2,7 +2,10 @@
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
   "tasks": {
-    "test": {},
+    "test": {
+      "cache": false,
+      "outputs": []
+    },
     "test:watch": {
       "cache": false,
       "persistent": true
@@ -13,14 +16,28 @@
     "db:push": {
       "cache": false
     },
+    "lint": {
+      "dependsOn": ["^lint"],
+      "cache": false,
+      "outputs": []
+    },
+    "lint:fix": {
+      "cache": false,
+      "outputs": []
+    },
+    "format:check": {
+      "cache": false,
+      "outputs": []
+    },
+    "format:write": {
+      "cache": false,
+      "outputs": []
+    },
     "build": {
       "dependsOn": ["^build", "^db:generate"],
       "env": [".env*"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".next/**", "!.next/cache/**"]
-    },
-    "lint": {
-      "dependsOn": ["^lint"]
     },
     "dev": {
       "dependsOn": ["^db:generate"],

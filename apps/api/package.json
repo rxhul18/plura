@@ -1,14 +1,20 @@
 {
-  "name": "api",
+  "name": "plura-api",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3001 --turbopack",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 5555",
+    "preview": "next build && next start -p 5555",
     "lint": "next lint",
-        "test": "vitest"
+    "lint:fix": "next lint --fix",
+    "test": "vitest --run",
+    "db:generate": "prisma generate",
+    "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
+    "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache"
   },
   "dependencies": {
     "@repo/db": "workspace:*",
+    "contentlayer2": "^0.5.3",
     "hono": "^4.6.9",
     "next": "15.0.2",
     "react": "19.0.0-rc-02c0e824-20241028",

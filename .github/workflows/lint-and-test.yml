@@ -28,17 +28,19 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
         
+      - name: Cache pnpm modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --shamefully-hoist
 
-      - name: Lint web code
-        run: cd ./apps/www && pnpm lint && cd ../..
-
-      - name: Lint api code
-        run: cd ./apps/api && pnpm lint && cd ../..
-
-      # - name: Lint turbo
-      #   run: pnpm lint
+      - name: Run Lint
+        run: pnpm lint
 
   test:
     runs-on: ubuntu-latest
@@ -56,11 +58,16 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
   
+      - name: Cache pnpm modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
       - name: Install dependencies
-        run: pnpm install 
+        run: pnpm install
 
-      - name: Test api code
-        run: cd ./apps/api && pnpm test && cd ../..
-
-      # - name: Run tests
-      #   run: pnpm test
+      - name: Run tests
+        run: pnpm test
