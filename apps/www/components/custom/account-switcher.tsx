@@ -1,5 +1,5 @@
 "use client";
-import { authClient } from "@/lib/auth-client";
+import { authClient } from "../../lib/auth-client";
 import { Session } from "@repo/auth";
 import { useRouter } from "next/navigation";
 interface Props {
