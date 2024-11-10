@@ -8,7 +8,7 @@ export default async function page() {
     <div>
       <AccountSwitcher session={multipleSessions} activeSession={session} />
       <pre className="font-sm">{JSON.stringify(session, null, 1)}</pre>
-      <pre>{JSON.stringify(multipleSessions,null,2)}</pre>
+      <pre>{JSON.stringify(multipleSessions, null, 2)}</pre>
     </div>
   );
 }

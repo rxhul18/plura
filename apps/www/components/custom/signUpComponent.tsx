@@ -32,13 +32,11 @@ export default function SignUpComponent() {
     },
   });
   const onSubmit = async (SignInData: z.infer<typeof formSchema>) => {
-    const { data, error } = await authClient.signUp.email(
-      {
-        name: SignInData.name,
-        email: SignInData.email,
-        password: SignInData.password,
-      }
-    );
+    const { data, error } = await authClient.signUp.email({
+      name: SignInData.name,
+      email: SignInData.email,
+      password: SignInData.password,
+    });
   };
 
   return (
