@@ -1,11 +1,11 @@
 import { Hono } from "hono";
-const app = new Hono()
+const app = new Hono();
 import { prisma } from "@repo/db";
 app
   .get("/", async (c) => {
     const user = await prisma.user.findMany();
     return c.json({
-     user
+      user,
     });
   })
   .patch(async (c) => {
@@ -43,4 +43,4 @@ app
     });
   });
 
-  export default app
+export default app;

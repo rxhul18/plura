@@ -34,7 +34,7 @@ export default function SignIn() {
       {
         email: SignInData.email,
         password: SignInData.password,
-        callbackURL: "/dashboard"
+        callbackURL: "/dashboard",
       },
       {
         onRequest: (ctx) => {},
@@ -42,7 +42,7 @@ export default function SignIn() {
         onError: (ctx) => {
           alert(ctx.error.message);
         },
-      }
+      },
     );
   };
 
