@@ -46,7 +46,7 @@ app
     }
     return c.json(
       {
-        message: "All Email sent successfully",
+        message: "All Emails sent successfully",
         data,
       },
       200
