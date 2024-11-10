@@ -2,10 +2,10 @@ import { Hono } from "hono";
 const app = new Hono();
 import { prisma } from "@repo/db";
 app
-  .get("/", async (c) => {
-    const user = await prisma.user.findMany();
+  .get("/hello", async (c) => {
+    const test = await prisma.user.findMany();
     return c.json({
-      user,
+      test,
     });
   })
   .patch(async (c) => {
