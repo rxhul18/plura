@@ -1,7 +1,7 @@
 import { prisma } from "@repo/db";
 import { handle } from "hono/vercel";
 import { Hono } from "hono";
-import {auth} from "@repo/auth"
+import { auth } from "@repo/auth";
 import { cors } from "hono/cors";
 import mail from "./mail";
 import hello from "./hello";
@@ -14,14 +14,12 @@ const allowedOrigins = [
 
 export const runtime = "nodejs";
 
-
 const app = new Hono<{
   Variables: {
     user: typeof auth.$Infer.Session.user | null;
-    session: typeof  auth.$Infer.Session.session | null;
+    session: typeof auth.$Infer.Session.session | null;
   };
 }>().basePath("/api");
-
 
 app.use(
   "/auth/**",
@@ -31,7 +29,7 @@ app.use(
     allowMethods: ["POST", "GET", "OPTIONS"],
     exposeHeaders: ["Content-Length"],
     maxAge: 600,
-    credentials: true
+    credentials: true,
   })
 );
 app.options("/auth/**", (c) => {
@@ -56,7 +54,6 @@ app.options("/auth/**", (c) => {
 });
 app.use("*", async (c, next) => {
   const session = await auth.api.getSession({ headers: c.req.raw.headers });
-
 
   if (!session) {
     c.set("user", null);
@@ -87,22 +84,21 @@ app.get("/session", async (c) => {
   });
 });
 app.route("/hello", hello);
-app.route("/mail", mail)
+app.route("/mail", mail);
 
 app.on(["POST", "GET"], "/auth/**", (c) => {
-
   return auth.handler(c.req.raw);
 });
-app.get("/multi-sessions",async (c)=>{
+app.get("/multi-sessions", async (c) => {
   const res = await auth.api.listDeviceSessions({
     headers: c.req.raw.headers,
-  })
+  });
   return c.json(res);
-})
+});
 const GET = handle(app);
 const POST = handle(app);
 const PATCH = handle(app);
 const DELETE = handle(app);
-export const OPTIONS = handle(app);;
+export const OPTIONS = handle(app);
 
 export { GET, PATCH, POST, DELETE };

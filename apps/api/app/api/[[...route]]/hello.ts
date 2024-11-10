@@ -5,7 +5,7 @@ app
   .get("/", async (c) => {
     const user = await prisma.user.findMany();
     return c.json({
-     user
+      user,
     });
   })
   .patch(async (c) => {
