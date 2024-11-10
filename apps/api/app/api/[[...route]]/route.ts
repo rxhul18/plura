@@ -4,6 +4,7 @@ import { Hono } from "hono";
 import {auth} from "@repo/auth"
 import { cors } from "hono/cors";
 import mail from "./mail";
+import hello from "./hello";
 
 const allowedOrigins = [
   "http://localhost:3003",
@@ -25,7 +26,7 @@ const app = new Hono<{
 app.use(
   "/auth/**",
   cors({
-    origin: ["http://localhost:3003", "https://www.plura.pro"],
+    origin: allowedOrigins,
     allowHeaders: ["Content-Type", "Authorization"],
     allowMethods: ["POST", "GET", "OPTIONS"],
     exposeHeaders: ["Content-Length"],
@@ -85,18 +86,17 @@ app.get("/session", async (c) => {
     user,
   });
 });
+app.route("/hello", hello);
 app.route("/mail", mail)
 
 app.on(["POST", "GET"], "/auth/**", (c) => {
-  console.log(c.req.raw.headers.get("origin"));
+
   return auth.handler(c.req.raw);
 });
 app.get("/multi-sessions",async (c)=>{
   const res = await auth.api.listDeviceSessions({
     headers: c.req.raw.headers,
   })
-  console.log(c.req.raw.headers.get("origin"));
-  console.log(res.length)
   return c.json(res);
 })
 const GET = handle(app);
