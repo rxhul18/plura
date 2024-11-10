@@ -1,7 +1,12 @@
 import { createAuthClient } from "better-auth/react";
 import { multiSessionClient } from "better-auth/client/plugins";
+import { Http2ServerRequest } from "http2";
+  const BaseDomain =
+    process.env.NODE_ENV === "production"
+      ? "https://api.plura.pro"
+      : "http://localhost:3001";
 export const authClient = createAuthClient({
-  baseURL: "http://localhost:3001",
+  baseURL: BaseDomain,
   plugins:[multiSessionClient()]
 });
 

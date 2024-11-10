@@ -1,5 +1,4 @@
 "use server";
-import { auth } from "@repo/auth";
 import { headers } from "next/headers";
 
 export const getMultipleSessions = async () => {
