@@ -31,22 +31,21 @@ export default function SignUp() {
       password: "",
     },
   });
-  const onSubmit = async(SignInData: z.infer<typeof formSchema>) => {
-     const { data, error } = await authClient.signUp.email({ 
+  const onSubmit = async (SignInData: z.infer<typeof formSchema>) => {
+    const { data, error } = await authClient.signUp.email(
+      {
         name: SignInData.name,
         email: SignInData.email,
-        password: SignInData.password
-     }, { 
-        onRequest: (ctx) => { 
-
-        }, 
-        onSuccess: (ctx) => { 
-
-        }, 
-        onError: (ctx) => { 
-          alert(ctx.error.message); 
-        }, 
-      }); 
+        password: SignInData.password,
+      },
+      {
+        onRequest: (ctx) => {},
+        onSuccess: (ctx) => {},
+        onError: (ctx) => {
+          alert(ctx.error.message);
+        },
+      },
+    );
   };
 
   return (
