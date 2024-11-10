@@ -13,4 +13,4 @@ export const getSession = async () => {
     headers: await headers(),
   });
   return res.json();
-}
+};

@@ -14,7 +14,7 @@ app
         {
           message: "Email sent failed",
         },
-        400
+        400,
       );
     }
     return c.json(
@@ -22,7 +22,7 @@ app
         message: "Email sent successfully",
         data,
       },
-      200
+      200,
     );
   })
   .get((c) => {
@@ -41,7 +41,7 @@ app
         {
           message: "Email sent failed",
         },
-        400
+        400,
       );
     }
     return c.json(
@@ -49,7 +49,7 @@ app
         message: "All Emails sent successfully",
         data,
       },
-      200
+      200,
     );
   })
   .get((c) => {
