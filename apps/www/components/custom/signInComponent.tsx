@@ -30,7 +30,7 @@ export default function SignInComponent() {
     },
   });
   const onSubmit = async (SignInData: z.infer<typeof formSchema>) => {
-      await authClient.signIn.email({
+    await authClient.signIn.email({
       email: SignInData.email,
       password: SignInData.password,
       callbackURL: "/dashboard",
