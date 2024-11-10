@@ -1,6 +1,6 @@
 import { createAuthClient } from "better-auth/react";
 import { multiSessionClient } from "better-auth/client/plugins";
-import { Http2ServerRequest } from "http2";
+
 const BaseDomain =
   process.env.NODE_ENV === "production"
     ? "https://api.plura.pro"

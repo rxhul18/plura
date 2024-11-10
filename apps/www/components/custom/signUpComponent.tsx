@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -27,12 +26,13 @@ export default function SignUpComponent() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
   });
   const onSubmit = async (SignInData: z.infer<typeof formSchema>) => {
-    const { data, error } = await authClient.signUp.email({
+      await authClient.signUp.email({
       name: SignInData.name,
       email: SignInData.email,
       password: SignInData.password,
