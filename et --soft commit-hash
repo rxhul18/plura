@@ -1,0 +1,278 @@
+[33mcommit 363ade8410a2df7d4f175613711bc7e9126162bc[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/pricing[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: Vinay <vinaymasina8740@gmail.com>
+Date:   Sat Nov 9 13:05:10 2024 +0530
+
+    Added Pricing page
+
+[33mcommit 584ad2bff2752308e144bbc3b66b15e3a5760c4c[m
+Merge: ed8fb5a e8ed8cf
+Author: Saidev Dhal (Dev) <connect.saidev@gmail.com>
+Date:   Thu Nov 7 12:53:11 2024 +0530
+
+    Merge pull request #19 from SkidGod4444/feature/app
+    
+    add scripts
+
+[33mcommit e8ed8cf0a924e047351175c75d235370ee6a5c71[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Thu Nov 7 12:50:47 2024 +0530
+
+    link packages
+
+[33mcommit 0d578958639a8da6b5c4d35dd12e0481e5a9ed89[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Thu Nov 7 12:50:42 2024 +0530
+
+    link packages
+
+[33mcommit dcecf96b2f904539edbe80a9e705d1cb8f419463[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Thu Nov 7 12:39:33 2024 +0530
+
+    fix workflow linting force
+
+[33mcommit 9a3751b7e651230ae45aaf681532176618df162f[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Thu Nov 7 12:34:18 2024 +0530
+
+    fix workflow linting
+
+[33mcommit 6cff12875305d7962b4db9bf944f4abbd5e8235f[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Thu Nov 7 12:25:42 2024 +0530
+
+    add scripts
+
+[33mcommit ed8fb5aa0a5bcf43c73ac5384df6bd623cfaa245[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Wed Nov 6 23:30:47 2024 +0530
+
+    remove  '&& pnpm db:generate' from workflow
+
+[33mcommit a22c4fc3c541a3e6664af45a0450c8aa224eb9d0[m
+Author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
+Date:   Wed Nov 6 17:52:36 2024 +0000
+
+    chore: format code with Prettier
+
+[33mcommit 043543c7debca33f7da8d0c373c3c3db11b1d43f[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Wed Nov 6 23:21:57 2024 +0530
+
+    add perms to workflow
+
+[33mcommit 500a79b118de80d51bb07f83dc81f60cdb004f3c[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Wed Nov 6 23:10:40 2024 +0530
+
+    fix errors & update workflow
+
+[33mcommit 3782d9eb8d3b920a289174d114ecd3812c397a6d[m
+Merge: 1cceea0 50da1bb
+Author: Saidev Dhal (Dev) <connect.saidev@gmail.com>
+Date:   Wed Nov 6 22:27:50 2024 +0530
+
+    Merge pull request #18 from wtfdivyansh/main
+    
+    route error fix
+
+[33mcommit 50da1bb166731451a25a533cd4899320857611f4[m
+Merge: 82f3845 1cceea0
+Author: Divyanshgupta030 <145568562+Divyanshgupta030@users.noreply.github.com>
+Date:   Wed Nov 6 22:05:04 2024 +0530
+
+    Merge branch 'main' of https://github.com/wtfdivyansh/plura
+
+[33mcommit 82f384546896a4378242165ace67fb15fdf88361[m
+Merge: d81602b e672ab5
+Author: Divyanshgupta030 <145568562+Divyanshgupta030@users.noreply.github.com>
+Date:   Wed Nov 6 22:04:51 2024 +0530
+
+    fix route error
+
+[33mcommit 1cceea04b73beb7d910b2e967d0ecba2bd2642c7[m
+Merge: 50212bd e672ab5
+Author: Saidev Dhal (Dev) <connect.saidev@gmail.com>
+Date:   Wed Nov 6 21:58:18 2024 +0530
+
+    Merge pull request #17 from wtfdivyansh/main
+    
+    added test to api add prisma with supabase db
+
+[33mcommit d81602b064a622f029b0ef2e6504ae18db7da7ce[m
+Author: Divyanshgupta030 <145568562+Divyanshgupta030@users.noreply.github.com>
+Date:   Wed Nov 6 21:56:43 2024 +0530
+
+    fix route error
+
+[33mcommit e672ab58828cc67449a2b8472cf51554857b7deb[m
+Author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
+Date:   Wed Nov 6 16:20:17 2024 +0000
+
+    chore: format code with Prettier
+
+[33mcommit 50f41cf0a3a366e5d2f25c7a9557e34c9c436128[m
+Author: Divyanshgupta030 <145568562+Divyanshgupta030@users.noreply.github.com>
+Date:   Wed Nov 6 21:49:43 2024 +0530
+
+    added test to api add prisma with supabase db
+
+[33mcommit 50212bd4a5acee9dfd6a43d62cfb7e715db2a6c7[m
+Merge: 84e04d6 cba022e
+Author: Saidev Dhal (Dev) <connect.saidev@gmail.com>
+Date:   Wed Nov 6 14:31:37 2024 +0530
+
+    Merge pull request #16 from SkidGod4444/app
+    
+    add app to turbopack
+
+[33mcommit cba022ec06417a7e079d97716951a4d1ce73a94c[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Wed Nov 6 14:29:22 2024 +0530
+
+    we dont support bellow v18
+
+[33mcommit 33bc2e8de5f4e472c831bd9696f432add2fc29b6[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Wed Nov 6 14:25:33 2024 +0530
+
+    add app to turbopack
+
+[33mcommit 84e04d6a64aa227a55e383e4c21713a9c48ee164[m
+Merge: 8c47947 2967118
+Author: Saidev Dhal (Dev) <connect.saidev@gmail.com>
+Date:   Wed Nov 6 11:50:41 2024 +0530
+
+    Merge pull request #15 from SkidGod4444/bugfix/docker
+    
+    eslint config
+
+[33mcommit 29671180c65e61cbd38e9da9e5e95b9a52f7f8b3[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Wed Nov 6 11:49:01 2024 +0530
+
+    update version
+
+[33mcommit 5f4c38ba626cf0a0e0bfe361c8442767c6d1b647[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Wed Nov 6 11:46:53 2024 +0530
+
+    update version
+
+[33mcommit 0c1459fb3f2082eb3e1363db21f08c5b6094af30[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Wed Nov 6 11:44:15 2024 +0530
+
+    remove turbo lint
+
+[33mcommit b3898099ffcf7c256ab881ddf759990018c789f4[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Wed Nov 6 11:42:26 2024 +0530
+
+    remove turbo lint
+
+[33mcommit e7571468732ceda86c12df6f8edc873a1c9b4517[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Wed Nov 6 11:41:06 2024 +0530
+
+    workflow fix
+
+[33mcommit 9d952d400d768df88304b0e6ddc861ff9f2e607f[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Wed Nov 6 11:27:52 2024 +0530
+
+    fix version
+
+[33mcommit edb28452444e3e2005b39e416ac75bf519d124e3[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Wed Nov 6 11:09:38 2024 +0530
+
+    eslint config
+
+[33mcommit 8c47947d6fd08475de836fbffbd83d4e8750b31f[m
+Merge: 41f7490 0225acc
+Author: Saidev Dhal (Dev) <connect.saidev@gmail.com>
+Date:   Wed Nov 6 10:51:32 2024 +0530
+
+    Merge pull request #13 from SkidGod4444/bugfix/docker
+    
+    try to fix docker
+
+[33mcommit 0225acc71ca4439868aa015e780e9e5116ce0a61[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Wed Nov 6 10:48:32 2024 +0530
+
+    try to fix docker
+
+[33mcommit 41f74903282e9f2460d03952eb8275f7ea226e3c[m
+Merge: ce72f38 14ad70b
+Author: Saidev Dhal (Dev) <connect.saidev@gmail.com>
+Date:   Wed Nov 6 01:06:32 2024 +0530
+
+    Merge pull request #12 from wtfdivyansh/db
+    
+    add prisma
+
+[33mcommit ce72f3894402998af8cd577c017a74e0877b382f[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Wed Nov 6 01:05:03 2024 +0530
+
+     - name: Install pnpm
+
+[33mcommit e89461499084b8cd37b76de1f6a216543c04bd66[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Wed Nov 6 01:01:14 2024 +0530
+
+    add vitest and workflows
+
+[33mcommit 14ad70bd046e3b70c3318af29d8250a09dc38756[m
+Author: Divyanshgupta030 <145568562+Divyanshgupta030@users.noreply.github.com>
+Date:   Wed Nov 6 00:56:41 2024 +0530
+
+    add prisma
+
+[33mcommit 677b722a57d16c0371205fb9b496110e34932a13[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Tue Nov 5 23:58:38 2024 +0530
+
+    update
+
+[33mcommit 7abfb9950f718d7271dbc92e68d5b3f245085019[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Tue Nov 5 23:53:11 2024 +0530
+
+    hono api
+
+[33mcommit 32b80ea5da968a875f4a053827d9aa6edb107e23[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Tue Nov 5 23:09:26 2024 +0530
+
+    fixx
+
+[33mcommit d088b07f3f930181b1c7f88be4a185f873f3cdcb[m
+Author: Saidev Dhal <connect.saidev@gmail.com>
+Date:   Tue Nov 5 22:58:37 2024 +0530
+
+    fix
+
+[33mcommit 02e6b8a781f6018154152847ee79254b8782a6c7[m
+Merge: 8455188 b6ae586
+Author: Saidev Dhal (Dev) <connect.saidev@gmail.com>
+Date:   Tue Nov 5 22:34:08 2024 +0530
+
+    Merge pull request #11 from wtfdivyansh/main
+    
+    update package manager to pnpm
+
+[33mcommit b6ae586a205f4cf3d51767eac9985a86e3b563b5[m
+Merge: 77aacc6 8455188
+Author: Saidev Dhal (Dev) <connect.saidev@gmail.com>
+Date:   Tue Nov 5 22:33:25 2024 +0530
+
+    Merge branch 'main' into main
+
+[33mcommit 77aacc68c98013dc1585c44f67f207e46ef03353[m
+Author: Divyanshgupta030 <145568562+Divyanshgupta030@users.noreply.github.com>
+Date:   Tue Nov 5 22:28:48 2024 +0530
+
+    
