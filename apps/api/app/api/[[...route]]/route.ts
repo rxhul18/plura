@@ -30,7 +30,7 @@ app.use(
     exposeHeaders: ["Content-Length"],
     maxAge: 600,
     credentials: true,
-  })
+  }),
 );
 app.options("/auth/**", (c) => {
   const origin = c.req.raw.headers.get("origin") ?? "";
