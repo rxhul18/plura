@@ -47,7 +47,7 @@ jobs:
     needs: lint
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      API_KEY: ${{ secrets.API_KEY }}
+      RESEND_API: ${{ secrets.RESEND_API }}
 
 
     steps:
