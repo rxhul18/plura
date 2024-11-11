@@ -13,9 +13,8 @@ on:
       - 'bugfix/*'
 
 jobs:
-  lint:
+  setup:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -23,11 +22,11 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '21.7.1'
+          node-version: '21.7.1' 
 
       - name: Install pnpm
         run: npm install -g pnpm
-        
+
       - name: Cache pnpm modules
         uses: actions/cache@v3
         with:
@@ -39,39 +38,30 @@ jobs:
       - name: Install dependencies
         run: pnpm install --shamefully-hoist
 
+  lint:
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Run Lint
         run: pnpm lint
 
   test:
     runs-on: ubuntu-latest
-    needs: lint
+    needs: [setup, lint]
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       RESEND_API: ${{ secrets.RESEND_API }}
-
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '21.7.1'
+      - name: Set up .env file for tests
+        run: |
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+          echo "RESEND_API=${{ secrets.RESEND_API }}" >> .env
 
-      - name: Install pnpm
-        run: npm install -g pnpm
-  
-      - name: Cache pnpm modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Run tests
+      - name: Run Tests
         run: pnpm test

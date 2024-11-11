@@ -20,11 +20,16 @@ jobs:
       RESEND_API: ${{ secrets.RESEND_API }}
     strategy:
       matrix:
-        node-version: [20.18.0, 18.20.4, 22.11.0, 19.9.0, 23.1.0] # we dont support bellow v18
+        node-version: [20.18.0, 18.20.4, 22.11.0, 19.9.0, 23.1.0]  # Ensure all versions are >= v18
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Set up .env file for tests
+        run: |
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+          echo "RESEND_API=${{ secrets.RESEND_API }}" >> .env
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
@@ -44,6 +49,6 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
-        
+
       - name: Run tests
         run: pnpm test
