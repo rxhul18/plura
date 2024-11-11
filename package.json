@@ -10,7 +10,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "turbo build",
+    "build": "turbo run db:generate && turbo build",
     "build:www": "turbo --filter=plura-www build",
     "build:app": "turbo --filter=plura-app build",
     "build:api": "turbo --filter=plura-api build",
@@ -21,7 +21,6 @@
     "lint": "turbo run lint --force",
     "lint:fix": "turbo run lint:fix",
     "test": "turbo run test --force",
-    "typecheck": "turbo run typecheck",
     "format:write": "turbo run format:write",
     "format:check": "turbo run format:check"
   },

@@ -2,6 +2,7 @@
   "name": "plura-api",
   "scripts": {
     "dev": "next dev -p 3001 --turbopack",
+    "prebuild": "turbo --filter=@repo/db db:generate",
     "build": "next build",
     "start": "next start -p 5555",
     "preview": "next build && next start -p 5555",
