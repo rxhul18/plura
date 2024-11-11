@@ -15,10 +15,14 @@
   "dependencies": {
     "@hono/node-server": "^1.13.5",
     "@hono/zod-validator": "^0.4.1",
+    "@prisma/client": "^5.22.0",
     "@repo/auth": "workspace:*",
     "@repo/db": "workspace:*",
+    "@repo/mail": "workspace:*",
+    "@repo/types": "workspace:*",
     "hono": "^4.6.9",
     "next": "15.0.2",
+    "prisma": "^5.22.0",
     "react": "19.0.0-rc-02c0e824-20241028",
     "react-dom": "19.0.0-rc-02c0e824-20241028",
     "zod": "^3.23.8"

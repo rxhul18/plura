@@ -71,6 +71,7 @@ app.get("/health", async (c) => {
     status: 200,
   });
 });
+
 app.get("/session", async (c) => {
   const session = c.get("session");
   const user = c.get("user");

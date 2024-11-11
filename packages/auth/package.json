@@ -13,6 +13,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "better-call": "0.2.14-beta.3"
+    "@repo/db": "workspace:*",
+    "better-auth": "0.8.1-beta.1",
+    "better-call": "0.2.14-beta.3",
+    "oslo": "^1.2.1"
   }
 }
