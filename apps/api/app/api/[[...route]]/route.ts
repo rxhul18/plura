@@ -8,7 +8,7 @@ import hello from "./hello";
 const allowedOrigins = [
   "http://localhost:3003",
   "https://www.plura.pro",
-  "http://app.plura.pro",
+  "https://app.plura.pro",
 ];
 
 export const runtime = "nodejs";
