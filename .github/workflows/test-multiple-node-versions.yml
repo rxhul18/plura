@@ -15,6 +15,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      API_KEY: ${{ secrets.API_KEY }}
     strategy:
       matrix:
         node-version: [20.18.0, 18.20.4, 22.11.0, 19.9.0, 23.1.0] # we dont support bellow v18
