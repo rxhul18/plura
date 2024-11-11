@@ -15,7 +15,7 @@ const nextConfig = {
           { key: "Access-Control-Allow-Credentials", value: "true" },
           {
             key: "Access-Control-Allow-Origin",
-            value: ["www.plura.pro", "app.plura.pro"],
+            value: "https://www.plura.pro, https://app.plura.pro",
           },
           {
             key: "Access-Control-Allow-Methods",
