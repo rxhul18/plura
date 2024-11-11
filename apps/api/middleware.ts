@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
   const response = NextResponse.next();
   response.headers.set("sec-fetch-mode", "no-cors");
 
-  return response
+  return response;
 }
 
 export const config = {
