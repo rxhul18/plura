@@ -1,0 +1,16 @@
+{
+  "name": "triggers",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "pnpm dlx trigger.dev@latest dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@trigger.dev/sdk": "^3.1.2"
+  },
+  "devDependencies": {
+    "@trigger.dev/build": "^3.1.2"
+  }
+}
