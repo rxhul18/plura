@@ -26,10 +26,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up .env file for tests
+      - name: Set up .env file for tests in apps/api
         run: |
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
-          echo "RESEND_API=${{ secrets.RESEND_API }}" >> .env
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> apps/api/.env
+          echo "RESEND_API=${{ secrets.RESEND_API }}" >> apps/api/.env
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
@@ -52,3 +52,12 @@ jobs:
 
       - name: Run tests
         run: pnpm test
+
+      # Ensuring environment is correctly set for vitest tests
+      - name: Set environment variables for vitest in apps/api
+        run: |
+          echo "RESEND_API=${{ secrets.RESEND_API }}" >> apps/api/.env
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> apps/api/.env
+        env:
+          RESEND_API: ${{ secrets.RESEND_API }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
