@@ -31,26 +31,6 @@ app.use(
     credentials: true,
   }),
 );
-app.options("/auth/**", (c) => {
-  const origin = c.req.raw.headers.get("origin") ?? "";
-
-  if (allowedOrigins.includes(origin)) {
-    return new Response(null, {
-      status: 204,
-      headers: {
-        "Access-Control-Allow-Origin": origin,
-        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
-        "Access-Control-Allow-Credentials": "true",
-        "Access-Control-Max-Age": "600",
-      },
-    });
-  }
-
-  return new Response("Forbidden", {
-    status: 403,
-  });
-});
 app.use("*", async (c, next) => {
   const session = await auth.api.getSession({ headers: c.req.raw.headers });
 
