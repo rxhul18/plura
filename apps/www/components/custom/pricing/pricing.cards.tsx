@@ -1,3 +1,4 @@
+import React from 'react'
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -6,41 +7,35 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { Check } from "lucide-react";
+import { Badge } from '@/components/ui/badge';
+import { pricingCardConfig } from '@/config/pricing.config';
 
-export default function PricingComponent() {
+export default function PricingCards() {
   return (
-    <div className="container relative">
-      <div className="absolute bottom-0 left-[-20%] right-0 top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(211,211,211,0.15),rgba(255,255,255,0))]" />
-      <div className="bg-black min-h-screen text-white py-12 px-4">
-        <div className="max-w-6xl mx-auto space-y-8">
-          <div className="text-center space-y-4">
-            <h1 className="text-2xl md:text-4xl font-bold">
-              Get instant access to all components and templates
-            </h1>
-            <p className="text-gray-400">
-              For a one-time payment, you get access to all components and
-              templates, including future updates and new templates.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
+    <div className="grid md:grid-cols-3 px-4 gap-4">
             {/* Basic Plan */}
-            <Card className="bg-zinc-900 border-zinc-800">
-              <CardHeader className="space-y-2">
-                <div className="text-sm text-gray-400">Basic</div>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-sm">$</span>
-                  <span className="text-5xl font-bold">129</span>
-                </div>
-                <div className="text-sm text-gray-400">
-                  <span className="line-through">$199</span>
-                  <span className="ml-2 text-emerald-500">35% OFF</span>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <Button className="w-full bg-white text-black hover:bg-gray-200">
-                  Get Basic Pro
+            <Card className='bg-[#171717] rounded-2xl p-2'>
+            <CardHeader className="rounded-2xl border-t-2 border-r border-[#333] border-opacity-80 m-3 bg-gradient-to-br from-[#262626] to-[#262829]">
+        <h3 className="text-xl font-semibold">{pricingCardConfig.basic.name}</h3>
+        <p className="text-xs">{pricingCardConfig.basic.tier}</p>
+        <div className="flex flex-row items-center gap-2 pt-4 pb-6">
+          <span className="text-7xl font-bold tracking-tight">
+            {/* <span className="text-xl align-bottom">$</span> */}
+            {pricingCardConfig.basic.price}
+          </span>
+          {/* <div className="flex flex-col text-lg gap-2 font-semibold">
+            <span className="line-through">$199</span>
+            <Badge className='bg-background text-primary'>
+            35% OFF
+            </Badge>
+          </div> */}
+        </div>
+        
+        <Button className="w-full bg-white text-black hover:bg-gray-200">
+                  Get Plura Basic
                 </Button>
+      </CardHeader>
+      <CardContent className="space-y-6 mt-14">
                 <ul className="space-y-2.5">
                   {[
                     "1 year access to all the premium component packs and templates",
@@ -75,25 +70,31 @@ export default function PricingComponent() {
             </Card>
 
             {/* Lifetime Plan */}
-            <Card className="bg-zinc-900 border-zinc-800 relative">
-              <div className="absolute -top-3 right-4 bg-white text-black text-xs px-3 py-1 rounded-full">
-                Featured
-              </div>
-              <CardHeader className="space-y-2">
-                <div className="text-sm text-gray-400">Lifetime</div>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-sm">$</span>
-                  <span className="text-5xl font-bold">169</span>
-                </div>
-                <div className="text-sm text-gray-400">
-                  <span className="line-through">$299</span>
-                  <span className="ml-2 text-emerald-500">43% OFF</span>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <Button className="w-full bg-white text-black hover:bg-gray-200">
-                  Get Lifetime Pro
+            <Card className='bg-[#171717] rounded-2xl p-2'>
+            <CardHeader className="rounded-2xl border-t-2 border-r border-[#333] border-opacity-80 m-3 bg-gradient-to-br from-[#262626] to-[#262829]">
+        <div className="flex flex-row items-center justify-between">
+          <h3 className="text-xl font-semibold">{pricingCardConfig.plus.name}</h3>
+          <Badge className='rounded-xl hover:bg-primary'>Featured</Badge>
+        </div>
+        <p className="text-xs">{pricingCardConfig.plus.tier}</p>
+
+        <div className="flex flex-row items-center gap-2 pt-4 pb-6">
+          <span className="text-7xl font-bold tracking-tight">
+            <span className="text-xl align-bottom">{pricingCardConfig.plus.currency}</span>{pricingCardConfig.plus.price}
+          </span>
+          <div className="flex flex-col text-lg gap-2 font-semibold">
+            <span className="line-through">{pricingCardConfig.plus.currency}{pricingCardConfig.plus.beforePrice}</span>
+            <Badge className='bg-background hover:bg-background text-primary'>
+            {pricingCardConfig.plus.discount}
+            </Badge>
+          </div>
+        </div>
+        
+        <Button className="w-full bg-white text-black hover:bg-gray-200">
+                  Get Plura Plus
                 </Button>
+      </CardHeader>
+      <CardContent className="space-y-6 mt-14">
                 <ul className="space-y-2.5">
                   {[
                     "Lifetime access to all the premium component packs",
@@ -129,22 +130,27 @@ export default function PricingComponent() {
             </Card>
 
             {/* Team Plan */}
-            <Card className="bg-zinc-900 border-zinc-800">
-              <CardHeader className="space-y-2">
-                <div className="text-sm text-gray-400">Team</div>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-sm">$</span>
-                  <span className="text-5xl font-bold">790</span>
-                </div>
-                <div className="text-sm text-gray-400">
-                  <span className="line-through">$1490</span>
-                  <span className="ml-2 text-emerald-500">47% OFF</span>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <Button className="w-full bg-white text-black hover:bg-gray-200">
-                  Get Teams Pro
+            <Card className='bg-[#171717] rounded-2xl p-2'>
+            <CardHeader className="rounded-2xl border-t-2 border-r border-[#333] border-opacity-80 m-3 bg-gradient-to-br from-[#262626] to-[#262829]">
+        <h3 className="text-xl font-semibold">{pricingCardConfig.pro.name}</h3>
+        <p className="text-xs">{pricingCardConfig.pro.tier}</p>
+        <div className="flex flex-row items-center gap-2 pt-4 pb-6">
+          <span className="text-7xl font-bold tracking-tight">
+            <span className="text-xl align-bottom">{pricingCardConfig.pro.currency}</span>{pricingCardConfig.pro.price}
+          </span>
+          <div className="flex flex-col text-lg gap-2 font-semibold">
+            <span className="line-through">{pricingCardConfig.pro.currency}{pricingCardConfig.pro.beforePrice}</span>
+            <Badge className='bg-background text-primary'>
+            {pricingCardConfig.pro.discount}
+            </Badge>
+          </div>
+        </div>
+        
+        <Button className="w-full bg-white text-black hover:bg-gray-200">
+                  Get Plura Pro
                 </Button>
+      </CardHeader>
+      <CardContent className="space-y-6 mt-14">
                 <ul className="space-y-2.5">
                   {[
                     "10 team members",
@@ -178,8 +184,5 @@ export default function PricingComponent() {
               </CardFooter>
             </Card>
           </div>
-        </div>
-      </div>
-    </div>
-  );
+  )
 }
