@@ -57,3 +57,11 @@ model Verification {
 
   @@map("verification")
 }
+
+model Trigger {
+  id         String   @id
+  name          String
+  email         String
+  emailVerified Boolean
+
+}
