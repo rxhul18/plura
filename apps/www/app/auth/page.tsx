@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -27,7 +27,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { signInSchema, signUpSchema } from "@/lib/types";
-import {zodResolver} from "@hookform/resolvers/zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { signInType, signUpType } from "@/lib/types";
 import { authClient } from "@/lib/auth-client";
@@ -35,7 +35,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 
 export default function Auth() {
-  const router = useRouter()
+  const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const SignInform = useForm<z.infer<typeof signInSchema>>({
@@ -59,7 +59,7 @@ export default function Auth() {
   });
 
   const handleSignIn = async (data: signInType) => {
-    const {email, password} = await signInSchema.parseAsync(data);
+    const { email, password } = await signInSchema.parseAsync(data);
     await authClient.signIn.email({
       email,
       password,
@@ -72,9 +72,9 @@ export default function Auth() {
           toast({
             title: "Successfully signed in",
           });
-            console.log("signin up ", ctx);
-            setIsLoading(false);
-            SignInform.reset();
+          console.log("signin up ", ctx);
+          setIsLoading(false);
+          SignInform.reset();
         },
         onError(ctx) {
           toast({
@@ -87,54 +87,52 @@ export default function Auth() {
     });
   };
   const handleSignUp = async (data: signUpType) => {
-     const validated = await signUpSchema.parseAsync(data);
-     const { firstName, lastName, email, password } = validated
-      await authClient.signUp.email({
-       name: firstName + " " + lastName,
-       email,
-       password,
-       fetchOptions: {
+    const validated = await signUpSchema.parseAsync(data);
+    const { firstName, lastName, email, password } = validated;
+    await authClient.signUp.email({
+      name: firstName + " " + lastName,
+      email,
+      password,
+      fetchOptions: {
         onRequest(ctx) {
           setIsLoading(true);
         },
-         onSuccess(ctx) {
-           toast({
-             title: "Successfully signed up",
-             description: "Check your email for verification link",
-           });
-           console.log("signed up ",ctx)
-           setIsLoading(false);
-           router.push("/dashboard")
-           SignUpform.reset();
-         },
-         onError(ctx) {
-           toast({
-             title: "Sign up failed",
-             description: ctx.error.message,
-           });
-           setIsLoading(false);
-         },
-       },
-     });
+        onSuccess(ctx) {
+          toast({
+            title: "Successfully signed up",
+            description: "Check your email for verification link",
+          });
+          console.log("signed up ", ctx);
+          setIsLoading(false);
+          router.push("/dashboard");
+          SignUpform.reset();
+        },
+        onError(ctx) {
+          toast({
+            title: "Sign up failed",
+            description: ctx.error.message,
+          });
+          setIsLoading(false);
+        },
+      },
+    });
   };
 
   const handleProviderSignIn = async (provider: string) => {
     switch (provider) {
       case "google":
-        await authClient.signIn.social({ 
-            provider: provider, 
-            callbackURL: "/dashboard", 
-            fetchOptions:{
-              onSuccess(ctx){
-                toast({
-                  title: "Successfully signed in",
-                  description: provider
-                });
-
-              },
-            }
-        }
-      );
+        await authClient.signIn.social({
+          provider: provider,
+          callbackURL: "/dashboard",
+          fetchOptions: {
+            onSuccess(ctx) {
+              toast({
+                title: "Successfully signed in",
+                description: provider,
+              });
+            },
+          },
+        });
         break;
       case "github":
         await authClient.signIn.social({
@@ -151,23 +149,23 @@ export default function Auth() {
         });
         break;
       case "discord":
-       await authClient.signIn.social({
-         provider: provider,
-         callbackURL: "/dashboard",
-         fetchOptions: {
-           onSuccess(ctx) {
-             toast({
-               title: "Successfully signed in",
-               description: provider,
-             });
-           },
-         },
-       });
+        await authClient.signIn.social({
+          provider: provider,
+          callbackURL: "/dashboard",
+          fetchOptions: {
+            onSuccess(ctx) {
+              toast({
+                title: "Successfully signed in",
+                description: provider,
+              });
+            },
+          },
+        });
         break;
       default:
         break;
     }
-  }
+  };
 
   return (
     <div className="flex flex-col h-full w-full lg:grid lg:grid-cols-2 overflow-hidden">

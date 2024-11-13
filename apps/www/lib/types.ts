@@ -1,4 +1,4 @@
-import {z} from "zod";
+import { z } from "zod";
 import { Profanity } from "profanity-validator";
 const profanity = new Profanity({
   customWords: ["badword", "inappropriate"],
@@ -10,7 +10,9 @@ const profanityCheck = async (value: string) => {
 };
 export const signInSchema = z.object({
   email: z.string().email("You must give a valid email"),
-  password: z.string().min(6,{message:"Password must be at least 6 characters"}),
+  password: z
+    .string()
+    .min(6, { message: "Password must be at least 6 characters" }),
 });
 
 export const signUpSchema = z
@@ -34,7 +36,7 @@ export const signUpSchema = z
       .refine(
         (value) =>
           /^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{}|;:'",.<>?/]*$/.test(value ?? ""),
-        "Password should contain only alphabets, numbers, and special characters"
+        "Password should contain only alphabets, numbers, and special characters",
       )
       .refine(async (val) => await profanityCheck(val), {
         message: "Inappropriate password",
@@ -46,6 +48,5 @@ export const signUpSchema = z
     path: ["confirmPassword"],
   });
 
-
-export type signInType =  z.infer<typeof signInSchema>;
-export type signUpType =  z.infer<typeof signUpSchema>;
+export type signInType = z.infer<typeof signInSchema>;
+export type signUpType = z.infer<typeof signUpSchema>;

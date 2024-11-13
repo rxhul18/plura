@@ -1,8 +1,14 @@
 import { betterFetch } from "@better-fetch/fetch";
 import type { Session } from "better-auth/types";
 import { NextResponse, type NextRequest } from "next/server";
-const baseDomain = process.env.NODE_ENV === "production" ? "https://api.plura.pro" : "http://localhost:3001";
-const redirectUrl = process.env.NODE_ENV === "production" ? "https://ww.plura.pro/auth" : "http://localhost:3003/auth";
+const baseDomain =
+  process.env.NODE_ENV === "production"
+    ? "https://api.plura.pro"
+    : "http://localhost:3001";
+const redirectUrl =
+  process.env.NODE_ENV === "production"
+    ? "https://ww.plura.pro/auth"
+    : "http://localhost:3003/auth";
 export default async function authMiddleware(request: NextRequest) {
   const { data: session } = await betterFetch<Session>(
     `${baseDomain}/api/auth/get-session`,
@@ -11,7 +17,7 @@ export default async function authMiddleware(request: NextRequest) {
       headers: {
         cookie: request.headers.get("cookie") || "",
       },
-    }
+    },
   );
 
   if (!session) {

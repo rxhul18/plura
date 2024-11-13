@@ -41,7 +41,12 @@ export default function AccountSwitcher({ session, activeSession }: Props) {
           );
         })}
       </select>
-      <div className="flex border border-neutral-900[0.2] bg-neutral-900/60 p-2" onClick={handleSignOut}>logout</div>
+      <div
+        className="flex border border-neutral-900[0.2] bg-neutral-900/60 p-2"
+        onClick={handleSignOut}
+      >
+        logout
+      </div>
     </div>
   );
 }
