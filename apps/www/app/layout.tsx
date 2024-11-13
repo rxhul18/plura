@@ -24,7 +24,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="relative flex  flex-col bg-background mx-auto">
+          <div className="flex flex-col items-center bg-background mx-auto">
             {children}
           </div>
         </ThemeProvider>

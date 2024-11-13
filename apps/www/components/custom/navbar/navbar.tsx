@@ -50,7 +50,7 @@ export function MainNav() {
           Usage
         </Link>
         <Link
-          href="/colors"
+          href="/pricing"
           className={cn(
             "transition-colors hover:text-foreground/80",
             pathname?.startsWith("/colors")

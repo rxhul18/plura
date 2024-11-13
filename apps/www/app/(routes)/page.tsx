@@ -12,7 +12,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="container relative">
+    <div className="flex flex-col items-center justify-center">
       <div className="absolute bottom-0 left-[-20%] right-0 top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(211,211,211,0.15),rgba(255,255,255,0))]" />
       <PageHeader>
         {/* <Announcement /> */}
@@ -26,10 +26,10 @@ export default function Home() {
         </PageHeaderDescription>
         <PageActions>
           <Button size={"lg"} variant={"outline"}>
-            <Link href="/docs">Get Started Free</Link>
+            <Link href="/auth">Get Started Free</Link>
           </Button>
           <RainbowButton>
-            <Link target="_blank" rel="noreferrer" href={"#"}>
+            <Link target="_blank" rel="noreferrer" href={"/pricing"}>
               Get Premium For $15
             </Link>
           </RainbowButton>

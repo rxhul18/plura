@@ -7,7 +7,7 @@ import PricingCards from "@/components/custom/pricing/pricing.cards";
 
 export default function Pricing() {
   return (
-    <div className="container relative">
+    <div className="flex flex-col items-center justify-center">
       <PageHeader className="gap-2">
         <h2 className="max-w-5xl mx-auto text-center tracking-tight font-medium text-white text-3xl md:text-4xl md:leading-tight">
           Get instant access to all components and templates
@@ -17,7 +17,8 @@ export default function Pricing() {
           templates, including future updates and new templates.
         </PageHeaderDescription>
       </PageHeader>
-      <section id="pricing">
+
+      <section id="pricing" className="flex items-center justify-center">
         <PricingCards />
       </section>
     </div>
