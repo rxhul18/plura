@@ -1,3 +1,4 @@
+"use client"
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,6 +8,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -14,11 +23,152 @@ import {
   IconBrandGithub,
   IconBrandDiscord,
 } from "@tabler/icons-react";
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import React from "react";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { signInSchema, signUpSchema } from "@/lib/types";
+import {zodResolver} from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { signInType, signUpType } from "@/lib/types";
+import { authClient } from "@/lib/auth-client";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 export default function Auth() {
+  const router = useRouter()
+  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
+  const SignInform = useForm<z.infer<typeof signInSchema>>({
+    resolver: zodResolver(signInSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    mode: "onBlur",
+  });
+  const SignUpform = useForm<z.infer<typeof signUpSchema>>({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+    mode: "onBlur",
+  });
+
+  const handleSignIn = async (data: signInType) => {
+    const {email, password} = await signInSchema.parseAsync(data);
+    await authClient.signIn.email({
+      email,
+      password,
+      callbackURL: "/dashboard",
+      fetchOptions: {
+        onRequest(ctx) {
+          setIsLoading(true);
+        },
+        onSuccess(ctx) {
+          toast({
+            title: "Successfully signed in",
+          });
+            console.log("signin up ", ctx);
+            setIsLoading(false);
+            SignInform.reset();
+        },
+        onError(ctx) {
+          toast({
+            title: "Sign in failed",
+            description: ctx.error.message,
+          });
+          setIsLoading(false);
+        },
+      },
+    });
+  };
+  const handleSignUp = async (data: signUpType) => {
+     const validated = await signUpSchema.parseAsync(data);
+     const { firstName, lastName, email, password } = validated
+      await authClient.signUp.email({
+       name: firstName + " " + lastName,
+       email,
+       password,
+       fetchOptions: {
+        onRequest(ctx) {
+          setIsLoading(true);
+        },
+         onSuccess(ctx) {
+           toast({
+             title: "Successfully signed up",
+             description: "Check your email for verification link",
+           });
+           console.log("signed up ",ctx)
+           setIsLoading(false);
+           router.push("/dashboard")
+           SignUpform.reset();
+         },
+         onError(ctx) {
+           toast({
+             title: "Sign up failed",
+             description: ctx.error.message,
+           });
+           setIsLoading(false);
+         },
+       },
+     });
+  };
+
+  const handleProviderSignIn = async (provider: string) => {
+    switch (provider) {
+      case "google":
+        await authClient.signIn.social({ 
+            provider: provider, 
+            callbackURL: "/dashboard", 
+            fetchOptions:{
+              onSuccess(ctx){
+                toast({
+                  title: "Successfully signed in",
+                  description: provider
+                });
+
+              },
+            }
+        }
+      );
+        break;
+      case "github":
+        await authClient.signIn.social({
+          provider: provider,
+          callbackURL: "/dashboard",
+          fetchOptions: {
+            onSuccess(ctx) {
+              toast({
+                title: "Successfully signed in",
+                description: provider,
+              });
+            },
+          },
+        });
+        break;
+      case "discord":
+       await authClient.signIn.social({
+         provider: provider,
+         callbackURL: "/dashboard",
+         fetchOptions: {
+           onSuccess(ctx) {
+             toast({
+               title: "Successfully signed in",
+               description: provider,
+             });
+           },
+         },
+       });
+        break;
+      default:
+        break;
+    }
+  }
+
   return (
     <div className="flex flex-col h-full w-full lg:grid lg:grid-cols-2 overflow-hidden">
       <div className="flex flex-col items-center justify-center px-4 sm:px-8 py-8 lg:py-0">
@@ -39,31 +189,82 @@ export default function Auth() {
               </CardHeader>
               <CardContent className="p-2">
                 <div className="flex flex-row items-center justify-between">
-                  <Button>
+                  <Button
+                    onClick={() => {
+                      handleProviderSignIn("google");
+                    }}
+                  >
                     <IconBrandGoogle className="size-5" /> Google
                   </Button>
-                  <Button>
+                  <Button
+                    onClick={() => {
+                      handleProviderSignIn("github");
+                    }}
+                  >
                     {" "}
                     <IconBrandGithub className="size-5" /> GitHub
                   </Button>
-                  <Button>
+                  <Button
+                    onClick={() => {
+                      handleProviderSignIn("discord");
+                    }}
+                  >
                     {" "}
                     <IconBrandDiscord className="size-5" /> Discord
                   </Button>
                 </div>
-                <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-6 h-[1px] w-full" />
-                <div className="flex flex-col w-full gap-2 items-center justify-between">
-                  <div className="flex flex-col w-full gap-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input id="email" placeholder="Email" type="email" />
-                  </div>
+                <Form {...SignInform}>
+                  <form
+                    onSubmit={SignInform.handleSubmit(handleSignIn)}
+                    className="space-y-8"
+                  >
+                    <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-6 h-[1px] w-full" />
+                    <div className="flex flex-col w-full gap-2 items-center justify-between">
+                      <div className="flex flex-col w-full gap-2">
+                        <FormField
+                          control={SignInform.control}
+                          name="email"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Email</FormLabel>
+                              <FormControl>
+                                <Input
+                                  placeholder="example@email.com"
+                                  type="email"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
 
-                  <div className="flex flex-col w-full gap-2">
-                    <Label htmlFor="pass">Password</Label>
-                    <Input id="pass" placeholder="Password" type="email" />
-                  </div>
-                  <Button className="w-full mt-2">Continue</Button>
-                </div>
+                      <div className="flex flex-col w-full gap-2">
+                        <FormField
+                          control={SignInform.control}
+                          name="password"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Password</FormLabel>
+                              <FormControl>
+                                <Input
+                                  type="password"
+                                  placeholder="123"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <Button className="w-full mt-2" disabled={isLoading}>
+                        Continue
+                      </Button>
+                    </div>
+                  </form>
+                </Form>
               </CardContent>
               <CardFooter className="p-0">
                 <Button
@@ -88,65 +289,127 @@ export default function Auth() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="p-2">
-                <div className="flex flex-row items-center justify-between">
-                  <Button>
-                    <IconBrandGoogle className="size-5" /> Google
-                  </Button>
-                  <Button>
-                    {" "}
-                    <IconBrandGithub className="size-5" /> GitHub
-                  </Button>
-                  <Button>
-                    {" "}
-                    <IconBrandDiscord className="size-5" /> Discord
-                  </Button>
-                </div>
-                <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-6 h-[1px] w-full" />
-                <div className="flex flex-col w-full gap-2 items-center justify-between">
-                  <div className="flex flex-row items-start justify-between gap-2">
-                    <div className="flex flex-col gap-2">
-                      <Label htmlFor="firstname">First Name</Label>
-                      <Input
-                        id="firstname"
-                        placeholder="First Name"
-                        type="text"
-                      />
+                <Form {...SignUpform}>
+                  <form onSubmit={SignUpform.handleSubmit(handleSignUp)}>
+                    <div className="flex flex-row items-center justify-between">
+                      <Button>
+                        <IconBrandGoogle className="size-5" /> Google
+                      </Button>
+                      <Button>
+                        {" "}
+                        <IconBrandGithub className="size-5" /> GitHub
+                      </Button>
+                      <Button>
+                        {" "}
+                        <IconBrandDiscord className="size-5" /> Discord
+                      </Button>
                     </div>
-                    <div className="flex flex-col gap-2">
-                      <Label htmlFor="lastname">Last Name</Label>
-                      <Input
-                        id="lastname"
-                        placeholder="Last Name"
-                        type="text"
-                      />
+                    <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-6 h-[1px] w-full" />
+                    <div className="flex flex-col w-full gap-2 items-center justify-between">
+                      <div className="flex flex-row items-start justify-between gap-2">
+                        <div className="flex flex-col gap-2">
+                          <FormField
+                            control={SignUpform.control}
+                            name="firstName"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>First Name</FormLabel>
+                                <FormControl>
+                                  <Input placeholder="saidev" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                        <div className="flex flex-col gap-2">
+                          <FormField
+                            control={SignUpform.control}
+                            name="lastName"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Last Name</FormLabel>
+                                <FormControl>
+                                  <Input placeholder="gupta" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col w-full gap-2">
+                        <FormField
+                          control={SignUpform.control}
+                          name="email"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Email</FormLabel>
+                              <FormControl>
+                                <Input
+                                  placeholder="exmaple@email.com"
+                                  type="email"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+
+                      <div className="flex flex-col w-full gap-2">
+                        <FormField
+                          control={SignUpform.control}
+                          name="password"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Password</FormLabel>
+                              <FormControl>
+                                <Input
+                                  placeholder="123"
+                                  type="password"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="flex flex-col w-full gap-2">
+                        <FormField
+                          control={SignUpform.control}
+                          name="confirmPassword"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Confirm Password</FormLabel>
+                              <FormControl>
+                                <Input
+                                  placeholder="***"
+                                  {...field}
+                                  type="password"
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <Button className="w-full mt-2" disabled={isLoading}>
+                        Continue
+                      </Button>
                     </div>
-                  </div>
-
-                  <div className="flex flex-col w-full gap-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input id="email" placeholder="Email" type="email" />
-                  </div>
-
-                  <div className="flex flex-col w-full gap-2">
-                    <Label htmlFor="pass">Password</Label>
-                    <Input id="pass" placeholder="Password" type="email" />
-                  </div>
-                  <div className="flex flex-col w-full gap-2">
-                    <Label htmlFor="cnfpass">Confirm Password</Label>
-                    <Input
-                      id="cnfpass"
-                      placeholder="Confirm Password"
-                      type="email"
-                    />
-                  </div>
-                  <Button className="w-full mt-2">Continue</Button>
-                </div>
+                  </form>
+                </Form>
               </CardContent>
+
               {/* <CardFooter className="p-0">
-    <Button variant={"ghost"} size={"sm"} className="hover:bg-background">
-      Forgot password
-    </Button>
-  </CardFooter> */}
+                      <Button variant={"ghost"} size={"sm"} className="hover:bg-background">
+                        Forgot password
+                      </Button>
+              </CardFooter> */}
             </Card>
           </TabsContent>
         </Tabs>

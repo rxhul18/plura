@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "predeploy": "turbo --filter=@repo/db db:generate",
-    "dev": "pnpm dlx trigger.dev@latest dev",
+    "trigger": "pnpm dlx trigger.dev@latest dev",
     "deploy": "pnpm predeploy && pnpm dlx trigger.dev@latest deploy"
   },
   "keywords": [],
