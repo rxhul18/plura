@@ -7,6 +7,7 @@ import { AppSidebar } from "@/components/custom/sidebar/sidebar";
 import { cookies } from "next/headers";
 import Infobar from "@/components/custom/infobar/infobar";
 import ProgressBar from "@/components/custom/progress.bar";
+import { PosthogProvider } from "@/hooks/posthog";
 
 export const metadata: Metadata = {
   title: "Plura",
@@ -23,6 +24,7 @@ async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
+      <PosthogProvider>
       <body
         className={`min-h-screen bg-background font-sans ${GeistSans.variable} antialiased`}
       >
@@ -42,6 +44,7 @@ async function RootLayout({
           </SidebarProvider>
         </ThemeProvider>
       </body>
+      </PosthogProvider>
     </html>
   );
 }
