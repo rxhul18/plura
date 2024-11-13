@@ -17,7 +17,7 @@ export default function Pricing() {
           templates, including future updates and new templates.
         </PageHeaderDescription>
       </PageHeader>
-      
+
       <section id="pricing" className="flex items-center justify-center">
         <PricingCards />
       </section>
