@@ -25,25 +25,25 @@ async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <PosthogProvider>
-      <body
-        className={`min-h-screen bg-background font-sans ${GeistSans.variable} antialiased`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
+        <body
+          className={`min-h-screen bg-background font-sans ${GeistSans.variable} antialiased`}
         >
-          <SidebarProvider defaultOpen={defaultOpen}>
-            <AppSidebar />
-            <div className="p-2">
-              <ProgressBar />
-              <Infobar />
-              {children}
-            </div>
-          </SidebarProvider>
-        </ThemeProvider>
-      </body>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <SidebarProvider defaultOpen={defaultOpen}>
+              <AppSidebar />
+              <div className="p-2">
+                <ProgressBar />
+                <Infobar />
+                {children}
+              </div>
+            </SidebarProvider>
+          </ThemeProvider>
+        </body>
       </PosthogProvider>
     </html>
   );

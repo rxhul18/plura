@@ -17,20 +17,20 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <PosthogProvider>
-      <body
-        className={` bg-background font-sans min-h-screen  ${GeistSans.variable} antialiased`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
+        <body
+          className={` bg-background font-sans min-h-screen  ${GeistSans.variable} antialiased`}
         >
-          <div className="flex flex-col items-center bg-background mx-auto">
-            {children}
-          </div>
-        </ThemeProvider>
-      </body>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="flex flex-col items-center bg-background mx-auto">
+              {children}
+            </div>
+          </ThemeProvider>
+        </body>
       </PosthogProvider>
     </html>
   );
