@@ -17,6 +17,15 @@ export default function AccountSwitcher({ session, activeSession }: Props) {
     console.log(active);
     router.refresh();
   };
+  const handleSignOut = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/auth");
+        },
+      },
+    });
+  };
   return (
     <div className="flex items-center justify-center gap-2 p-4">
       <select
@@ -32,6 +41,12 @@ export default function AccountSwitcher({ session, activeSession }: Props) {
           );
         })}
       </select>
+      <div
+        className="flex border border-neutral-900[0.2] bg-neutral-900/60 p-2"
+        onClick={handleSignOut}
+      >
+        logout
+      </div>
     </div>
   );
 }

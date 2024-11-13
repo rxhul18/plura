@@ -75,6 +75,7 @@ app.get("/multi-sessions", async (c) => {
   });
   return c.json(res);
 });
+
 const GET = handle(app);
 const POST = handle(app);
 const PATCH = handle(app);
