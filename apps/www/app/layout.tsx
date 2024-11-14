@@ -3,6 +3,7 @@ import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { ThemeProvider } from "@/hooks/theme-provider";
 import { PosthogProvider } from "@/hooks/posthog";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Plura",
@@ -30,6 +31,7 @@ export default function RootLayout({
               {children}
             </div>
           </ThemeProvider>
+          <Toaster />
         </body>
       </PosthogProvider>
     </html>
