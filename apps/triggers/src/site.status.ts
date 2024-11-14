@@ -2,7 +2,7 @@ import { cache } from "@repo/cache";
 import { logger, schedules } from "@trigger.dev/sdk/v3";
 
 const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK!;
-const LATENCY_THRESHOLD = 500;
+const LATENCY_THRESHOLD = 1000;
 
 export const siteStatusTask = schedules.task({
   id: "site-status",
@@ -55,10 +55,10 @@ export const siteStatusTask = schedules.task({
     };
 
     // Push the status record to a list in Redis
-    await cache.rpush("site-status:history", JSON.stringify(statusRecord));
-    await cache.ltrim("site-status:history", -100, -1);  // Keep last 100 entries
+    await cache.rpush("site-latency:history", JSON.stringify(statusRecord));
+    await cache.ltrim("site-latency:history", -100, -1);  // Keep last 100 entries
 
-    const cachedStatusHistory = await cache.lrange("site-status:history", 0, -1);
+    const cachedStatusHistory = await cache.lrange("site-latency:history", 0, -1);
     if (cachedStatusHistory) {
       cachedStatusHistory.forEach((record) => {
         try {
