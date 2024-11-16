@@ -3,8 +3,8 @@ import { authClient } from "@/lib/auth-client";
 import { Session } from "@repo/auth";
 import { useRouter } from "next/navigation";
 interface Props {
-  session: Session[];
-  activeSession: Session;
+  session: Session[] | null;
+  activeSession: Session | null
 }
 export default function AccountSwitcher({ session, activeSession }: Props) {
   const router = useRouter();
@@ -15,17 +15,24 @@ export default function AccountSwitcher({ session, activeSession }: Props) {
     });
 
     console.log(active);
-    router.refresh();
+    window.location.reload()
   };
   const handleSignOut = async () => {
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
-          router.push("/auth");
+          router.push("/auth")
         },
+        onError: (ctx) => {
+          console.log("error",ctx.error)
+        }
       },
     });
   };
+  if(!activeSession || !session ){
+    return <div>loading sessions</div>
+
+  }
   return (
     <div className="flex items-center justify-center gap-2 p-4">
       <select

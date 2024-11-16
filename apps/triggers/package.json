@@ -2,7 +2,7 @@
   "name": "triggers",
   "version": "1.0.0",
   "scripts": {
-    "dev": "pnpm dlx trigger.dev@latest dev",
+    "trigger": "pnpm dlx trigger.dev@latest dev",
     "deploy": "pnpm dlx trigger.dev@latest deploy"
   },
   "keywords": [],

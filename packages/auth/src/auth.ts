@@ -5,8 +5,7 @@ import { multiSession } from "better-auth/plugins";
 
 const BaseDomain = process.env.NODE_ENV === "production" ? process.env.API_DOMAIN as string : "http://localhost:3001";
 
-
-export const config = {
+export const auth = betterAuth({
   trustedOrigins: [
     "https://www.plura.pro",
     "https://plura.pro",
@@ -28,24 +27,23 @@ export const config = {
       clientId: process.env.GITHUB_CLIENT_ID!,
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     },
-    discord:{
+    discord: {
       clientId: process.env.DISCORD_CLIENT_ID!,
       clientSecret: process.env.DISCORD_CLIENT_SECRET!,
     },
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }
+    },
   },
   ...(process.env.NODE_ENV === "production" && {
     advanced: {
       crossSubDomainCookies: {
         enabled: true,
+        domain: "plura.pro",
       },
     },
   }),
-} satisfies BetterAuthOptions;
-
-export const auth = betterAuth(config);
+});
 
 export type Session = typeof auth.$Infer.Session;
