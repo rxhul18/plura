@@ -11,7 +11,7 @@ const allowedOrigins = [
   "https://app.plura.pro",
 ];
 
-export const runtime = "nodejs";
+export const runtime = "edge";
 
 const app = new Hono<{
   Variables: {
