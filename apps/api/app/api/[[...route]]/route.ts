@@ -1,9 +1,11 @@
 import { handle } from "hono/vercel";
 import { Hono } from "hono";
-import { auth } from "@repo/auth";
+import { auth as Auth } from "@repo/auth";
 import { cors } from "hono/cors";
 import mail from "./mail";
 import hello from "./hello";
+import session from "./session";
+import auth from "./auth";
 
 const allowedOrigins = [
   "http://localhost:3003",
@@ -11,12 +13,12 @@ const allowedOrigins = [
   "https://app.plura.pro",
 ];
 
-export const runtime = "nodejs";
+export const runtime = "edge";
 
 const app = new Hono<{
   Variables: {
-    user: typeof auth.$Infer.Session.user | null;
-    session: typeof auth.$Infer.Session.session | null;
+    user: typeof Auth.$Infer.Session.user | null;
+    session: typeof Auth.$Infer.Session.session | null;
   };
 }>().basePath("/api");
 
@@ -32,7 +34,7 @@ app.use(
   }),
 );
 app.use("*", async (c, next) => {
-  const session = await auth.api.getSession({ headers: c.req.raw.headers });
+  const session = await Auth.api.getSession({ headers: c.req.raw.headers });
 
   if (!session) {
     c.set("user", null);
@@ -52,29 +54,10 @@ app.get("/health", async (c) => {
   });
 });
 
-app.get("/session", async (c) => {
-  const session = c.get("session");
-  const user = c.get("user");
-
-  if (!user) return c.body(null, 401);
-
-  return c.json({
-    session,
-    user,
-  });
-});
+app.route("/session", session);
 app.route("/hello", hello);
 app.route("/mail", mail);
-
-app.on(["POST", "GET"], "/auth/**", (c) => {
-  return auth.handler(c.req.raw);
-});
-app.get("/multi-sessions", async (c) => {
-  const res = await auth.api.listDeviceSessions({
-    headers: c.req.raw.headers,
-  });
-  return c.json(res);
-});
+app.route("/auth", auth);
 
 const GET = handle(app);
 const POST = handle(app);
