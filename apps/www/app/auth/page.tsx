@@ -287,21 +287,21 @@ export default function Auth() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="p-2">
+                <div className="flex flex-row items-center justify-between">
+                  <Button>
+                    <IconBrandGoogle className="size-5" /> Google
+                  </Button>
+                  <Button>
+                    {" "}
+                    <IconBrandGithub className="size-5" /> GitHub
+                  </Button>
+                  <Button>
+                    {" "}
+                    <IconBrandDiscord className="size-5" /> Discord
+                  </Button>
+                </div>
                 <Form {...SignUpform}>
                   <form onSubmit={SignUpform.handleSubmit(handleSignUp)}>
-                    <div className="flex flex-row items-center justify-between">
-                      <Button>
-                        <IconBrandGoogle className="size-5" /> Google
-                      </Button>
-                      <Button>
-                        {" "}
-                        <IconBrandGithub className="size-5" /> GitHub
-                      </Button>
-                      <Button>
-                        {" "}
-                        <IconBrandDiscord className="size-5" /> Discord
-                      </Button>
-                    </div>
                     <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-6 h-[1px] w-full" />
                     <div className="flex flex-col w-full gap-2 items-center justify-between">
                       <div className="flex flex-row items-start justify-between gap-2">
