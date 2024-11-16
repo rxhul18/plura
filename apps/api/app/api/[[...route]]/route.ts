@@ -15,7 +15,7 @@ const allowedOrigins = [
 
 export const runtime = "edge";
 
- const app = new Hono<{
+const app = new Hono<{
   Variables: {
     user: typeof Auth.$Infer.Session.user | null;
     session: typeof Auth.$Infer.Session.session | null;
@@ -54,12 +54,10 @@ app.get("/health", async (c) => {
   });
 });
 
-
 app.route("/session", session);
 app.route("/hello", hello);
 app.route("/mail", mail);
 app.route("/auth", auth);
-
 
 const GET = handle(app);
 const POST = handle(app);
@@ -68,4 +66,3 @@ const DELETE = handle(app);
 const OPTIONS = handle(app);
 
 export { GET, PATCH, POST, DELETE, OPTIONS };
-
