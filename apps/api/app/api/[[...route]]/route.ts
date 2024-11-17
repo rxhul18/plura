@@ -54,7 +54,6 @@ app.get("/health", async (c) => {
   });
 });
 
-
 app.route("/session", session);
 app.route("/hello", hello);
 app.route("/mail", mail);
