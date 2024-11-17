@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 import { auth } from "@repo/auth";
-const app = new Hono()
+const app = new Hono();
 app.get("/", async (c) => {
-   const session = await auth.api.getSession({ headers: c.req.raw.headers });
+  const session = await auth.api.getSession({ headers: c.req.raw.headers });
 
   if (!session) return c.json({ message: "no session found" }, 401);
 
@@ -17,6 +17,5 @@ app.get("/all", async (c) => {
   });
   return c.json(res);
 });
-
 
 export default app;
