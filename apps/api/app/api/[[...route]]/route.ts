@@ -3,10 +3,11 @@ import { Hono } from "hono";
 import { auth as Auth } from "@repo/auth";
 import { cors } from "hono/cors";
 import mail from "./mail";
-import hello from "./hello";
+import hello from "./test";
 import session from "./session";
 import auth from "./auth";
 import status from "./status";
+import health from "./health";
 
 const allowedOrigins = [
   "http://localhost:3003",
@@ -34,29 +35,10 @@ app.use(
     credentials: true,
   }),
 );
-app.use("*", async (c, next) => {
-  const session = await Auth.api.getSession({ headers: c.req.raw.headers });
 
-  if (!session) {
-    c.set("user", null);
-    c.set("session", null);
-    return next();
-  }
-
-  c.set("user", session.user);
-  c.set("session", session.session);
-  return next();
-});
-
-app.get("/health", async (c) => {
-  return c.json({
-    message: "i am alive",
-    status: 200,
-  });
-});
-
+app.route("/health", health);
 app.route("/session", session);
-app.route("/hello", hello);
+app.route("/test", hello);
 app.route("/mail", mail);
 app.route("/auth", auth);
 app.route("/status", status);
