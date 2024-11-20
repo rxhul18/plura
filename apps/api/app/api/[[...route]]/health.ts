@@ -7,4 +7,4 @@ app.get("/", async (c) => {
   });
 });
 
-export default app
+export default app;
