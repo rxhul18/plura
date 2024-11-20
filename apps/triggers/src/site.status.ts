@@ -6,7 +6,7 @@ const LATENCY_THRESHOLD = 1000;
 
 export const siteStatusTask = schedules.task({
   id: "site-status",
-  cron: "*/15 * * * *",  // Every 15 minutes
+  cron: "*/12 * * * *",
   maxDuration: 600,
   run: async () => {
     const urls = {
@@ -56,19 +56,7 @@ export const siteStatusTask = schedules.task({
 
     // Push the status record to a list in Redis
     await cache.rpush("site-latency:history", JSON.stringify(statusRecord));
-    await cache.ltrim("site-latency:history", -100, -1);  // Keep last 100 entries
-
-    const cachedStatusHistory = await cache.lrange("site-latency:history", 0, -1);
-    if (cachedStatusHistory) {
-      cachedStatusHistory.forEach((record) => {
-        try {
-          const parsedRecord = JSON.parse(record);
-          logger.log("Cached Status Record", parsedRecord);
-        } catch (error) {
-          logger.error("Failed to parse cached status record", { error });
-        }
-      });
-    }
+    await cache.ltrim("site-latency:history", -120, -1);
   },
 });
 
@@ -79,7 +67,12 @@ async function sendDiscordNotification(
   latency: number | null = null,
   error: string | null = null
 ) {
+  const ROLE_ID = "1308042212319428668";
+  const downMsg = `🚨 Service **${serviceName}** is experiencing issues!`;
+  const upMsg = `📢 Service **${serviceName}** is having high latency!`;
+  const NotifyMsg = status === "UP" ? upMsg : downMsg;
   const message = {
+    content: `<@&${ROLE_ID}> ${NotifyMsg}`,
     embeds: [
       {
         title: `Status Alert for ${serviceName}`,
@@ -95,7 +88,7 @@ async function sendDiscordNotification(
             name: "Error",
             value: error || "None",
             inline: true,
-          }
+          },
         ],
         timestamp: new Date().toISOString(),
       },
@@ -115,3 +108,4 @@ async function sendDiscordNotification(
     logger.error("Failed to send notification to Discord", { notificationError });
   }
 }
+

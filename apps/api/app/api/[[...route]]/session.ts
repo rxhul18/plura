@@ -1,6 +1,8 @@
 import { Hono } from "hono";
 import { auth } from "@repo/auth";
+
 const app = new Hono();
+
 app.get("/", async (c) => {
   const session = await auth.api.getSession({ headers: c.req.raw.headers });
 

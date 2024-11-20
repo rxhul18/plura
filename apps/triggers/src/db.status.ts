@@ -8,7 +8,7 @@ const db = createClient(supabaseUrl, supabaseKey);
 
 export const dbStatusTask = schedules.task({
   id: "db-status",
-  cron: "*/10 * * * *",
+  cron: "*/12 * * * *",
   maxDuration: 600,
   run: async (payload, { ctx }) => {
     const latencies: Record<string, number | null> = {};
@@ -93,6 +93,6 @@ export const dbStatusTask = schedules.task({
     };
 
     await cache.rpush("db-latency:history", JSON.stringify(latencyRecord));
-    await cache.ltrim("db-latency:history", -100, -1);
+    await cache.ltrim("db-latency:history", -120, -1);
   },
 });

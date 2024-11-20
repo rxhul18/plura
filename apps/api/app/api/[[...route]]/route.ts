@@ -6,6 +6,7 @@ import mail from "./mail";
 import hello from "./hello";
 import session from "./session";
 import auth from "./auth";
+import status from "./status";
 
 const allowedOrigins = [
   "http://localhost:3003",
@@ -58,6 +59,7 @@ app.route("/session", session);
 app.route("/hello", hello);
 app.route("/mail", mail);
 app.route("/auth", auth);
+app.route("/status", status);
 
 const GET = handle(app);
 const POST = handle(app);
