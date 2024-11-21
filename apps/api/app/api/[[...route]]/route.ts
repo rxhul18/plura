@@ -3,7 +3,7 @@ import { Hono } from "hono";
 import { auth as Auth } from "@repo/auth";
 import { cors } from "hono/cors";
 import mail from "./mail";
-import hello from "./test";
+import test from "./test";
 import session from "./session";
 import auth from "./auth";
 import status from "./status";
@@ -38,7 +38,7 @@ app.use(
 
 app.route("/health", health);
 app.route("/session", session);
-app.route("/test", hello);
+app.route("/test", test);
 app.route("/mail", mail);
 app.route("/auth", auth);
 app.route("/status", status);
