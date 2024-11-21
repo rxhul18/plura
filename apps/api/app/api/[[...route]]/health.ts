@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 const app = new Hono();
-app.get("/", async (c) => {
+app.get("/", (c) => {
   return c.json({
     message: "i am alive",
     status: 200,
