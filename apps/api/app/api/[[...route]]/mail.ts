@@ -2,9 +2,7 @@ import { Hono } from "hono";
 import { mailBatchSchema, mailSchema } from "@repo/types";
 import { zValidator } from "@hono/zod-validator";
 
-const app = new Hono();
-
-app
+const app = new Hono()
   .post("/send", zValidator("json", mailSchema), async (c) => {
     const { email, subject } = c.req.valid("json");
     const { sendEmail } = await import("@repo/mail");
@@ -30,9 +28,7 @@ app
       message: "mail api is alive",
       status: 200,
     });
-  });
-
-app
+  })
   .post("/send-batch", zValidator("json", mailBatchSchema), async (c) => {
     const { emails, subject } = c.req.valid("json");
     const { sendBatchEmail } = await import("@repo/mail");

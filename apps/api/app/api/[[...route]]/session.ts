@@ -1,9 +1,8 @@
 import { Hono } from "hono";
 import { auth } from "@repo/auth";
 
-const app = new Hono();
-
-app.get("/", async (c) => {
+const app = new Hono()
+.get("/", async (c) => {
   const session = await auth.api.getSession({ headers: c.req.raw.headers });
 
   if (!session) return c.json({ message: "no session found" }, 401);
@@ -11,9 +10,8 @@ app.get("/", async (c) => {
   return c.json({
     session,
   });
-});
-
-app.get("/all", async (c) => {
+})
+.get("/all", async (c) => {
   const res = await auth.api.listDeviceSessions({
     headers: c.req.raw.headers,
   });

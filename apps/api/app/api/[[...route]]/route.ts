@@ -38,7 +38,7 @@ app.use(
 
 app.route("/health", health);
 app.route("/session", session);
-app.route("/hello", test);
+app.route("/test", test);
 app.route("/mail", mail);
 app.route("/auth", auth);
 app.route("/status", status);
