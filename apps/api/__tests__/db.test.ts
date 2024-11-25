@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { prisma } from "@repo/db";
-import { DELETE, GET, PATCH, POST } from "@/app/api/[[...route]]/route";
+import { DELETE, GET, PATCH, POST } from "../app/api/[[...route]]/route";
 
 vi.mock("@repo/db", () => ({
   prisma: {

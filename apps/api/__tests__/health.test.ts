@@ -1,4 +1,4 @@
-import { GET } from "@/app/api/[[...route]]/route";
+import { GET } from "../app/api/[[...route]]/route";
 import { describe, it, expect } from "vitest";
 
 describe("Health API", () => {

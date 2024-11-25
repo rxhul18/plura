@@ -17,7 +17,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   IconBrandGoogle,
   IconBrandGithub,
@@ -65,7 +64,7 @@ export default function Auth() {
       password,
       callbackURL: "/dashboard",
       fetchOptions: {
-        onRequest(ctx) {
+        onRequest() {
           setIsLoading(true);
         },
         onSuccess(ctx) {
@@ -94,7 +93,7 @@ export default function Auth() {
       email,
       password,
       fetchOptions: {
-        onRequest(ctx) {
+        onRequest() {
           setIsLoading(true);
         },
         onSuccess(ctx) {
@@ -125,7 +124,7 @@ export default function Auth() {
           provider: provider,
           callbackURL: "/dashboard",
           fetchOptions: {
-            onSuccess(ctx) {
+            onSuccess() {
               toast({
                 title: "Successfully signed in",
                 description: provider,
@@ -139,7 +138,7 @@ export default function Auth() {
           provider: provider,
           callbackURL: "/dashboard",
           fetchOptions: {
-            onSuccess(ctx) {
+            onSuccess() {
               toast({
                 title: "Successfully signed in",
                 description: provider,
@@ -153,7 +152,7 @@ export default function Auth() {
           provider: provider,
           callbackURL: "/dashboard",
           fetchOptions: {
-            onSuccess(ctx) {
+            onSuccess() {
               toast({
                 title: "Successfully signed in",
                 description: provider,
