@@ -21,6 +21,12 @@ jobs:
 
       - name: Install pnpm
         run: npm install -g pnpm
+      
+      - name: Set up pnpm environment
+        run: |
+          pnpm setup
+          export PATH=$(pnpm env get-path):$PATH
+        shell: bash
 
       - name: Install dependencies
         run: pnpm install

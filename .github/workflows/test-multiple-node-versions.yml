@@ -42,8 +42,17 @@ jobs:
           echo "RESEND_API=${{ secrets.RESEND_API }}" >> apps/api/.env
           cat apps/api/.env # Verify .env contents
 
-      - name: Install pnpm & turbo
-        run: npm install -g pnpm && pnpm install -g turbo
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Set up pnpm environment
+        run: |
+          pnpm setup
+          export PATH=$(pnpm env get-path):$PATH
+        shell: bash
+
+      - name: Install trubo 
+        run: pnpm install -g turbo
 
       - name: Cache pnpm modules
         uses: actions/cache@v3
