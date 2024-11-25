@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-      - 'feat/*'
-      - 'bugfix/*'
   pull_request:
     branches:
       - main
@@ -51,10 +49,6 @@ jobs:
             echo "Formatting required"
             echo "formatting_required=true" >> $GITHUB_ENV
           fi
-
-      - name: Format code with Prettier if needed
-        if: env.formatting_required == 'true'
-        run: pnpm format:write
 
       - name: Check for changes and push if needed
         run: |

@@ -21,6 +21,7 @@
     "lint": "turbo run lint --force",
     "lint:fix": "turbo run lint:fix",
     "test": "turbo run test --force",
+    "typecheck": "turbo run typecheck",
     "format:write": "turbo run format:write",
     "format:check": "turbo run format:check"
   },
