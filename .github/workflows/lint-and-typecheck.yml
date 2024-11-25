@@ -72,16 +72,23 @@ jobs:
     runs-on: ubuntu-latest
     needs: [setup, lint]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9.12.1
+          run_install: false
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: '21.7.1'
+          cache: 'pnpm'
 
-      - name: Use turbo from setup
-        run: turbo --version
+      - name: Install dependencies & turbo
+        run: pnpm install && pnpm install -g turbo
 
       - name: Run Type Check
         run: turbo typecheck
