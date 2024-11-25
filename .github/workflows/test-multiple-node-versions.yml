@@ -18,13 +18,20 @@ jobs:
         node-version: [20.18.0, 18.20.4, 22.11.0, 19.9.0, 23.1.0] # Ensure all versions are >= v18
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+          run_install: false
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
 
       - name: Set environment variables
         run: |
@@ -42,18 +49,6 @@ jobs:
           echo "RESEND_API=${{ secrets.RESEND_API }}" >> apps/api/.env
           cat apps/api/.env # Verify .env contents
 
-      - name: Install pnpm
-        run: npm install -g pnpm
-
-      - name: Set up pnpm environment
-        run: |
-          pnpm setup
-          export PATH=$(pnpm env get-path):$PATH
-        shell: bash
-
-      - name: Install trubo 
-        run: pnpm install -g turbo
-
       - name: Cache pnpm modules
         uses: actions/cache@v3
         with:
@@ -64,6 +59,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Install trubo 
+        run: pnpm install -g turbo
 
       - name: Run Turbo tests
         run: turbo test

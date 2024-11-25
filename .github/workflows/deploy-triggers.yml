@@ -12,21 +12,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Use Node.js 20.x
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+          run_install: false
+
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20.x"
-
-      - name: Install pnpm
-        run: npm install -g pnpm
-      
-      - name: Set up pnpm environment
-        run: |
-          pnpm setup
-          export PATH=$(pnpm env get-path):$PATH
-        shell: bash
+          node-version: '21.7.1'
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install
