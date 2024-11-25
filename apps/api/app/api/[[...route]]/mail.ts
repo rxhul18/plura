@@ -25,7 +25,7 @@ const app = new Hono()
   })
   .get((c) => {
     return c.json({
-      message: "mail api is alive",
+      message: "Mail api is alive",
       status: 200,
     });
   })
@@ -51,7 +51,7 @@ const app = new Hono()
   })
   .get((c) => {
     return c.json({
-      message: "all mail api is alive",
+      message: "Batch mail api is alive",
       status: 200,
     });
   });
