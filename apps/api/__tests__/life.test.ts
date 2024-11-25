@@ -1,5 +1,16 @@
 import { GET } from "../app/api/[[...route]]/route";
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
+
+vi.mock("@repo/db", () => ({
+  prisma: {
+    user: {
+      findMany: vi.fn(),
+      create: vi.fn(),
+      update: vi.fn(),
+      delete: vi.fn(),
+    },
+  },
+}));
 
 describe("Health API", () => {
   it("GET /api/health should return health status", async () => {
