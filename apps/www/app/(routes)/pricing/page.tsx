@@ -2,7 +2,7 @@
 import {
   PageHeader,
   PageHeaderDescription,
-} from "@/components/custom/page-header";
+} from "@/components/custom/text-wrappers";
 import PricingCards from "@/components/custom/pricing/pricing.cards";
 
 export default function Pricing() {
