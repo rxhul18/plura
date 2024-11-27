@@ -25,7 +25,7 @@ function PageHeaderHeading({
   return (
     <h1
       className={cn(
-        "text-5xl md:text-6xl font-semibold tracking-tighter drop-shadow-sm bg-clip-text max-w-3xl",
+        "text-5xl md:text-6xl font-semibold tracking-tighter drop-shadow-sm max-w-3xl select-none",
         className,
       )}
       {...props}
@@ -40,7 +40,7 @@ function PageHeaderDescription({
   return (
     <p
       className={cn(
-        "text-start text-xl font-semibold text-muted-foreground bg-clip-text max-w-2xl",
+        "text-start text-xl font-semibold text-muted-foreground bg-clip-text max-w-2xl select-none",
         className,
       )}
       {...props}
@@ -97,7 +97,7 @@ function SectionHeaderHeading({
   return (
     <h1
       className={cn(
-        "text-5xl md:text-6xl font-semibold tracking-tighter drop-shadow-sm bg-clip-text max-w-3xl",
+        "text-5xl md:text-6xl font-semibold tracking-tighter drop-shadow-sm max-w-3xl select-none",
         className,
       )}
       {...props}
@@ -112,7 +112,7 @@ function SectionHeaderDescription({
   return (
     <p
       className={cn(
-        "text-start text-sm/2 text-muted-foreground max-w-lg font-medium mt-auto",
+        "text-start text-sm/2 text-muted-foreground max-w-lg font-medium mt-auto z-50 select-none",
         className,
       )}
       {...props}
@@ -126,7 +126,10 @@ function SectionActions({
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn("flex w-full items-start justify-start md:items-start gap-8 px-12 md:px-20", className)}
+      className={cn(
+        "flex w-full items-start justify-start md:items-start gap-8 px-12 md:px-20",
+        className,
+      )}
       {...props}
     />
   );
@@ -138,9 +141,8 @@ export {
   PageHeaderDescription,
   PageHeaderHeading,
   PageCommandText,
-
   SectionHeader,
   SectionHeaderHeading,
   SectionHeaderDescription,
-  SectionActions
+  SectionActions,
 };

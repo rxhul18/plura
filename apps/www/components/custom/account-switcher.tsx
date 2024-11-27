@@ -30,16 +30,16 @@ export default function AccountSwitcher({ session, activeSession }: Props) {
       },
     });
   };
- 
+
   if (!activeSession || !session) {
     return <div>loading sessions</div>;
   }
-   const handleCurrentSignOut = async () => {
-     await authClient.multiSession.revoke({
-       sessionToken: activeSession?.session.token
-     });
-     window.location.reload();
-   };
+  const handleCurrentSignOut = async () => {
+    await authClient.multiSession.revoke({
+      sessionToken: activeSession?.session.token,
+    });
+    window.location.reload();
+  };
   return (
     <div className="flex items-center justify-center gap-2 p-4">
       <select
