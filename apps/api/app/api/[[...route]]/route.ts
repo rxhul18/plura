@@ -1,19 +1,13 @@
 import { handle } from "hono/vercel";
 import { Hono } from "hono";
 import { auth as Auth } from "@repo/auth";
-import { cors } from "hono/cors";
 import mail from "./mail";
 import test from "./test";
 import session from "./session";
 import auth from "./auth";
 import status from "./status";
 import health from "./health";
-
-const allowedOrigins = [
-  "http://localhost:3003",
-  "https://www.plura.pro",
-  "https://app.plura.pro",
-];
+import user from "./user";
 
 export const runtime = "edge";
 
@@ -24,24 +18,13 @@ const app = new Hono<{
   };
 }>().basePath("/api");
 
-app.use(
-  "/auth/**",
-  cors({
-    origin: allowedOrigins,
-    allowHeaders: ["Content-Type", "Authorization"],
-    allowMethods: ["POST", "GET", "OPTIONS"],
-    exposeHeaders: ["Content-Length"],
-    maxAge: 600,
-    credentials: true,
-  }),
-);
-
 app.route("/health", health);
 app.route("/session", session);
 app.route("/test", test);
 app.route("/mail", mail);
 app.route("/auth", auth);
 app.route("/status", status);
+app.route("/user", user);
 
 const GET = handle(app);
 const POST = handle(app);
