@@ -25,6 +25,10 @@
       "cache": false,
       "outputs": []
     },
+    "typecheck": {
+      "cache": false,
+      "outputs": []
+    },
     "format:check": {
       "cache": false,
       "outputs": []

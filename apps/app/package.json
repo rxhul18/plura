@@ -11,7 +11,8 @@
     "lint:fix": "next lint --fix",
     "typecheck": "tsc --noEmit",
     "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
-    "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache"
+    "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
+    "react-scan": "pnpm dlx react-scan@latest http://localhost:3002"
   },
   "dependencies": {
     "@better-fetch/fetch": "^1.1.12",
