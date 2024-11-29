@@ -9,12 +9,18 @@ import {
 import { Check } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { pricingCardConfig } from "@/config/pricing.config";
+import { TextMorph } from "../text-morph";
+import { AnimatedNumber } from "../anim-numb";
 
-export default function PricingCards() {
+interface PCards {
+isYearly: boolean
+}
+
+export default function PricingCards({isYearly}: PCards) {
   return (
-    <div className="grid md:grid-cols-3 px-4 gap-4">
-      {/* Basic Plan */}
-      <Card className="bg-[#171717] rounded-2xl p-2">
+    <div className="grid md:grid-cols-3 gap-5">
+      {/* Plura Basic */}
+      <Card className="bg-[#171717] rounded-2xl p-2 max-w-sm">
         <CardHeader className="rounded-2xl border-t-2 border-r border-[#333] border-opacity-80 m-3 bg-gradient-to-br from-[#262626] to-[#262829]">
           <h3 className="text-xl font-semibold">
             {pricingCardConfig.basic.name}
@@ -22,15 +28,20 @@ export default function PricingCards() {
           <p className="text-xs">{pricingCardConfig.basic.tier}</p>
           <div className="flex flex-row items-center gap-2 pt-4 pb-6">
             <span className="text-7xl font-bold tracking-tight">
-              {/* <span className="text-xl align-bottom">$</span> */}
-              {pricingCardConfig.basic.price}
+              <span className="text-xl align-bottom">
+                {pricingCardConfig.basic.currency}
+              </span>
+              {pricingCardConfig.basic.priceMonthly}
             </span>
-            {/* <div className="flex flex-col text-lg gap-2 font-semibold">
-            <span className="line-through">$199</span>
-            <Badge className='bg-background text-primary'>
-            35% OFF
-            </Badge>
-          </div> */}
+            <div className="flex flex-col text-lg gap-2 font-semibold">
+              <span className="line-through">
+                {pricingCardConfig.basic.currency}
+                {pricingCardConfig.basic.beforePrice}
+              </span>
+              <Badge className="bg-background hover:bg-background text-primary">
+                {pricingCardConfig.basic.discount}% OFF
+              </Badge>
+            </div>
           </div>
 
           <Button className="w-full bg-white text-black hover:bg-gray-200">
@@ -71,8 +82,8 @@ export default function PricingCards() {
         </CardFooter>
       </Card>
 
-      {/* Lifetime Plan */}
-      <Card className="bg-[#171717] rounded-2xl p-2">
+      {/* Plura PLus */}
+      <Card className="bg-[#171717] rounded-2xl p-2 max-w-sm">
         <CardHeader className="rounded-2xl border-t-2 border-r border-[#333] border-opacity-80 m-3 bg-gradient-to-br from-[#262626] to-[#262829]">
           <div className="flex flex-row items-center justify-between">
             <h3 className="text-xl font-semibold">
@@ -80,22 +91,46 @@ export default function PricingCards() {
             </h3>
             <Badge className="rounded-xl hover:bg-primary">Featured</Badge>
           </div>
-          <p className="text-xs">{pricingCardConfig.plus.tier}</p>
+          <p className="text-xs inline-flex gap-1">
+          Billed
+            <TextMorph>
+              {isYearly ? "Yearly" : "Monthly"} 
+            </TextMorph>
+          </p>
 
           <div className="flex flex-row items-center gap-2 pt-4 pb-6">
             <span className="text-7xl font-bold tracking-tight">
               <span className="text-xl align-bottom">
                 {pricingCardConfig.plus.currency}
               </span>
-              {pricingCardConfig.plus.price}
+              <AnimatedNumber
+        springOptions={{
+          bounce: 0,
+          duration: 2000,
+        }}
+        value={isYearly ? pricingCardConfig.plus.priceYearly : pricingCardConfig.plus.priceMonthly}
+      />
             </span>
             <div className="flex flex-col text-lg gap-2 font-semibold">
               <span className="line-through">
                 {pricingCardConfig.plus.currency}
-                {pricingCardConfig.plus.beforePrice}
+                <AnimatedNumber
+        springOptions={{
+          bounce: 0,
+          duration: 2000,
+        }}
+        value={isYearly ? pricingCardConfig.plus.beforePriceYearly : pricingCardConfig.plus.beforePriceMonthly}
+      />
               </span>
               <Badge className="bg-background hover:bg-background text-primary">
-                {pricingCardConfig.plus.discount}
+              <AnimatedNumber
+        springOptions={{
+          bounce: 0,
+          duration: 2000,
+        }}
+        value={isYearly ? pricingCardConfig.plus.discountYearly : pricingCardConfig.plus.discountMonthly}
+      />
+      % OFF
               </Badge>
             </div>
           </div>
@@ -139,27 +174,51 @@ export default function PricingCards() {
         </CardFooter>
       </Card>
 
-      {/* Team Plan */}
-      <Card className="bg-[#171717] rounded-2xl p-2">
+      {/* Plura Pro */}
+      <Card className="bg-[#171717] rounded-2xl p-2 max-w-sm">
         <CardHeader className="rounded-2xl border-t-2 border-r border-[#333] border-opacity-80 m-3 bg-gradient-to-br from-[#262626] to-[#262829]">
           <h3 className="text-xl font-semibold">
             {pricingCardConfig.pro.name}
           </h3>
-          <p className="text-xs">{pricingCardConfig.pro.tier}</p>
+          <p className="text-xs inline-flex gap-1">
+          Billed
+            <TextMorph>
+              {isYearly ? "Yearly" : "Monthly"} 
+            </TextMorph>
+          </p>
           <div className="flex flex-row items-center gap-2 pt-4 pb-6">
             <span className="text-7xl font-bold tracking-tight">
               <span className="text-xl align-bottom">
                 {pricingCardConfig.pro.currency}
               </span>
-              {pricingCardConfig.pro.price}
+              <AnimatedNumber
+        springOptions={{
+          bounce: 0,
+          duration: 2000,
+        }}
+        value={isYearly ? pricingCardConfig.pro.priceYearly : pricingCardConfig.pro.priceMonthly}
+      />
             </span>
             <div className="flex flex-col text-lg gap-2 font-semibold">
               <span className="line-through">
                 {pricingCardConfig.pro.currency}
-                {pricingCardConfig.pro.beforePrice}
+                <AnimatedNumber
+        springOptions={{
+          bounce: 0,
+          duration: 2000,
+        }}
+        value={isYearly ? pricingCardConfig.pro.beforePriceYearly : pricingCardConfig.pro.beforePriceMonthly}
+      />
               </span>
-              <Badge className="bg-background text-primary">
-                {pricingCardConfig.pro.discount}
+              <Badge className="bg-background hover:bg-background text-primary">
+              <AnimatedNumber
+        springOptions={{
+          bounce: 0,
+          duration: 2000,
+        }}
+        value={isYearly ? pricingCardConfig.pro.discountYearly : pricingCardConfig.pro.discountMonthly}
+      />
+      % OFF
               </Badge>
             </div>
           </div>
