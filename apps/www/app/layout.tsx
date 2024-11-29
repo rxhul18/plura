@@ -27,7 +27,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="flex flex-col items-center bg-background mx-auto">
+            <div className="flex flex-col items-center bg-background overflow-hidden mt-20">
               {children}
             </div>
           </ThemeProvider>

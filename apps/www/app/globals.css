@@ -89,6 +89,11 @@
   }
 }
 
+::selection {
+  background-color: hsl(var(--accent));
+  color: hsl(var(--primary))
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -104,7 +109,6 @@
     text-rendering: optimizeLegibility;
   }
 }
-
 @media (max-width: 640px) {
   .container {
     @apply px-4;
