@@ -36,7 +36,7 @@ What started as a simple issue tracker, has since evolved into a powerful projec
   },
   pricingPage: {
     title: "Pricing",
-    desc: "Use Linear for free with your whole team. Upgrade to enable unlimited issues, enhanced security controls, and additional features."
+    desc: "Use Linear for free with your whole team. Upgrade to enable unlimited issues, enhanced security controls, and additional features.",
   },
   links: {
     github: "https://l.devwtf.in/plura",

@@ -27,7 +27,7 @@ export const pricingCardConfig = {
     name: "Plus",
     tier: "Paid Monthly",
     discountMonthly: 42.3,
-    discountYearly: 60.60,
+    discountYearly: 60.6,
     beforePriceMonthly: 69,
     beforePriceYearly: 69,
     currency: "$",

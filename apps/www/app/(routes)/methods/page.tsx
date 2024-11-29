@@ -1,9 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export default function Methods() {
-  return (
-    <div>
-      Fuck
-    </div>
-  )
+  return <div>Fuck</div>;
 }
