@@ -1,15 +1,15 @@
 {
-  "name": "@repo/encryption",
+  "name": "@repo/crypt",
   "scripts": {
     "dev": "tsc --watch",
     "build": "tsc"
   },
   "exports": {
-    ".": "./src/cryptoUtils.ts"
+    ".": "./src/crypt.ts"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
-    "typescript": "latest"
+    "typescript": "5.7.2"
   },
   "dependencies": {
     "crypto": "^1.0.1"

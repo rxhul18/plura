@@ -87,12 +87,12 @@ importers:
       '@repo/cache':
         specifier: workspace:*
         version: link:../../packages/cache
+      '@repo/crypt':
+        specifier: workspace:*
+        version: link:../../packages/crypt
       '@repo/db':
         specifier: workspace:*
         version: link:../../packages/database
-      '@repo/encryption':
-        specifier: workspace:*
-        version: link:../../packages/encryption
       '@repo/mail':
         specifier: workspace:*
         version: link:../../packages/mail
@@ -534,6 +534,19 @@ importers:
         specifier: ^5.4.1
         version: 5.4.1
 
+  packages/crypt:
+    dependencies:
+      crypto:
+        specifier: ^1.0.1
+        version: 1.0.1
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+
   packages/database:
     dependencies:
       '@prisma/client':
@@ -546,19 +559,6 @@ importers:
       prisma:
         specifier: ^5.22.0
         version: 5.22.0
-
-  packages/encryption:
-    dependencies:
-      crypto:
-        specifier: ^1.0.1
-        version: 1.0.1
-    devDependencies:
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-      typescript:
-        specifier: latest
-        version: 5.7.2
 
   packages/eslint-config:
     devDependencies:

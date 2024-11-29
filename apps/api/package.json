@@ -22,7 +22,7 @@
     "@repo/mail": "workspace:*",
     "@repo/types": "workspace:*",
     "@repo/cache": "workspace:*",
-    "@repo/encryption":"workspace:*",
+    "@repo/crypt":"workspace:*",
     "hono": "^4.6.9",
     "next": "15.0.2",
     "prisma": "^5.22.0",
