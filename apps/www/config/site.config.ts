@@ -46,8 +46,8 @@ What started as a simple issue tracker, has since evolved into a powerful projec
   },
   methodPage: {
     sectionA: {
-      title:`Plura Method`,
-      desc: `Empower your SAAS support service with your own AI agent. Let our intelligent assistant handle your customer queries, provide instant solutions, and enhance your customer satisfaction.`
-    }
-  }
+      title: `Plura Method`,
+      desc: `Empower your SAAS support service with your own AI agent. Let our intelligent assistant handle your customer queries, provide instant solutions, and enhance your customer satisfaction.`,
+    },
+  },
 };
