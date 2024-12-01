@@ -32,6 +32,7 @@
     "@repo/auth": "workspace:*",
     "@repo/db": "workspace:*",
     "@repo/types": "workspace:*",
+    "@repo/cache":"workspace:*",
     "@tabler/icons-react": "^3.21.0",
     "better-auth": "1.0.5",
     "class-variance-authority": "^0.7.0",

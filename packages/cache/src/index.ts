@@ -1,8 +1,6 @@
 import { Redis } from "@upstash/redis";
 
 export const cache = new Redis({
-  url: 'https://glowing-earwig-20304.upstash.io',
-  token: 'AU9QAAIjcDFkYzAxMWVmMTQwZDQ0YmExYTI1N2FlYzkwZjA0ZWI3N3AxMA',
+    url: process.env.UPSTASH_REDIS_REST_URL,
+    token: process.env.UPSTASH_REDIS_REST_TOKEN
   })
-
-

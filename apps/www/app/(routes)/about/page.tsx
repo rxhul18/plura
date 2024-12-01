@@ -1,3 +1,7 @@
+
+import ContributorsGridWrapper from "@/components/custom/ColloboratorGridWrapper";
+import ContributorsGrid from "@/components/custom/Colloborators";
+import DummyDataPage from "@/components/custom/Colloborators";
 import {
   SectionHeader,
   SectionHeaderDescription,
@@ -42,7 +46,9 @@ export default function About() {
                 className="m-20 transition-all duration-200 hover:brightness-[0.8] grayscale rounded-2xl hover:grayscale-0 object-cover object-center shadow-lg border-2 p-1 border-dashed"
               />
             </Card>
+            
           </div>
+          <ContributorsGridWrapper/>
         </section>
       </div>
     </section>

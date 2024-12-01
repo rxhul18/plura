@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <PosthogProvider>
+      
         <body
           className={` bg-background font-sans min-h-screen  ${GeistSans.variable} antialiased`}
         >
@@ -33,7 +33,7 @@ export default function RootLayout({
           </ThemeProvider>
           <Toaster />
         </body>
-      </PosthogProvider>
+      
     </html>
   );
 }
