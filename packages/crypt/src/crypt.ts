@@ -6,14 +6,12 @@ interface EncryptedData {
   initialVector: string;
   encrypted: string;
   authTag: string;
-
 }
 
 export function encrypt(text: string, key: Buffer): EncryptedData {
   if (key.length !== 32) {
     throw new Error("Key must be 32 bytes long for AES-256-GCM encryption");
   }
-
 
   try {
     const initialVector = crypto.randomBytes(12);
@@ -44,7 +42,6 @@ export function decrypt(encryptedData: EncryptedData, key: Buffer): string {
     throw new Error("Key must be 32 bytes long for AES-256-GCM decryption");
   }
 
-
   try {
     const initialVector = Buffer.from(encryptedData.initialVector, "hex");
     const encrypted = encryptedData.encrypted;
@@ -60,6 +57,6 @@ export function decrypt(encryptedData: EncryptedData, key: Buffer): string {
       throw new Error("Decryption failed: " + error.message);
     } else {
       throw new Error("Decryption failed: unknown error");
-  }
+    }
   }
 }
