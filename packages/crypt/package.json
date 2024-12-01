@@ -1,0 +1,17 @@
+{
+  "name": "@repo/crypt",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+  "exports": {
+    ".": "./src/crypt.ts"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "typescript": "5.7.2"
+  },
+  "dependencies": {
+    "crypto": "^1.0.1"
+  }
+}
