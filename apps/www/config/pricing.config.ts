@@ -1,11 +1,12 @@
 export const pricingCardConfig = {
   basic: {
     name: "Basic",
-    tier: "Free Lifetime",
-    discount: "",
-    beforePrice: "",
-    currency: "",
-    price: "Free",
+    tier: "Free Forever",
+    discount: "100",
+    beforePrice: "19",
+    currency: "$",
+    priceMonthly: 0,
+    priceYearly: 0,
     features: [
       "1 year access to all the premium component packs and templates",
       "1 year of updates and new features",
@@ -25,10 +26,13 @@ export const pricingCardConfig = {
   plus: {
     name: "Plus",
     tier: "Paid Monthly",
-    discount: "42.03% OFF",
-    beforePrice: 69,
+    discountMonthly: 42.3,
+    discountYearly: 60.6,
+    beforePriceMonthly: 69,
+    beforePriceYearly: 69,
     currency: "$",
-    price: 29,
+    priceMonthly: 29,
+    priceYearly: 279,
     features: [
       "1 year access to all the premium component packs and templates",
       "1 year of updates and new features",
@@ -48,10 +52,13 @@ export const pricingCardConfig = {
   pro: {
     name: "Pro",
     tier: "Paid Quarterly",
-    discount: "55% OFF",
-    beforePrice: 449,
+    discountMonthly: 423.03,
+    discountYearly: 334.03,
+    beforePriceMonthly: 629,
+    beforePriceYearly: 659,
     currency: "$",
-    price: 249,
+    priceMonthly: 249,
+    priceYearly: 679,
     features: [
       "1 year access to all the premium component packs and templates",
       "1 year of updates and new features",

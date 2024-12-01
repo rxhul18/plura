@@ -114,7 +114,7 @@ export function MainNav() {
         <Link
           href="https://status.plura.pro"
           target="_blank"
-              rel="noreferrer"
+          rel="noreferrer"
           className={cn(
             "transition-colors hover:text-foreground/80",
             pathname?.startsWith("/colors")

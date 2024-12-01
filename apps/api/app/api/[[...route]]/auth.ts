@@ -17,7 +17,7 @@ app.use(
     exposeHeaders: ["Content-Length"],
     maxAge: 600,
     credentials: true,
-  })
+  }),
 );
 app.get("/*", (c) => auth.handler(c.req.raw));
 app.post("/*", (c) => auth.handler(c.req.raw));
