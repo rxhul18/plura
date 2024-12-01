@@ -1,7 +1,6 @@
 import { Hono } from "hono";
 import { prisma } from "@repo/db";
-import {auth} from "@repo/auth"
-
+import { auth } from "@repo/auth";
 
 const app = new Hono()
   .get("/self", async (c) => {
@@ -10,10 +9,13 @@ const app = new Hono()
     });
 
     if (!currentUser) {
-      return c.json({
-        message: "Not logged in",
-        status: 400,
-      },400);
+      return c.json(
+        {
+          message: "Not logged in",
+          status: 400,
+        },
+        400,
+      );
     }
 
     const user = await prisma.user.findUnique({
@@ -25,32 +27,34 @@ const app = new Hono()
       {
         user,
       },
-      200
+      200,
     );
   })
   .get("/all", async (c) => {
     const cursor = c.req.query("cursor");
     const take = c.req.query("take");
     if (!c.req.url.includes("?cursor=")) {
-       return c.redirect("?cursor=");
+      return c.redirect("?cursor=");
     }
 
     const users = await prisma.user.findMany({
       take: parseInt(take!) || 10,
       skip: 1,
-      cursor: cursor ? {
-        id: cursor,
-      } :undefined
+      cursor: cursor
+        ? {
+            id: cursor,
+          }
+        : undefined,
     });
-    
+
     const nextCursor = users.length > 0 ? users[users.length - 1].id : null;
 
     return c.json(
       {
         nextCursor,
-        users
+        users,
       },
-      200
+      200,
     );
   })
   .get("/:id", async (c) => {
@@ -70,9 +74,8 @@ const app = new Hono()
       {
         user,
       },
-      200
+      200,
     );
   });
-
 
 export default app;
