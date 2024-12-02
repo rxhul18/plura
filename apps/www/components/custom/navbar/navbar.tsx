@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -12,6 +10,8 @@ import {
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export function MainNav() {
   const pathname = usePathname();
@@ -34,7 +34,7 @@ export function MainNav() {
             "transition-colors hover:text-foreground/80",
             pathname?.startsWith("/about")
               ? "text-foreground"
-              : "text-foreground/60",
+              : "text-foreground/60"
           )}
         >
           About
@@ -48,7 +48,7 @@ export function MainNav() {
                   "transition-colors hover:text-foreground/80",
                   pathname?.startsWith("/features")
                     ? "text-foreground"
-                    : "text-foreground/60",
+                    : "text-foreground/60"
                 )}
               >
                 Features
@@ -58,19 +58,57 @@ export function MainNav() {
                   <li className="row-span-3">
                     <NavigationMenuLink asChild>
                       <Link
-                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/40 to-muted p-6 no-underline outline-none transition-all duration-300 ease-in-out hover:scale-[1.02] focus:shadow-md hover:from-muted/60 hover:to-muted group"
                         href="/"
                       >
                         {/* <Icons.logo className="h-6 w-6" /> */}
                         <div className="mb-2 mt-4 text-lg font-medium">
                           shadcn/ui
                         </div>
-                        <p className="text-sm leading-tight text-muted-foreground">
+                        <p className="text-sm leading-tight text-muted-foreground/60 group-hover:text-muted-foreground">
                           Beautifully designed components built with Radix UI
                           and Tailwind CSS.
                         </p>
                       </Link>
                     </NavigationMenuLink>
+                  </li>
+                  <li className="row-span-3">
+                    <ul className="flex flex-col gap-3">
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/40 to-muted p-6 no-underline outline-none transition-all duration-300 ease-in-out hover:scale-[1.02] focus:shadow-md hover:from-muted/60 hover:to-muted group"
+                            href="/"
+                          >
+                            {/* <Icons.logo className="h-6 w-6" /> */}
+                            <div className="mb-2 mt-4 text-lg font-medium">
+                              shadcn/ui
+                            </div>
+                            <p className="text-sm leading-tight text-muted-foreground/60 group-hover:text-muted-foreground">
+                              Beautifully designed components built with Radix
+                              UI and Tailwind CSS.
+                            </p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/40 to-muted p-6 no-underline outline-none transition-all duration-300 ease-in-out hover:scale-[1.02] focus:shadow-md hover:from-muted/60 hover:to-muted group"
+                            href="/"
+                          >
+                            {/* <Icons.logo className="h-6 w-6" /> */}
+                            <div className="mb-2 mt-4 text-lg font-medium">
+                              shadcn/ui
+                            </div>
+                            <p className="text-sm leading-tight text-muted-foreground/60 group-hover:text-muted-foreground">
+                              Beautifully designed components built with Radix
+                              UI and Tailwind CSS.
+                            </p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
                   </li>
                 </ul>
               </NavigationMenuContent>
@@ -84,7 +122,7 @@ export function MainNav() {
             "transition-colors hover:text-foreground/80",
             pathname?.startsWith("/methods")
               ? "text-foreground"
-              : "text-foreground/60",
+              : "text-foreground/60"
           )}
         >
           Methods
@@ -95,7 +133,7 @@ export function MainNav() {
             "transition-colors hover:text-foreground/80",
             pathname?.startsWith("/integrations")
               ? "text-foreground"
-              : "text-foreground/60",
+              : "text-foreground/60"
           )}
         >
           Integrations
@@ -106,7 +144,7 @@ export function MainNav() {
             "transition-colors hover:text-foreground/80",
             pathname?.startsWith("/pricing")
               ? "text-foreground"
-              : "text-foreground/60",
+              : "text-foreground/60"
           )}
         >
           Pricing
@@ -114,12 +152,12 @@ export function MainNav() {
         <Link
           href="https://status.plura.pro"
           target="_blank"
-              rel="noreferrer"
+          rel="noreferrer"
           className={cn(
             "transition-colors hover:text-foreground/80",
             pathname?.startsWith("/colors")
               ? "text-foreground"
-              : "text-foreground/60",
+              : "text-foreground/60"
           )}
         >
           Status
@@ -130,7 +168,7 @@ export function MainNav() {
             "transition-colors hover:text-foreground/80",
             pathname?.startsWith("/contact")
               ? "text-foreground"
-              : "text-foreground/60",
+              : "text-foreground/60"
           )}
         >
           Contact
