@@ -12,9 +12,13 @@ export const publishContributorsTask = schedules.task({
 
     let contributors = [];
     let page = 1;
-
+    const MAX_PAGES = 10; // Limit total pages to prevent excessive API calls
     try {
       do {
+        if (page > MAX_PAGES) {
+                 logger.warn(`Reached maximum page limit of ${MAX_PAGES}`);
+               break;
+          }
         const response = await fetch(
           `https://api.github.com/repos/${owner}/${repo}/contributors?per_page=100&page=${page}`,
           {
@@ -24,7 +28,11 @@ export const publishContributorsTask = schedules.task({
             },
           }
         );
-
+        const rateLimit = response.headers.get('x-ratelimit-remaining');
+       if (rateLimit === '0') {
+        logger.error('GitHub API rate limit exceeded');
+                return;
+       }
         if (!response.ok) {
           logger.error(`GitHub API request failed with status ${response.status}`);
           return;
@@ -38,7 +46,7 @@ export const publishContributorsTask = schedules.task({
 
         contributors = contributors.concat(data);
         page += 1;
-      } while (true);
+      } while (page <=MAX_PAGES);
 
       // Filter out bots based on type or if 'bot' appears in their login
       const filteredContributors = contributors.filter(
@@ -57,9 +65,13 @@ export const publishContributorsTask = schedules.task({
 
       // Store data in Redis under a fixed key
       const redisKey = 'contributors';
-      await cache.del(redisKey); // Clear existing data
-      await cache.rpush(redisKey, ...contributorData.map((c) => JSON.stringify(c)));
-
+      try {
+        await cache.del(redisKey); // Clear existing data
+        await cache.rpush(redisKey, ...contributorData.map((c) => JSON.stringify(c)));
+        } catch (error) {
+        logger.error('Failed to store contributors in Redis', { error });
+        throw error; // Re-throw to trigger task retry
+      }
       logger.log('Published contributors data', { contributorData });
     } catch (error) {
       logger.error('Error fetching contributors from GitHub', { error });

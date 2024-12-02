@@ -1,7 +1,5 @@
 
 import ContributorsGridWrapper from "@/components/custom/ColloboratorGridWrapper";
-import ContributorsGrid from "@/components/custom/Colloborators";
-import DummyDataPage from "@/components/custom/Colloborators";
 import {
   SectionHeader,
   SectionHeaderDescription,
