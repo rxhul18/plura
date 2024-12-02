@@ -75,6 +75,7 @@ export const publishContributorsTask = schedules.task({
       logger.log('Published contributors data', { contributorData });
     } catch (error) {
       logger.error('Error fetching contributors from GitHub', { error });
+      throw error;
     }
   },
 });

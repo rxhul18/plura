@@ -8,7 +8,7 @@ type ContributorData = {
   login: string;
   id: number;
   avatar_url?: string;
-  html_url?: string;
+  html_url: string;
 };
 
 interface ContributorsGridProps {
@@ -31,7 +31,11 @@ export default function ContributorsGrid({ data }: ContributorsGridProps) {
                         alt={contributor.login}
                         width={40}
                         height={40}
-                        className="object-cover w-full h-full"
+                        className="object-cover w-full h-full bg-gray-700"
+                        loading="lazy"
+                        onError={(e) => {
+                        e.currentTarget.src = `/fallback-avatar.png`;
+                        }}
                       />
                     ) : (
                       <Avatar.Fallback className="flex items-center justify-center w-full h-full bg-gray-700 text-white text-sm">
