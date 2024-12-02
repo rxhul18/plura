@@ -19,11 +19,15 @@ type ContributorData = {
 
 export default function About() {
   const [contributors, setContributors] = useState<ContributorData[]>([]);
+  const fetchUrl =
+  process.env.NODE_ENV === 'production'
+    ? 'https://app.plura.pro/api/contributors'
+    : 'http://localhost:3001/api/contributors';
 
   useEffect(() => {
     const fetchContributors = async () => {
       try{
-      const response = await fetch("http://localhost:3001/api/contributors");
+      const response = await fetch(fetchUrl);
       const data = await response.json();
       console.log(data);
       setContributors(data.contributorsData);
