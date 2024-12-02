@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import ContributorsGrid from "@/components/custom/contributors-grid";
 import {
   SectionHeader,
@@ -20,25 +20,23 @@ type ContributorData = {
 export default function About() {
   const [contributors, setContributors] = useState<ContributorData[]>([]);
   const fetchUrl =
-  process.env.NODE_ENV === 'production'
-    ? 'https://app.plura.pro/api/contributors'
-    : 'http://localhost:3001/api/contributors';
+    process.env.NODE_ENV === "production"
+      ? "https://app.plura.pro/api/contributors"
+      : "http://localhost:3001/api/contributors";
 
   useEffect(() => {
     const fetchContributors = async () => {
-      try{
-      const response = await fetch(fetchUrl);
-      const data = await response.json();
-      console.log(data);
-      setContributors(data.contributorsData);
-      }catch (e){
+      try {
+        const response = await fetch(fetchUrl);
+        const data = await response.json();
+        console.log(data);
+        setContributors(data.contributorsData);
+      } catch (e) {
         console.log(e);
       }
     };
     fetchContributors();
   }, []);
-
-
 
   return (
     <section className="flex flex-col items-center md:items-start justify-center overflow-hidden">
@@ -73,9 +71,8 @@ export default function About() {
                 className="m-20 transition-all duration-200 hover:brightness-[0.8] grayscale rounded-2xl hover:grayscale-0 object-cover object-center shadow-lg border-2 p-1 border-dashed"
               />
             </Card>
-            
           </div>
-          <ContributorsGrid data={contributors}/>
+          <ContributorsGrid data={contributors} />
         </section>
       </div>
     </section>

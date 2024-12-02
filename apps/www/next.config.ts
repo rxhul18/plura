@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    domains: ['avatars.githubusercontent.com'],
+    domains: ["avatars.githubusercontent.com"],
   },
   reactStrictMode: true,
 };

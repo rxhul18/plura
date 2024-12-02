@@ -8,7 +8,7 @@ import auth from "./auth";
 import status from "./status";
 import health from "./health";
 import user from "./user";
-import contributors from "./contributors"
+import contributors from "./contributors";
 import { cors } from "hono/cors";
 
 export const runtime = "edge";
@@ -26,13 +26,12 @@ const allowedOrigins = [
   "https://app.plura.pro",
 ];
 
-
 app.use(
-  '*',
+  "*",
   cors({
     origin: allowedOrigins, // Allow requests from your frontend origin
-    allowMethods: ['GET', 'POST', 'OPTIONS'],
-  })
+    allowMethods: ["GET", "POST", "OPTIONS"],
+  }),
 );
 
 app.route("/health", health);
