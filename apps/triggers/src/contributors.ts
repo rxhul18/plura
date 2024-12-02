@@ -1,8 +1,15 @@
 import { cache } from '@repo/cache';
 import { logger, schedules } from '@trigger.dev/sdk/v3';
 
+type ContributorData = {
+  login: string;
+  id: number;
+  avatar_url?: string;
+  html_url: string;
+};
+
 export const publishContributorsTask = schedules.task({
-  id: "publish-contributors",
+  id: "publish-contributors5",
   cron: "0 0 * * 0", // Runs every Sunday at midnight
   maxDuration: 60,
   run: async () => {
@@ -10,7 +17,7 @@ export const publishContributorsTask = schedules.task({
     const repo = 'plura'; // Replace with the repository name
     const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
-    let contributors = [];
+    let contributors: ContributorData[] = [];
     let page = 1;
     const MAX_PAGES = 10; // Limit total pages to prevent excessive API calls
     try {
@@ -51,7 +58,6 @@ export const publishContributorsTask = schedules.task({
       // Filter out bots based on type or if 'bot' appears in their login
       const filteredContributors = contributors.filter(
         (contributor) =>
-          contributor.type !== 'Bot' &&
           !contributor.login.toLowerCase().includes('bot')
       );
 
@@ -60,17 +66,17 @@ export const publishContributorsTask = schedules.task({
         login: contributor.login,
         id: contributor.id,
         avatar_url: contributor.avatar_url,
-        html_url: contributor.html_url,
+        github_link: contributor.html_url,
       }));
 
       // Store data in Redis under a fixed key
       const redisKey = 'contributors';
       try {
-        await cache.del(redisKey); // Clear existing data
+        await cache.del(redisKey); 
         await cache.rpush(redisKey, ...contributorData.map((c) => JSON.stringify(c)));
         } catch (error) {
         logger.error('Failed to store contributors in Redis', { error });
-        throw error; // Re-throw to trigger task retry
+        throw error; 
       }
       logger.log('Published contributors data', { contributorData });
     } catch (error) {

@@ -8,6 +8,8 @@ import auth from "./auth";
 import status from "./status";
 import health from "./health";
 import user from "./user";
+import contributors from "./contributors"
+import { cors } from "hono/cors";
 
 export const runtime = "edge";
 
@@ -18,6 +20,14 @@ const app = new Hono<{
   };
 }>().basePath("/api");
 
+app.use(
+  '*',
+  cors({
+    origin: 'http://localhost:3003', // Allow requests from your frontend origin
+    allowMethods: ['GET', 'POST', 'OPTIONS'],
+  })
+);
+
 app.route("/health", health);
 app.route("/session", session);
 app.route("/test", test);
@@ -25,6 +35,7 @@ app.route("/mail", mail);
 app.route("/auth", auth);
 app.route("/status", status);
 app.route("/user", user);
+app.route("/contributors", contributors);
 
 const GET = handle(app);
 const POST = handle(app);
