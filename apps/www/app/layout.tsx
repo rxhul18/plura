@@ -33,7 +33,7 @@ export default function RootLayout({
           </ThemeProvider>
           <Toaster />
         </body>
-      </PosthogProvider>
+        </PosthogProvider>
     </html>
   );
 }
