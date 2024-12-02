@@ -9,7 +9,7 @@ type ContributorData = {
 };
 
 export const publishContributorsTask = schedules.task({
-  id: "publish-contributors5",
+  id: "publish-contributors",
   cron: "0 0 * * 0", // Runs every Sunday at midnight
   maxDuration: 60,
   run: async () => {
