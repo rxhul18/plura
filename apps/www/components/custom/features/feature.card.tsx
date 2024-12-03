@@ -8,10 +8,15 @@ import {
   SectionHeaderHeading,
 } from "../text-wrappers";
 
-const FeatureCard = ({
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  children?: React.ReactNode;
+}
+
+const FeatureCard: React.FC<CardProps & { rowSpan?: boolean }> = ({
   className,
+  rowSpan = false,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) => {
+}) => {
   return (
     <Card
       className={cn(
@@ -24,9 +29,14 @@ const FeatureCard = ({
         src="/images/usagehome.jpg"
         alt="image"
         height={300}
-        width={300}
+        width={500}
         draggable={false}
-        className="w-full rounded-xl object-cover flex-1 min-h-60"
+        className={cn(
+          "w-full rounded-xl object-cover",
+          rowSpan ? "h-full" : "h-60"
+        )}
+        quality={100}
+        unoptimized={true}
       />
       <div className="flex justify-between flex-wrap items-center gap-3">
         <div>
