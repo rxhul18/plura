@@ -43,16 +43,18 @@ export function MainNav() {
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
-              <NavigationMenuTrigger
-                className={cn(
-                  "transition-colors hover:text-foreground/80",
-                  pathname?.startsWith("/features")
-                    ? "text-foreground"
-                    : "text-foreground/60"
-                )}
-              >
-                Features
-              </NavigationMenuTrigger>
+              <Link href="/features">
+                <NavigationMenuTrigger
+                  className={cn(
+                    "transition-colors hover:text-foreground/80",
+                    pathname?.startsWith("/features")
+                      ? "text-foreground"
+                      : "text-foreground/60"
+                  )}
+                >
+                  Features
+                </NavigationMenuTrigger>
+              </Link>
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                   <li className="row-span-3">
