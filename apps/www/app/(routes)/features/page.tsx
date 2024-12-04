@@ -32,7 +32,10 @@ export default function Features() {
         className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 px-4"
       >
         <FeatureCard className="col-span-1 md:col-span-2" />
-        <FeatureCard className="col-span-1 row-span-2" />
+        <FeatureCard
+          className="col-span-1 row-span-2"
+          imgClassName="md:flex-1"
+        />
         <FeatureCard className="col-span-1" />
         <FeatureCard className="col-span-1" />
         <FeatureCard className="col-span-1" />

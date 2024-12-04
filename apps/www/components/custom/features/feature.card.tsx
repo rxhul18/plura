@@ -10,11 +10,12 @@ import {
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
+  imgClassName?: string;
 }
 
 const FeatureCard: React.FC<CardProps & { rowSpan?: boolean }> = ({
   className,
-  rowSpan = false,
+  imgClassName,
   ...props
 }) => {
   return (
@@ -31,10 +32,7 @@ const FeatureCard: React.FC<CardProps & { rowSpan?: boolean }> = ({
         height={300}
         width={500}
         draggable={false}
-        className={cn(
-          "w-full rounded-xl object-cover",
-          rowSpan ? "h-full" : "h-60"
-        )}
+        className={cn("w-full rounded-xl object-cover h-60", imgClassName)}
         quality={100}
         unoptimized={true}
       />
