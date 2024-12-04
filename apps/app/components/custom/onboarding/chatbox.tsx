@@ -18,14 +18,13 @@ import {
 } from "@/components/ui/form"
 import { use, useEffect, useRef } from "react";
 import { useScrollToBottom } from "@/hooks/use-scroll-to-bottom";
+import { sleep } from "@/lib/utils";
 
 const formSchema = z.object({
   message: z.string(),
 });
- type formType = z.infer<typeof formSchema>
- const sleep = (ms: number) => {
-   return new Promise((resolve) => setTimeout(resolve, ms));
- };
+type formType = z.infer<typeof formSchema>
+
 export default function Chatbox() {
   const [messagesContainerRef, messagesEndRef] =
     useScrollToBottom<HTMLDivElement>();
@@ -87,7 +86,7 @@ let count = 0
         <div ref={messagesEndRef}  />
       </div>
       <div className="fixed inset-x-0 w-full bottom-4 ">
-        <div className="max-w-2xl mx-auto ">
+        <div className="max-w-2xl mx-auto sm:p-0 px-4   ">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div className="grow border border-woodsmoke-900/[0.5] flex flex-row justify-center items-center rounded-full bg-woodsmoke-950 p-1 shadow-md ">

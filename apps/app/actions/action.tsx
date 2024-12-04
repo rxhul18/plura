@@ -10,7 +10,7 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import Proceed from "@/components/custom/onboarding/proceed";
 import WorkspaceForm from "@/components/custom/onboarding/workspace-form";
-
+import {sleep } from "@/lib/utils";
 export type ServerMessage = {
   role: "user" | "assistant";
   content: string;
@@ -109,7 +109,7 @@ export const sendMessage = async (
   console.log(history.get())
   const value = await streamUI({
     model: togetherai("meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo"),
-    system: ` reply first time with the following text exactly as it is: ${contentString}
+    system: ` always reply the exact same text exactly as it is: ${contentString}
     `,
     messages: history.get(),
     initial: (
@@ -132,8 +132,3 @@ export const sendMessage = async (
     display: value.value
   }]
  }
-
-
-const sleep = (ms: number) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}

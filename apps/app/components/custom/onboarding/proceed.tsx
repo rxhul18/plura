@@ -1,22 +1,49 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
 import { AI } from "@/lib/ai";
 import { useActions, useUIState } from "ai/rsc";
+import { useState } from "react";
 
 export default function Proceed() {
-  const {sendMessage} = useActions<typeof AI>()
+  const [activeButton, setActiveButton] = useState<"yes" | "no" | null>(null);
+  const { sendMessage } = useActions<typeof AI>();
   const [messages, setMessages] = useUIState<typeof AI>();
-  const handleClick = async() => {
-     const response =await sendMessage("yes")
-     setMessages((currentMessages) => [...currentMessages,response]);
-     console.log("response",JSON.stringify(response.display))
-  };
+const handleClick = async (reply: "yes"|"no") => {
+  setActiveButton(reply);
+  try {
+    const response = await sendMessage(reply);
+    setMessages((currentMessages) => [...currentMessages, response]);
+    console.log("response", JSON.stringify(response.display));
+  } catch (error) {
+    setActiveButton(null);
+    console.log("error", error);
+  }
+};
+
   return (
-    <div className="flex flex-col ">
-      <div>should we continue?</div>
-      <div className="flex flex-row gap-2">
-        <Button className="p-2" onClick={handleClick}>yes</Button>
-        <Button className="p-2">no</Button>
+    <div className="p-1 bg-transparent rounded-lg shadow-md">
+      <h2 className="text-xl  font-bold mb-2 text-start">
+        Should we continue?
+      </h2>
+      <div className="flex justify-start space-x-2">
+        <Button
+          onClick={(e) => handleClick("yes")}
+          variant={activeButton === "yes" ? "default" : "outline"}
+          className={`w-16 bg-woodsmoke-950  rounded-full ${activeButton === "yes" ? " bg-neutral-600 " : ""}`}
+          aria-pressed={activeButton === "yes"}
+          disabled={activeButton === "yes" || activeButton === "no"}
+        >
+          Yes
+        </Button>
+        <Button
+          onClick={() => handleClick("no")}
+          variant={activeButton === "no" ? "default" : "outline"}
+          className={`w-16 rounded-full bg-woodsmoke-950 ${activeButton === "no" ? " bg-neutral-600" : ""}`}
+          aria-pressed={activeButton === "no"}
+          disabled={activeButton === "no" || activeButton === "yes"}
+        >
+          No
+        </Button>
       </div>
     </div>
   );
