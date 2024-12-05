@@ -13,8 +13,8 @@ vi.mock("@repo/db", () => ({
 }));
 
 describe("Health API", () => {
-  it("GET /api/health should return health status", async () => {
-    const req = new Request("http://localhost:3000/api/health", {
+  it("GET /v1/health should return health status", async () => {
+    const req = new Request("http://localhost:3000/v1/health", {
       method: "GET",
     });
     const res = await GET(req);
@@ -29,8 +29,8 @@ describe("Health API", () => {
 });
 
 describe("Mail API", () => {
-  it("GET /api/mail should return health status", async () => {
-    const req = new Request("http://localhost:3000/api/mail/send", {
+  it("GET /v1/mail should return health status", async () => {
+    const req = new Request("http://localhost:3000/v1/mail/send", {
       method: "GET",
     });
     const res = await GET(req);
@@ -45,8 +45,8 @@ describe("Mail API", () => {
 });
 
 describe("Mail Batch API", () => {
-  it("GET /api/mail should return health status", async () => {
-    const req = new Request("http://localhost:3000/api/mail/send-batch", {
+  it("GET /v1/mail should return health status", async () => {
+    const req = new Request("http://localhost:3000/v1/mail/send-batch", {
       method: "GET",
     });
     const res = await GET(req);
