@@ -22,14 +22,14 @@ const handleClick = async (reply: "yes"|"no") => {
 
   return (
     <div className="p-1 bg-transparent rounded-lg shadow-md">
-      <h2 className="text-xl  font-bold mb-2 text-start">
+      <h2 className="text-md  font-bold mb-2 text-start">
         Should we continue?
       </h2>
       <div className="flex justify-start space-x-2">
         <Button
           onClick={(e) => handleClick("yes")}
           variant={activeButton === "yes" ? "default" : "outline"}
-          className={`w-16 bg-woodsmoke-950  rounded-full ${activeButton === "yes" ? " bg-neutral-600 " : ""}`}
+          className={`w-16 bg-woodsmoke-950  rounded-full  disabled:cursor-not-allowed ${activeButton === "yes" ? " bg-neutral-600 " : ""}`}
           aria-pressed={activeButton === "yes"}
           disabled={activeButton === "yes" || activeButton === "no"}
         >
@@ -38,7 +38,7 @@ const handleClick = async (reply: "yes"|"no") => {
         <Button
           onClick={() => handleClick("no")}
           variant={activeButton === "no" ? "default" : "outline"}
-          className={`w-16 rounded-full bg-woodsmoke-950 ${activeButton === "no" ? " bg-neutral-600" : ""}`}
+          className={`w-16 rounded-full bg-woodsmoke-950  disabled:cursor-not-allowed  ${activeButton === "no" ? " bg-neutral-600" : ""}`}
           aria-pressed={activeButton === "no"}
           disabled={activeButton === "no" || activeButton === "yes"}
         >
