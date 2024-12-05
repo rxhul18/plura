@@ -11,7 +11,7 @@ on:
       - 'bugfix/*'
 
 permissions:
-  contents: write 
+  contents: write
 
 jobs:
   format:
@@ -52,12 +52,16 @@ jobs:
         run: turbo format:write
 
       - name: Check for changes and push if needed
+        if: |
+          github.event_name == 'push' && 
+          github.event.head_commit.message != 'format: make the code prettier'
         run: |
           if [ -n "$(git status --porcelain)" ]; then
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
             git add .
             git commit -m "format: make the code prettier"
-            git push origin HEAD:${{ github.head_ref }}
+            git push origin HEAD:$(git rev-parse --abbrev-ref HEAD)
           else
             echo "No formatting changes to push."
+          fi
