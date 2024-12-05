@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from 'react';
 import {
   Accordion,
@@ -10,12 +9,14 @@ import {
 import { Card } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { IconWifi } from '@tabler/icons-react';
+import Link from 'next/link';
+import StatusTracker, { StatusData } from './status.tracker';
 
-export default function StatusCard() {
-  // Track the state of open accordion items (if needed elsewhere)
+export default function StatusCard({statusData}:{statusData: StatusData[]}) {
   const [openItems, setOpenItems] = useState<string[]>([]);
 
   const handleToggle = (value: string) => {
+  console.log("oops", statusData)
     setOpenItems((prev) =>
       prev.includes(value) ? prev.filter((item) => item !== value) : [...prev, value]
     );
@@ -45,7 +46,15 @@ export default function StatusCard() {
             </Badge>
           </AccordionTrigger>
           <AccordionContent className="p-5">
-            Yes. It adheres to the WAI-ARIA design pattern.
+          <Card className="mx-auto bg-transparent shadow-none">
+      <p className="text-tremor-default flex items-center justify-between font-semibold">
+        <Link href={"https://www.plura.pro"}>
+        <span>www.plura.pro</span>
+        </Link>
+        <span className="text-emerald-500">99.1% uptime</span>
+      </p>
+      <StatusTracker data={statusData}/>
+    </Card>
           </AccordionContent>
         </AccordionItem>
 

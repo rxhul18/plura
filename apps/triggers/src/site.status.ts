@@ -11,7 +11,7 @@ export const siteStatusTask = schedules.task({
   run: async () => {
     const urls = {
       WEB: "https://www.plura.pro",
-      API: "https://api.plura.pro/api/health",
+      API: "https://api.plura.pro/v1/health",
       APP: "https://app.plura.pro/events",
     };
     

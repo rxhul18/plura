@@ -1,7 +1,6 @@
 {
   "name": "@repo/crypt",
   "scripts": {
-    "dev": "tsc --watch",
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",

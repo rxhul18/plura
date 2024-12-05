@@ -1,4 +1,4 @@
-import { GET } from "../app/api/[[...route]]/route";
+import { GET } from "../app/v1/[[...route]]/route";
 import { describe, it, expect, vi } from "vitest";
 
 vi.mock("@repo/db", () => ({
