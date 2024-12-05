@@ -1,3 +1,5 @@
+"use client";
+import ContributorsGrid from "@/components/custom/contributors-grid";
 import {
   SectionHeader,
   SectionHeaderDescription,
@@ -6,9 +8,36 @@ import {
 import { Card } from "@/components/ui/card";
 import { siteConfig } from "@/config/site.config";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+type ContributorData = {
+  login: string;
+  id: number;
+  avatar_url?: string;
+  github_link: string;
+};
 
 export default function About() {
+  const [contributors, setContributors] = useState<ContributorData[]>([]);
+  const fetchUrl =
+    process.env.NODE_ENV === "production"
+      ? "https://app.plura.pro/api/contributors"
+      : "http://localhost:3001/api/contributors";
+
+  useEffect(() => {
+    const fetchContributors = async () => {
+      try {
+        const response = await fetch(fetchUrl);
+        const data = await response.json();
+        console.log(data);
+        setContributors(data.contributorsData);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchContributors();
+  }, []);
+
   return (
     <section className="flex flex-col items-center md:items-start justify-center overflow-hidden">
       <div className="absolute inset-0 mx-auto h-full w-full bg-[radial-gradient(circle,rgba(211,211,211,0.1),rgba(18,20,22,0.05),rgba(18,20,22,0))] opacity-60" />
@@ -43,6 +72,7 @@ export default function About() {
               />
             </Card>
           </div>
+          <ContributorsGrid data={contributors} />
         </section>
       </div>
     </section>
