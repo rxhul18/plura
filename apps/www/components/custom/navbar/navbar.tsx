@@ -34,7 +34,7 @@ export function MainNav() {
             "transition-colors hover:text-foreground/80",
             pathname?.startsWith("/about")
               ? "text-foreground"
-              : "text-foreground/60"
+              : "text-foreground/60",
           )}
         >
           About
@@ -49,7 +49,7 @@ export function MainNav() {
                     "transition-colors hover:text-foreground/80",
                     pathname?.startsWith("/features")
                       ? "text-foreground"
-                      : "text-foreground/60"
+                      : "text-foreground/60",
                   )}
                 >
                   Features
@@ -124,7 +124,7 @@ export function MainNav() {
             "transition-colors hover:text-foreground/80",
             pathname?.startsWith("/methods")
               ? "text-foreground"
-              : "text-foreground/60"
+              : "text-foreground/60",
           )}
         >
           Methods
@@ -135,7 +135,7 @@ export function MainNav() {
             "transition-colors hover:text-foreground/80",
             pathname?.startsWith("/integrations")
               ? "text-foreground"
-              : "text-foreground/60"
+              : "text-foreground/60",
           )}
         >
           Integrations
@@ -146,7 +146,7 @@ export function MainNav() {
             "transition-colors hover:text-foreground/80",
             pathname?.startsWith("/pricing")
               ? "text-foreground"
-              : "text-foreground/60"
+              : "text-foreground/60",
           )}
         >
           Pricing
@@ -159,7 +159,7 @@ export function MainNav() {
             "transition-colors hover:text-foreground/80",
             pathname?.startsWith("/colors")
               ? "text-foreground"
-              : "text-foreground/60"
+              : "text-foreground/60",
           )}
         >
           Status
@@ -170,7 +170,7 @@ export function MainNav() {
             "transition-colors hover:text-foreground/80",
             pathname?.startsWith("/contact")
               ? "text-foreground"
-              : "text-foreground/60"
+              : "text-foreground/60",
           )}
         >
           Contact

@@ -22,7 +22,7 @@ const FeatureCard: React.FC<CardProps & { rowSpan?: boolean }> = ({
     <Card
       className={cn(
         "bg-card rounded-3xl p-4 hover:bg-muted/50 transition-all ease-in-out duration-300 w-full group flex flex-col justify-between gap-3",
-        className
+        className,
       )}
       {...props}
     >
