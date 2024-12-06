@@ -30,7 +30,7 @@ Please confirm that you have completed the following:
 - [ ] I have added any necessary documentation or comments.
 - [ ] I have updated any relevant tests or test cases.
 
-#### Check only those which is applicable.
+#### Check only those which are applicable.
 
 **Documentation Updated?**
 
