@@ -11,7 +11,10 @@ import { Button } from "@/components/ui/button";
 import Proceed from "@/components/custom/onboarding/proceed";
 import WorkspaceForm from "@/components/custom/onboarding/workspace-form";
 import {sleep } from "@/lib/utils";
+import { CoreMessage, generateId,ToolInvocation } from "ai";
 export type ServerMessage = {
+  id?: number;
+  name?: "proceed" | "workspace" ;
   role: "user" | "assistant";
   content: string;
 };
@@ -20,25 +23,30 @@ export type ClientMessage = {
   id: number;
   role: "user" | "assistant";
   display: ReactNode;
+  toolInvocations?: ToolInvocation[]
 };
 
 export const sendMessage = async (
   message: string
-): Promise<{
-  id: number;
-  role: "user" | "assistant";
-  display: ReactNode;
-}> => {
+): Promise<ClientMessage> => {
   const history = getMutableAIState<typeof AI>();
   console.log(history.get().length)
+  console.log("ai",history.get())
 
   history.update([...history.get(), { role: "user", content: message }]);
 
   const response = await streamUI({
     model: togetherai("meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo"),
-    system: `You are a helpful assistant.
-    if the message comes as "should we continue" then call proceed tool
-    if the message comes as  "yes" then call workspace tool`,
+    system: `
+    You are an onboarding assitand and you are helping users to onboard them to Plura AI.
+    -if the message comes as "should we continue" then call proceed tool
+    The workflow is as follows:
+    -User sends "yes" or "no" to proceed
+    -If the user sends "yes" then the workflow is as follows:
+    -then you call the workspace tool
+    - If the user sends "no", respond with exactly: "please create a workspace to continue your onboarding" Do not call any tools for "no"
+    - Only trigger the proceed tool when asking: "should we continue?"
+    `,
     messages: [{ role: "user", content: message }, ...history.get()],
     temperature: 0,
     initial: (
@@ -50,48 +58,57 @@ export const sendMessage = async (
       await sleep(1000);
       if (done) {
         history.done([...history.get(), { role: "assistant", content }]);
-        
       }
       return <BotMessage>{content}</BotMessage>;
     },
     tools: {
-        workspace:{
-        description: "yes",
+      workspace: {
+        description:
+          "when the user responds with yes then render the workspace form",
         parameters: z.object({}),
         generate: async function* ({}) {
-          yield (console.log("call workspace"),
-          (
+          yield (
             <BotMessage>
               <BeatLoader />
             </BotMessage>
-          ));
+          );
+          console.log("before");
+          history.done([
+            ...history.get(),
+            { role: "assistant", content: "workspace form rendered" },
+          ]);
+          console.log("history", history.get());
+          console.log("after");
 
           return (
             <BotMessage>
-             <WorkspaceForm />
+              <WorkspaceForm />
             </BotMessage>
           );
         },
       },
       proceed: {
-        description: "should we continue",
+        description: `should we continue option that contains yes and no options`,
         parameters: z.object({}),
         generate: async function* ({}) {
-          yield (console.log("should we continue?"),
-          (
+          yield (
             <BotMessage>
               <BeatLoader />
             </BotMessage>
-          ));
+          );
+
+          history.done([
+            ...history.get(),
+            { role: "assistant", content: "should be continue rendered" },
+          ]);
 
           return (
             <BotMessage>
-             <Proceed />
+              <Proceed />
             </BotMessage>
           );
         },
       },
-    
     },
   });
 
@@ -106,7 +123,7 @@ export const sendMessage = async (
   const {name,email} = session!.user
   const contentString = `Hi ${name}, welcome to Plura AI!.Your email is ${email}.I am going to help you with oboarding your acccount`
   const history = getMutableAIState<typeof AI>();
-  console.log(history.get())
+  console.log("greeting history", history.get())
   const value = await streamUI({
     model: togetherai("meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo"),
     system: ` always reply the exact same text exactly as it is: ${contentString}
@@ -129,6 +146,6 @@ export const sendMessage = async (
   return [{
     id: Date.now(),
     role: "assistant" as const,
-    display: value.value
+    display: value.value,
   }]
  }

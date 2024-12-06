@@ -1,24 +1,36 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { AI } from "@/lib/ai";
-import { useActions, useUIState } from "ai/rsc";
-import { useState } from "react";
+import { useActions, useAIState, useUIState } from "ai/rsc";
+import { useEffect, useState } from "react";
 
 export default function Proceed() {
   const [activeButton, setActiveButton] = useState<"yes" | "no" | null>(null);
   const { sendMessage } = useActions<typeof AI>();
   const [messages, setMessages] = useUIState<typeof AI>();
+  const [aiMessages, setAiMessages] = useAIState<typeof AI>();
 const handleClick = async (reply: "yes"|"no") => {
   setActiveButton(reply);
   try {
     const response = await sendMessage(reply);
-    setMessages((currentMessages) => [...currentMessages, response]);
-    console.log("response", JSON.stringify(response.display));
+    setMessages((currentMessages) => [...currentMessages, response]);;
   } catch (error) {
     setActiveButton(null);
     console.log("error", error);
   }
 };
+useEffect(() => {
+
+  const userMessages=aiMessages.filter((message)=>  message.role==="user")
+  const lastMessage=userMessages[userMessages.length-1]
+  if (lastMessage.content=="yes") {
+    setActiveButton("yes");
+  }
+  if(lastMessage.content=="no"){
+    setActiveButton("no")
+  }
+
+}, [aiMessages]);
 
   return (
     <div className="p-1 bg-transparent rounded-lg shadow-md">
