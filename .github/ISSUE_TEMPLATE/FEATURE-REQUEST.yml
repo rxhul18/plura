@@ -15,10 +15,15 @@ body:
     validations:
       required: true
   - type: textarea
-    id: rationale
+    id: expected
     attributes:
-      label: It should be implemented because
-      placeholder: It will allow to do Y that is needed for Z
+      label: What is the current behaviour?
+      placeholder: Currently this is happening
+  - type: textarea
+    id: expected
+    attributes:
+      label: What was the expected behaviour?
+      placeholder: I expected this to happen
   - type: textarea
     id: context
     attributes:
@@ -31,6 +36,15 @@ body:
       label: "Would you like to work on this issue?"
       options:
         - "Yes"
+  - type: markdown
+    id: accept-conditions
+    attributes:
+      label: "Please check and mark accordingly"
+      value: |
+        - [ ] I have read and followed the project's code of conduct.
+        - [ ] I have searched for similar issues before creating this one.
+        - [ ] I have provided all the necessary information to understand and reproduce the issue.
+        - [ ] I am willing to contribute to the resolution of this issue.
   - type: markdown
     attributes:
       value: |
