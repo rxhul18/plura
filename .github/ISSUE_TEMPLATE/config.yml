@@ -1,6 +1,6 @@
 blank_issues_enabled: true
 contact_links:
- - name: Open a blank issue
+  - name: Open a blank issue
     url: https://github.com/SkidGod4444/plura/issues/new
     about: Please open a blank issue to if you don't see your issue type here.
   - name: Discord
