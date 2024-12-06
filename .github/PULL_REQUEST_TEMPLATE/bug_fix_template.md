@@ -1,6 +1,6 @@
 ## Description
 
-[Provide a brief description of the bug that was fixed.]
+[Provide a concise description of the changes made in this PR.]
 
 ## Root Cause
 
@@ -30,6 +30,6 @@ Please confirm that you have completed the following:
 - [] I have added any necessary documentation or comments.
 - [] I have updated any relevant tests or test cases.
 
-## Issue ID
+## Issue Ticket Number
 
-[Include any related issue numbers or links here.]
+[Add the relevant issue ticket number here (e.g., Closes #<issue_number>).]
