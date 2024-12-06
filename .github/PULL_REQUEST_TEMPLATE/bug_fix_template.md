@@ -24,13 +24,14 @@ Please confirm that you have completed the following:
 
 <!-- Add a small letter x to the square brackets to tick the checkbox -->
 
-- [] I have tested the bug fix thoroughly.
-- [] I have provided a clear and concise description of the bug fix.
-- [] I have followed the code style and formatting guidelines.
-- [] I have added any necessary documentation or comments.
-- [] I have updated any relevant tests or test cases.
+- [ ] I have tested the bug fix thoroughly.
+- [ ] I have provided a clear and concise description of the bug fix.
+- [ ] I have followed the code style and formatting guidelines.
+- [ ] I have added any necessary documentation or comments.
+- [ ] I have updated any relevant tests or test cases.
 
-Check only those which is applicable.
+#### Check only those which is applicable.
+
 **Documentation Updated?**
 
 - [ ] If your feature adds a new API, then documentation related to the feature like API-Contracts, and Data-models must be updated.
