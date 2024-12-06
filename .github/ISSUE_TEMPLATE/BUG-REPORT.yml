@@ -26,7 +26,7 @@ body:
     validations:
       required: true
   - type: textarea
-    id: expected
+    id: current_behavior
     attributes:
       label: What is the current behaviour?
       placeholder: Currently this is happening
@@ -84,6 +84,7 @@ body:
       label: "Would you like to work on this issue?"
       options:
         - "Yes"
+        - "No"
   - type: markdown
     id: accept-conditions
     attributes:
