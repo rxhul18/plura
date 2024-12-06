@@ -12,11 +12,29 @@ import { IconWifi } from '@tabler/icons-react';
 import Link from 'next/link';
 import StatusTracker, { StatusData } from './status.tracker';
 
-export default function StatusCard({statusData}:{statusData: StatusData[]}) {
+const calculateUptime = (statusData: StatusData[]): number => {
+  type StatusT = 'operational' | 'degraded' | 'down' | 'warning';
+  const weights: Record<StatusT, number> = {
+    operational: 1, // Full uptime
+    degraded: 0.8,  // Partial uptime
+    warning: 0.5,   // Reduced uptime
+    down: 0,        // No uptime
+  };
+
+  const totalStatuses = statusData.length;
+  if (totalStatuses === 0) return 0;
+  const uptimeScore = statusData.reduce(
+    (sum, { status }) => sum + (weights[status] || 0),
+    0
+  );
+
+  return parseFloat(((uptimeScore / totalStatuses) * 100).toFixed(2));
+};
+
+export default function StatusCard({wwwData}:{wwwData: StatusData[]}) {
   const [openItems, setOpenItems] = useState<string[]>([]);
 
   const handleToggle = (value: string) => {
-  console.log("oops", statusData)
     setOpenItems((prev) =>
       prev.includes(value) ? prev.filter((item) => item !== value) : [...prev, value]
     );
@@ -48,12 +66,12 @@ export default function StatusCard({statusData}:{statusData: StatusData[]}) {
           <AccordionContent className="p-5">
           <Card className="mx-auto bg-transparent shadow-none">
       <p className="text-tremor-default flex items-center justify-between font-semibold">
-        <Link href={"https://www.plura.pro"}>
-        <span>www.plura.pro</span>
+        <Link href={"https://www.plura.pro"} rel="noopener noreferrer" target="_blank">
+        <span>{new URL("https://www.plura.pro").host}</span>
         </Link>
-        <span className="text-emerald-500">99.1% uptime</span>
+        <span className="text-emerald-500">{calculateUptime(wwwData)}% uptime</span>
       </p>
-      <StatusTracker data={statusData}/>
+      <StatusTracker data={wwwData}/>
     </Card>
           </AccordionContent>
         </AccordionItem>

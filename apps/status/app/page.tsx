@@ -27,62 +27,67 @@ const Page = () => {
   const [appStatus, setAppStatus] = useState<StatusData[]>([]);
   const [isFetching, setIsFetching] = useState(true);
 
-  const fetchStatusData = async () => {
-    try {
-      setIsFetching(true);
-      const siteResponse = await fetch("http://localhost:3001/v1/status/site");
-      const data = await siteResponse.json();
-
-      if (data.siteStatus && data.siteStatus.length > 0) {
-        const today = new Date().toISOString().split("T")[0];
-
-        const todayStatus = data.siteStatus.filter((status: StatusT) =>
-          status.timestamp.startsWith(today)
-        );
-        console.log("todayStatus", todayStatus);
-
-        if (todayStatus.length > 0) {
-          const getServiceStatus = (
-            latency: number,
-            originalStatus: string
-          ): "operational" | "warning" | "down" => {
-            if (originalStatus === "DOWN" || latency >= 1000) return "down";
-            if (latency >= 700) return "warning";
-            return "operational";
-          };
-
-          const webData = todayStatus.map((status: StatusT) => ({
-            status: getServiceStatus(status.latencies.WEB, status.statuses.WEB),
-            timestamp: status.timestamp,
-          }));
-
-          const apiData = todayStatus.map((status: StatusT) => ({
-            status: getServiceStatus(status.latencies.API, status.statuses.API),
-            timestamp: status.timestamp,
-          }));
-
-          const appData = todayStatus.map((status: StatusT) => ({
-            status: getServiceStatus(status.latencies.APP, status.statuses.APP),
-            timestamp: status.timestamp,
-          }));
-
-          setWebStatus(webData);
-          setApiStatus(apiData);
-          setAppStatus(appData);
-        } else {
-          setWebStatus([]);
-          setApiStatus([]);
-          setAppStatus([]);
-        }
-      }
-    } catch (error) {
-      console.error("Error fetching status data:", error);
-    } finally {
-      setIsFetching(false);
-    }
-  };
-
   useEffect(() => {
+    
+    const BASE_API =
+  process.env.NODE_ENV === "production"
+    ? "https://api.plura.pro"
+    : "http://localhost:3001";
+
+    const fetchStatusData = async () => {
+      try {
+        setIsFetching(true);
+        const siteResponse = await fetch(`${BASE_API}/v1/status/site`);
+        const data = await siteResponse.json();
+  
+        if (data.siteStatus && data.siteStatus.length > 0) {
+          const today = new Date().toISOString().split("T")[0];
+  
+          const todayStatus = data.siteStatus.filter((status: StatusT) =>
+            status.timestamp.startsWith(today)
+          );
+  
+          if (todayStatus.length > 0) {
+            const getServiceStatus = (
+              latency: number,
+              originalStatus: string
+            ): "operational" | "warning" | "down" => {
+              if (originalStatus === "DOWN" || latency >= 1000) return "down";
+              if (latency >= 700) return "warning";
+              return "operational";
+            };
+  
+            const webData = todayStatus.map((status: StatusT) => ({
+              status: getServiceStatus(status.latencies.WEB, status.statuses.WEB),
+              timestamp: status.timestamp,
+            }));
+  
+            const apiData = todayStatus.map((status: StatusT) => ({
+              status: getServiceStatus(status.latencies.API, status.statuses.API),
+              timestamp: status.timestamp,
+            }));
+  
+            const appData = todayStatus.map((status: StatusT) => ({
+              status: getServiceStatus(status.latencies.APP, status.statuses.APP),
+              timestamp: status.timestamp,
+            }));
+  
+            setWebStatus(webData);
+            setApiStatus(apiData);
+            setAppStatus(appData);
+          } else {
+            setWebStatus([]);
+            setApiStatus([]);
+            setAppStatus([]);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching status data:", error);
+      } finally {
+        setIsFetching(false);
+      }
+    };
+
     fetchStatusData();
     const interval = setInterval(fetchStatusData, 4 * 60 * 1000);
     return () => clearInterval(interval);
@@ -115,7 +120,7 @@ const Page = () => {
         </span>
       </div>
       <div className="flex w-full h-full px-10 md:px-40 gap-4">
-        <StatusCard statusData={webStatus} />
+        <StatusCard wwwData={webStatus} />
       </div>
     </div>
   );

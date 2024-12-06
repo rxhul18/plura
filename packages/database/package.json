@@ -7,10 +7,7 @@
   },
   "scripts": {
     "db:generate": "prisma generate --no-engine",
-    "db:push": "prisma db push --skip-generate",
-    "typecheck": "tsc --noEmit",
-    "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
-    "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache"
+    "db:push": "prisma db push --skip-generate"
   },
   "dependencies": {
     "@prisma/client": "^6.0.1",

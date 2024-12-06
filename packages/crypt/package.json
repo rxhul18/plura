@@ -1,11 +1,5 @@
 {
   "name": "@repo/crypt",
-  "scripts": {
-    "build": "tsc",
-    "typecheck": "tsc --noEmit",
-    "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
-    "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache"
-  },
   "exports": {
     ".": "./src/crypt.ts"
   },
