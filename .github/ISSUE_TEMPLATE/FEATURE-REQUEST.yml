@@ -37,17 +37,19 @@ body:
       options:
         - "Yes"
         - "No"
-  - type: markdown
-    id: accept-conditions
+  - type: checkboxes
+    id: terms
     attributes:
-      value: |
-        ### Please check and mark accordingly
-        - [ ] I have read and followed the project's code of conduct.
-        - [ ] I have searched for similar issues before creating this one.
-        - [ ] I have provided all the necessary information to understand and reproduce the issue.
-        - [ ] I am willing to contribute to the resolution of this issue.
-    validations:
-      required: true
+      label: Please check all the boxes below
+      options:
+        - label: I have read and followed the project's code of conduct
+          required: true
+        - label: I have searched for similar issues before creating this one
+          required: true
+        - label: I have provided all the necessary information to understand and reproduce the issue
+          required: true
+        - label: I am willing to contribute to the resolution of this issue
+          required: false
   - type: markdown
     attributes:
       value: |
