@@ -11,10 +11,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { Car, LoaderCircle, Mail } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { sleep } from "@/lib/utils";
+import { useActions, useUIState } from "ai/rsc";
+import { AI } from "@/lib/ai";
 const createWorkspace =async(workspaceName:string)=>{
   await sleep(2000);
   return {
@@ -25,6 +27,9 @@ const createWorkspace =async(workspaceName:string)=>{
 export default function DialogDemo() {
   const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState("");
+  const {sendMessage} = useActions<typeof AI>();
+  const [messages, setMessages] = useUIState<typeof AI>();
+  const [hasWorkspace, setHasWorkspace] = useState(false);
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
    e.preventDefault()
 
@@ -36,8 +41,12 @@ export default function DialogDemo() {
     setIsLoading(true);
 
     const res = await createWorkspace(workspaceName)
+    const response = await sendMessage(`Workspace ${workspaceName} created`)
 
-    toast.success(`Workspace ${workspaceName} created`)
+    setMessages((currentMessages) => [...currentMessages, response]);
+    toast.success(`Workspace ${workspaceName} created`);
+    setHasWorkspace(true)
+ 
 
     return res
    } catch (error) {
@@ -76,7 +85,7 @@ export default function DialogDemo() {
             className={cn("w-full bg-gray-200 rounded-md", {
               "bg-neutral-600": isLoading,
             })}
-            disabled={isLoading || value.trim().length === 0}
+            disabled={isLoading || value.trim().length === 0 || hasWorkspace}
           >
             {isLoading ? <LoaderCircle className="animate-spin" /> : "Create"}
           </Button>

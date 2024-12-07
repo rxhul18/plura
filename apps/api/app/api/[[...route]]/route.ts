@@ -20,19 +20,6 @@ const app = new Hono<{
   };
 }>().basePath("/api");
 
-const allowedOrigins = [
-  "http://localhost:3003",
-  "https://www.plura.pro",
-  "https://app.plura.pro",
-];
-
-app.use(
-  "*",
-  cors({
-    origin: allowedOrigins, // Allow requests from your frontend origin
-    allowMethods: ["GET", "POST", "OPTIONS"],
-  }),
-);
 
 app.route("/health", health);
 app.route("/session", session);
