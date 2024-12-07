@@ -11,20 +11,20 @@ on:
       - 'bugfix/*'
 
 permissions:
-  contents: write 
+  contents: write
 
 jobs:
   format:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}  # Checkout the PR branch
+          fetch-depth: 0
 
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
         with:
           version: 9.12.1
           run_install: false
@@ -44,19 +44,24 @@ jobs:
             ${{ runner.os }}-pnpm-
 
       - name: Install dependencies & turbo
-        run: pnpm install && pnpm i -g turbo
+        run: |
+          pnpm install
+          pnpm i -g turbo
 
       - name: Format code with Prettier
         run: turbo format:write
 
       - name: Check for changes and push if needed
+        if: |
+          github.event_name == 'push' && 
+          github.event.head_commit.message != 'format: make the code prettier'
         run: |
           if [ -n "$(git status --porcelain)" ]; then
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
             git add .
             git commit -m "format: make the code prettier"
-            git push origin ${{ github.head_ref }}
+            git push origin HEAD:$(git rev-parse --abbrev-ref HEAD)
           else
             echo "No formatting changes to push."
           fi

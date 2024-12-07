@@ -11,7 +11,7 @@ const redirectUrl =
     : "http://localhost:3003/auth";
 export default async function authMiddleware(request: NextRequest) {
   const { data: session } = await betterFetch<Session>(
-    `${baseDomain}/api/auth/get-session`,
+    `${baseDomain}/v1/auth/get-session`,
     {
       baseURL: request.nextUrl.origin,
       headers: {

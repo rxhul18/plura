@@ -1,0 +1,23 @@
+{
+  "name": "@repo/rag-ai",
+  "version": "1.0.0",
+  "description": "",
+  "private": false,
+  "exports": {
+    ".": "./src/init.ts",
+    "./types": "./types.d.ts",
+    "./context": "./src/func/context.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@upstash/rag-chat": "^2.0.3",
+    "langchain": "^0.3.6"
+  },
+  "devDependencies": {
+    "@repo/cache": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "typescript": "^5.7.2"
+  }
+}

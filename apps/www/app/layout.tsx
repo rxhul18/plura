@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning suppressContentEditableWarning>
       <PosthogProvider>
         <body
           className={` bg-background font-sans min-h-screen  ${GeistSans.variable} antialiased`}
