@@ -64,7 +64,7 @@ const app = new Hono()
         userId: userId,
       },
     });
-    if (!workspaces) {
+    if (workspaces.length === 0) {
       return c.json({ message: "workspaces not found" }, 404);
     }
     return c.json(
@@ -91,7 +91,7 @@ const app = new Hono()
       },
     });
     if (!workspace) {
-      return c.json({ message: "workspace not found" }, 404);
+      return c.json({ message: "failed to create workspace" }, 404);
     }
     return c.json(
       {
@@ -102,24 +102,34 @@ const app = new Hono()
   })
   .delete("/:id", async (c) => {
     const workspaceId = c.req.param("id");
-    if (!workspaceId) {
-      return c.json({ message: "missing workspace id" }, 400);
+     if (!workspaceId) {
+       return c.json({ message: "missing workspace id" }, 400);
+     }
+    const session = await getSession(c.req.raw);
+    if (!session?.user.id) {
+      return c.json({ message: "unauthorized" }, 401);
     }
-    const workspace = await prisma.workspace.delete({
+
+    const existingWorkspace = await prisma.workspace.findUnique({
       where: {
-        id: workspaceId,
-      },
+       id: workspaceId,
+       userId: session.user.id,
+     },
     });
-    if (!workspace) {
-      return c.json({ message: "workspace not found" }, 404);
+    if (!existingWorkspace) {
+     return c.json({ message: "workspace not found" }, 404);
     }
-    return c.json(
-      {
-        message: "workspace deleted successfully",
-        deletedWorkspace: workspace,
-      },
-      200,
-    );
+     const workspace = await prisma.workspace.delete({
+       where: {
+         id: workspaceId,
+        userId: session.user.id, 
+       },
+     });
+     return c.json({
+         deletedWorkspace: workspace,
+       },
+       200,
+     );
   });
 
 export default app;
