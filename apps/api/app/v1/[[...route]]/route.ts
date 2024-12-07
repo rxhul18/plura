@@ -1,6 +1,5 @@
 import { handle } from "hono/vercel";
 import { Hono } from "hono";
-import { auth as Auth } from "@repo/auth";
 import mail from "./mail";
 import test from "./test";
 import session from "./session";
@@ -10,18 +9,16 @@ import health from "./health";
 import user from "./user";
 import contributors from "./contributors";
 import { cors } from "hono/cors";
+import { HonoBase } from "hono/hono-base";
 
 export const runtime = "edge";
 
-const app = new Hono<{
-  Variables: {
-    user: typeof Auth.$Infer.Session.user | null;
-    session: typeof Auth.$Infer.Session.session | null;
-  };
-}>().basePath("/api");
+const app = new Hono().basePath("/v1");
 
 const allowedOrigins = [
+  "http://localhost:3002",
   "http://localhost:3003",
+  "http://localhost:3004",
   "https://www.plura.pro",
   "https://app.plura.pro",
 ];
@@ -29,8 +26,12 @@ const allowedOrigins = [
 app.use(
   "*",
   cors({
-    origin: allowedOrigins, // Allow requests from your frontend origin
-    allowMethods: ["GET", "POST", "OPTIONS"],
+    origin: allowedOrigins,
+    allowMethods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+    allowHeaders: ["Content-Type", "Authorization"],
+    exposeHeaders: ["Content-Length"],
+    maxAge: 600,
+    credentials: true,
   }),
 );
 

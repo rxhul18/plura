@@ -8,11 +8,12 @@ const BaseDomain = process.env.NODE_ENV === "production" ? process.env.API_DOMAI
 export const auth = betterAuth({
   trustedOrigins: [
     "https://www.plura.pro",
-    "https://plura.pro",
+    "http://localhost:3004",
     "https://app.plura.pro",
     "http://localhost:3003",
   ],
   baseURL: BaseDomain,
+  basePath: "/v1/auth",
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
