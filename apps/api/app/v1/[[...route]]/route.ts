@@ -43,7 +43,7 @@ app.route("/auth", auth);
 app.route("/status", status);
 app.route("/user", user);
 app.route("/contributors", contributors);
-app.route("/workspace",workspace)
+app.route("/workspace", workspace);
 
 const GET = handle(app);
 const POST = handle(app);
