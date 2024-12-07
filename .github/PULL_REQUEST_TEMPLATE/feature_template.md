@@ -1,6 +1,6 @@
 ## Description
 
-[Provide a brief description of the feature you are addingProvide a concise description of the changes made in this PR.]
+[Provide a brief description of the feature you are adding and the changes made in this PR.]
 
 ## Implementation Details
 
