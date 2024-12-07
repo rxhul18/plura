@@ -2,10 +2,35 @@ import { zValidator } from "@hono/zod-validator"
 import { prisma } from "@repo/db"
 import { Hono } from "hono"
 import { workspaceSchema } from "@repo/types"
-import { auth } from "@repo/auth"
 import { getSession } from "@/lib/session"
 
+
 const app = new Hono()
+.get("/all", async(c) => {
+    const cursor = c.req.query("cursor");
+    const take = c.req.query("take");
+    if (!c.req.url.includes("?cursor=")) {
+     return c.redirect("?cursor=");
+    }
+   
+  const workspaces = await prisma.workspace.findMany({
+    take: parseInt(take!) || 10,
+    skip: 1,
+    cursor: cursor
+      ? {
+          id: cursor,
+        }
+      : undefined,
+    orderBy: {
+      createdAt: "asc",
+    },
+  });
+  const nextCursor = workspaces.length > 0 ? workspaces[workspaces.length - 1].id : null;
+  return c.json({
+    workspaces,
+    nextCursor
+  },200)
+})
 .get("/:id", async(c) => {
   const workspaceId = c.req.param("id")
   if (!workspaceId) {
