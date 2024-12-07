@@ -88,8 +88,8 @@ body:
   - type: markdown
     id: accept-conditions
     attributes:
-      label: "Please check and mark accordingly"
       value: |
+        ### Please check and mark accordingly
         - [ ] I have read and followed the project's code of conduct.
         - [ ] I have searched for similar issues before creating this one.
         - [ ] I have provided all the necessary information to understand and reproduce the issue.
