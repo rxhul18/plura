@@ -61,10 +61,10 @@ export default function Method() {
 
   const handleHash = () => {
     const hash = decodeURIComponent(
-      window.location.hash.slice(1).toLowerCase()
+      window.location.hash.slice(1).toLowerCase(),
     );
     const item = accordionItems.find(
-      (item) => item.id === hash || item.title.toLowerCase() === hash
+      (item) => item.id === hash || item.title.toLowerCase() === hash,
     );
     if (item) {
       scrollToItem(item.id);
