@@ -2,7 +2,7 @@ import { zValidator } from "@hono/zod-validator";
 import { prisma } from "@repo/db";
 import { Hono } from "hono";
 import { workspaceSchema } from "@repo/types";
-import { getSession } from "@/lib/session";
+import { auth } from "@repo/auth";
 
 const app = new Hono()
   .get("/all", async (c) => {
@@ -75,7 +75,10 @@ const app = new Hono()
     );
   })
   .post("/", zValidator("form", workspaceSchema), async (c) => {
-    const userId = (await getSession(c.req.raw))?.user.id;
+    const session = await auth.api.getSession({
+    headers: c.req.raw.headers,
+    });
+    const userId = session?.user.id;
     const body = c.req.valid("form");
 
     if (!body) {
@@ -105,7 +108,9 @@ const app = new Hono()
      if (!workspaceId) {
        return c.json({ message: "missing workspace id" }, 400);
      }
-    const session = await getSession(c.req.raw);
+    const session = await auth.api.getSession({
+      headers: c.req.raw.headers,
+    });
     if (!session?.user.id) {
       return c.json({ message: "unauthorized" }, 401);
     }
