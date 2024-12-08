@@ -9,7 +9,7 @@ import health from "./health";
 import user from "./user";
 import contributors from "./contributors";
 import { cors } from "hono/cors";
-import { HonoBase } from "hono/hono-base";
+import workspace from "./workspace";
 
 export const runtime = "edge";
 
@@ -43,6 +43,7 @@ app.route("/auth", auth);
 app.route("/status", status);
 app.route("/user", user);
 app.route("/contributors", contributors);
+app.route("/workspace", workspace);
 
 const GET = handle(app);
 const POST = handle(app);

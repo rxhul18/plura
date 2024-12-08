@@ -19,6 +19,7 @@ model User {
   updatedAt     DateTime
   sessions      Session[]
   accounts      Account[]
+  workspaces    Workspace[]
 
   @@unique([email])
   @@map("user")
@@ -74,4 +75,15 @@ model Trigger {
   name          String
   email         String
   emailVerified Boolean
+}
+
+
+model Workspace {
+  id         String       @id @default(uuid())
+  name       String
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  invite_url String?
+  userId     String
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
