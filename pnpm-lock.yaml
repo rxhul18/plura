@@ -463,6 +463,9 @@ importers:
       lucide-react:
         specifier: ^0.454.0
         version: 0.454.0(react@19.0.0-rc-02c0e824-20241028)
+      motion:
+        specifier: ^11.13.1
+        version: 11.13.1(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028)
       next:
         specifier: 15.0.3
         version: 15.0.3(@opentelemetry/api@1.9.0)(@playwright/test@1.49.0)(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028)
@@ -625,7 +628,7 @@ importers:
     dependencies:
       '@upstash/rag-chat':
         specifier: ^2.0.3
-        version: 2.0.3(@browserbasehq/sdk@2.0.0)(@browserbasehq/stagehand@1.5.0(@playwright/test@1.49.0)(deepmerge@4.3.1)(dotenv@16.4.5)(openai@4.76.0(zod@3.23.8))(zod@3.23.8))(@ibm-cloud/watsonx-ai@1.3.0)(@langchain/openai@0.3.14(@langchain/core@0.2.36(openai@4.76.0(zod@3.23.8))))(@supabase/supabase-js@2.46.1)(@upstash/ratelimit@2.0.5(@upstash/redis@1.34.3))(@upstash/redis@1.34.3)(@upstash/vector@1.1.7)(axios@1.7.4)(crypto-js@4.2.0)(fast-xml-parser@4.5.0)(ibm-cloud-sdk-core@5.1.0)(ignore@5.3.2)(ioredis@5.4.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openai@4.76.0(zod@3.23.8))(playwright@1.49.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)(sswr@2.1.0(svelte@5.7.1))(svelte@5.7.1)(vue@3.5.13(typescript@5.7.2))(ws@8.18.0)(zod@3.23.8)
+        version: 2.0.3(@browserbasehq/sdk@2.0.0)(@browserbasehq/stagehand@1.5.0(@playwright/test@1.49.0)(deepmerge@4.3.1)(dotenv@16.4.5)(openai@4.76.0(zod@3.23.8))(zod@3.23.8))(@ibm-cloud/watsonx-ai@1.3.0)(@langchain/openai@0.3.14(@langchain/core@0.2.36(openai@4.76.0(zod@3.23.8))))(@supabase/supabase-js@2.46.1)(@upstash/ratelimit@2.0.5(@upstash/redis@1.34.3))(@upstash/redis@1.34.3)(@upstash/vector@1.1.7)(axios@1.7.4)(crypto-js@4.2.0)(fast-xml-parser@4.5.0)(ibm-cloud-sdk-core@5.1.0)(ignore@5.3.2)(ioredis@5.4.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openai@4.76.0(zod@3.23.8))(playwright@1.49.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)(sswr@2.1.0(svelte@5.8.1))(svelte@5.8.1)(vue@3.5.13(typescript@5.7.2))(ws@8.18.0)(zod@3.23.8)
       langchain:
         specifier: ^0.3.6
         version: 0.3.6(@langchain/anthropic@0.2.18(openai@4.76.0(zod@3.23.8)))(@langchain/core@0.2.36(openai@4.76.0(zod@3.23.8)))(@langchain/mistralai@0.0.28(openai@4.76.0(zod@3.23.8)))(axios@1.7.4)(cheerio@1.0.0)(openai@4.76.0(zod@3.23.8))
@@ -1850,6 +1853,12 @@ packages:
   '@langchain/textsplitters@0.0.3':
     resolution: {integrity: sha512-cXWgKE3sdWLSqAa8ykbCcUsUF1Kyr5J3HOWYGuobhPEycXW4WI++d5DhzdpL238mzoEXTi90VqfSCra37l5YqA==}
     engines: {node: '>=18'}
+
+  '@langchain/textsplitters@0.1.0':
+    resolution: {integrity: sha512-djI4uw9rlkAb5iMhtLED+xJebDdAG935AdP4eRTB02R7OB/act55Bj9wsskhZsvuyQRpO4O1wQOp85s6T6GWmw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@langchain/core': '>=0.2.21 <0.4.0'
 
   '@levischuck/tiny-cbor@0.2.2':
     resolution: {integrity: sha512-f5CnPw997Y2GQ8FAvtuVVC19FX8mwNNC+1XJcIi16n/LTJifKO6QBgGLgN3YEmqtGMk17SKSuoWES3imJVxAVw==}
@@ -4499,8 +4508,8 @@ packages:
   create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
 
-  cronstrue@2.52.0:
-    resolution: {integrity: sha512-NKgHbWkSZXJUcaBHSsyzC8eegD6bBd4O0oCI6XMIJ+y4Bq3v4w7sY3wfWoKPuVlq9pQHRB6od0lmKpIqi8TlKA==}
+  cronstrue@2.51.0:
+    resolution: {integrity: sha512-7EG9VaZZ5SRbZ7m25dmP6xaS0qe9ay6wywMskFOU/lMDKa+3gZr2oeT5OUfXwRP/Bcj8wxdYJ65AHU70CI3tsw==}
     hasBin: true
 
   cross-fetch@4.0.0:
@@ -5257,6 +5266,20 @@ packages:
       react-dom:
         optional: true
 
+  framer-motion@11.13.1:
+    resolution: {integrity: sha512-F40tpGTHByhn9h3zdBQPcEro+pSLtzARcocbNqAyfBI+u9S+KZuHH/7O9+z+GEkoF3eqFxfvVw0eBDytohwqmQ==}
+    peerDependencies:
+      '@emotion/is-prop-valid': '*'
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    peerDependenciesMeta:
+      '@emotion/is-prop-valid':
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+
   fs-monkey@1.0.6:
     resolution: {integrity: sha512-b1FMfwetIKymC0eioW7mTywihSQE4oLzQn1dB6rZB5fx/3NpNEdAWeCSMB+60/AeT0TCXsxzAlcYVEFCTAksWg==}
 
@@ -5488,8 +5511,8 @@ packages:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
     engines: {node: '>=6'}
 
-  import-in-the-middle@1.11.3:
-    resolution: {integrity: sha512-tNpKEb4AjZrCyrxi+Eyu43h5ig0O8ZRFSXPHh/00/o+4P4pKzVEW/m5lsVtsAT7fCIgmQOAPjdqecGDsBXRxsw==}
+  import-in-the-middle@1.11.2:
+    resolution: {integrity: sha512-gK6Rr6EykBcc6cVWRSBR5TWf8nn6hZMYSRYqCcHa0l0d1fPK7JSYo6+Mlmck76jIX9aL/IZ71c06U2VpFwl1zA==}
 
   imurmurhash@0.1.4:
     resolution: {integrity: sha512-JmXMZ6wuvDmLiHEml9ykzqO6lwFbof0GG4IkcGaENdCRDDmMVnny7s5HsIgHCbaq0w2MyPhDqkhTUgS2LU2PHA==}
@@ -6062,8 +6085,8 @@ packages:
       openai:
         optional: true
 
-  langsmith@0.2.10:
-    resolution: {integrity: sha512-yuEhRRdQqtXkLVcNxwk2sNFkj4oDvlG1SYZbAXmTM+vlIvxGkT0vWqgLNJLd31+SqxyG3TBPvCCpiYTMCWV8BA==}
+  langsmith@0.2.11:
+    resolution: {integrity: sha512-rVPUN/jQEHjTuYaoVKGjfb3NsYNLGTQT9LXcgJvka5M0EDcXciC598A+DsAQrl6McdfSJCFJDelgRPqVoF2xNA==}
     peerDependencies:
       openai: '*'
     peerDependenciesMeta:
@@ -6400,6 +6423,26 @@ packages:
 
   module-details-from-path@1.0.3:
     resolution: {integrity: sha512-ySViT69/76t8VhE1xXHK6Ch4NcDd26gx0MzKXLO+F7NOtnqH68d9zF94nT8ZWSxXh8ELOERsnJO/sWt1xZYw5A==}
+
+  motion-dom@11.13.0:
+    resolution: {integrity: sha512-Oc1MLGJQ6nrvXccXA89lXtOqFyBmvHtaDcTRGT66o8Czl7nuA8BeHAd9MQV1pQKX0d2RHFBFaw5g3k23hQJt0w==}
+
+  motion-utils@11.13.0:
+    resolution: {integrity: sha512-lq6TzXkH5c/ysJQBxgLXgM01qwBH1b4goTPh57VvZWJbVJZF/0SB31UWEn4EIqbVPf3au88n2rvK17SpDTja1A==}
+
+  motion@11.13.1:
+    resolution: {integrity: sha512-64+QpZQv8WJJFn+tEEzX04il9s6ReA6lhKRZaxzD6SunGqoaq5g+AFVfcKWme8N83eytUOpGp7mpfJ9cyZlhAA==}
+    peerDependencies:
+      '@emotion/is-prop-valid': '*'
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    peerDependenciesMeta:
+      '@emotion/is-prop-valid':
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
 
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
@@ -7541,8 +7584,8 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  svelte@5.7.1:
-    resolution: {integrity: sha512-kUtiiNcN7ssi5X8OQW8IILoI53RUudjn8TD1910i8cg5c5IRZ4IuaDO1vFl+kZcvv1geYBxlFpi/mj09m/CCBg==}
+  svelte@5.8.1:
+    resolution: {integrity: sha512-tqJY46Xoe+KiKvD4/guNlqpE+jco4IBcuaM6Ei9SEMETtsbLMfbak9XjTacqd6aGMmWXh7uFInfFTd4yES5r0A==}
     engines: {node: '>=18'}
 
   swr@2.2.5:
@@ -8207,13 +8250,13 @@ snapshots:
     transitivePeerDependencies:
       - zod
 
-  '@ai-sdk/svelte@0.0.57(svelte@5.7.1)(zod@3.23.8)':
+  '@ai-sdk/svelte@0.0.57(svelte@5.8.1)(zod@3.23.8)':
     dependencies:
       '@ai-sdk/provider-utils': 1.0.22(zod@3.23.8)
       '@ai-sdk/ui-utils': 0.0.50(zod@3.23.8)
-      sswr: 2.1.0(svelte@5.7.1)
+      sswr: 2.1.0(svelte@5.8.1)
     optionalDependencies:
-      svelte: 5.7.1
+      svelte: 5.8.1
     transitivePeerDependencies:
       - zod
 
@@ -8994,7 +9037,7 @@ snapshots:
       ibm-cloud-sdk-core: 5.1.0
       js-yaml: 4.1.0
       langchain: 0.3.6(@langchain/anthropic@0.2.18(openai@4.76.0(zod@3.23.8)))(@langchain/core@0.2.36(openai@4.76.0(zod@3.23.8)))(@langchain/mistralai@0.0.28(openai@4.76.0(zod@3.23.8)))(axios@1.7.4)(cheerio@1.0.0)(openai@4.76.0(zod@3.23.8))
-      langsmith: 0.2.10(openai@4.76.0(zod@3.23.8))
+      langsmith: 0.2.11(openai@4.76.0(zod@3.23.8))
       openai: 4.76.0(zod@3.23.8)
       uuid: 10.0.0
       zod: 3.23.8
@@ -9083,6 +9126,11 @@ snapshots:
       js-tiktoken: 1.0.15
     transitivePeerDependencies:
       - openai
+
+  '@langchain/textsplitters@0.1.0(@langchain/core@0.2.36(openai@4.76.0(zod@3.23.8)))':
+    dependencies:
+      '@langchain/core': 0.2.36(openai@4.76.0(zod@3.23.8))
+      js-tiktoken: 1.0.15
 
   '@levischuck/tiny-cbor@0.2.2': {}
 
@@ -9477,7 +9525,7 @@ snapshots:
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/api-logs': 0.52.1
       '@types/shimmer': 1.2.0
-      import-in-the-middle: 1.11.3
+      import-in-the-middle: 1.11.2
       require-in-the-middle: 7.4.0
       semver: 7.6.3
       shimmer: 1.2.1
@@ -11060,7 +11108,7 @@ snapshots:
       '@opentelemetry/semantic-conventions': 1.25.1
       '@trigger.dev/core': 3.3.5
       chalk: 5.3.0
-      cronstrue: 2.52.0
+      cronstrue: 2.51.0
       debug: 4.3.7
       evt: 2.5.8
       slug: 6.1.0
@@ -11530,7 +11578,7 @@ snapshots:
     dependencies:
       '@upstash/redis': 1.34.3
 
-  '@upstash/rag-chat@2.0.3(@browserbasehq/sdk@2.0.0)(@browserbasehq/stagehand@1.5.0(@playwright/test@1.49.0)(deepmerge@4.3.1)(dotenv@16.4.5)(openai@4.76.0(zod@3.23.8))(zod@3.23.8))(@ibm-cloud/watsonx-ai@1.3.0)(@langchain/openai@0.3.14(@langchain/core@0.2.36(openai@4.76.0(zod@3.23.8))))(@supabase/supabase-js@2.46.1)(@upstash/ratelimit@2.0.5(@upstash/redis@1.34.3))(@upstash/redis@1.34.3)(@upstash/vector@1.1.7)(axios@1.7.4)(crypto-js@4.2.0)(fast-xml-parser@4.5.0)(ibm-cloud-sdk-core@5.1.0)(ignore@5.3.2)(ioredis@5.4.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openai@4.76.0(zod@3.23.8))(playwright@1.49.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)(sswr@2.1.0(svelte@5.7.1))(svelte@5.7.1)(vue@3.5.13(typescript@5.7.2))(ws@8.18.0)(zod@3.23.8)':
+  '@upstash/rag-chat@2.0.3(@browserbasehq/sdk@2.0.0)(@browserbasehq/stagehand@1.5.0(@playwright/test@1.49.0)(deepmerge@4.3.1)(dotenv@16.4.5)(openai@4.76.0(zod@3.23.8))(zod@3.23.8))(@ibm-cloud/watsonx-ai@1.3.0)(@langchain/openai@0.3.14(@langchain/core@0.2.36(openai@4.76.0(zod@3.23.8))))(@supabase/supabase-js@2.46.1)(@upstash/ratelimit@2.0.5(@upstash/redis@1.34.3))(@upstash/redis@1.34.3)(@upstash/vector@1.1.7)(axios@1.7.4)(crypto-js@4.2.0)(fast-xml-parser@4.5.0)(ibm-cloud-sdk-core@5.1.0)(ignore@5.3.2)(ioredis@5.4.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openai@4.76.0(zod@3.23.8))(playwright@1.49.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)(sswr@2.1.0(svelte@5.8.1))(svelte@5.8.1)(vue@3.5.13(typescript@5.7.2))(ws@8.18.0)(zod@3.23.8)':
     dependencies:
       '@ai-sdk/openai': 0.0.44(zod@3.23.8)
       '@langchain/anthropic': 0.2.18(openai@4.76.0(zod@3.23.8))
@@ -11541,7 +11589,7 @@ snapshots:
       '@upstash/ratelimit': 2.0.5(@upstash/redis@1.34.3)
       '@upstash/redis': 1.34.3
       '@upstash/vector': 1.1.7
-      ai: 3.4.33(openai@4.76.0(zod@3.23.8))(react@19.0.0-rc-66855b96-20241106)(sswr@2.1.0(svelte@5.7.1))(svelte@5.7.1)(vue@3.5.13(typescript@5.7.2))(zod@3.23.8)
+      ai: 3.4.33(openai@4.76.0(zod@3.23.8))(react@19.0.0-rc-66855b96-20241106)(sswr@2.1.0(svelte@5.8.1))(svelte@5.8.1)(vue@3.5.13(typescript@5.7.2))(zod@3.23.8)
       cheerio: 1.0.0
       d3-dsv: 3.0.1
       html-to-text: 9.0.5
@@ -11862,13 +11910,13 @@ snapshots:
     dependencies:
       humanize-ms: 1.2.1
 
-  ai@3.4.33(openai@4.76.0(zod@3.23.8))(react@19.0.0-rc-66855b96-20241106)(sswr@2.1.0(svelte@5.7.1))(svelte@5.7.1)(vue@3.5.13(typescript@5.7.2))(zod@3.23.8):
+  ai@3.4.33(openai@4.76.0(zod@3.23.8))(react@19.0.0-rc-66855b96-20241106)(sswr@2.1.0(svelte@5.8.1))(svelte@5.8.1)(vue@3.5.13(typescript@5.7.2))(zod@3.23.8):
     dependencies:
       '@ai-sdk/provider': 0.0.26
       '@ai-sdk/provider-utils': 1.0.22(zod@3.23.8)
       '@ai-sdk/react': 0.0.70(react@19.0.0-rc-66855b96-20241106)(zod@3.23.8)
       '@ai-sdk/solid': 0.0.54(zod@3.23.8)
-      '@ai-sdk/svelte': 0.0.57(svelte@5.7.1)(zod@3.23.8)
+      '@ai-sdk/svelte': 0.0.57(svelte@5.8.1)(zod@3.23.8)
       '@ai-sdk/ui-utils': 0.0.50(zod@3.23.8)
       '@ai-sdk/vue': 0.0.59(vue@3.5.13(typescript@5.7.2))(zod@3.23.8)
       '@opentelemetry/api': 1.9.0
@@ -11880,8 +11928,8 @@ snapshots:
     optionalDependencies:
       openai: 4.76.0(zod@3.23.8)
       react: 19.0.0-rc-66855b96-20241106
-      sswr: 2.1.0(svelte@5.7.1)
-      svelte: 5.7.1
+      sswr: 2.1.0(svelte@5.8.1)
+      svelte: 5.8.1
       zod: 3.23.8
     transitivePeerDependencies:
       - solid-js
@@ -12375,7 +12423,7 @@ snapshots:
   create-require@1.1.1:
     optional: true
 
-  cronstrue@2.52.0: {}
+  cronstrue@2.51.0: {}
 
   cross-fetch@4.0.0:
     dependencies:
@@ -12831,8 +12879,8 @@ snapshots:
       '@typescript-eslint/parser': 7.18.0(eslint@8.57.1)(typescript@5.6.3)
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@8.57.1)
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1)
+      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@8.57.1)
       eslint-plugin-react: 7.37.2(eslint@8.57.1)
       eslint-plugin-react-hooks: 5.0.0(eslint@8.57.1)
@@ -12851,8 +12899,8 @@ snapshots:
       '@typescript-eslint/parser': 7.18.0(eslint@8.57.1)(typescript@5.6.3)
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@8.57.1)
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1)
+      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@8.57.1)
       eslint-plugin-react: 7.37.2(eslint@8.57.1)
       eslint-plugin-react-hooks: 5.0.0(eslint@8.57.1)
@@ -12903,19 +12951,19 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@8.57.1):
+  eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1):
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
       debug: 4.3.7
       enhanced-resolve: 5.17.1
       eslint: 8.57.1
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
       fast-glob: 3.3.2
       get-tsconfig: 4.8.1
       is-bun-module: 1.2.1
       is-glob: 4.0.3
     optionalDependencies:
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
     transitivePeerDependencies:
       - '@typescript-eslint/parser'
       - eslint-import-resolver-node
@@ -12943,14 +12991,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       '@typescript-eslint/parser': 7.18.0(eslint@8.57.1)(typescript@5.6.3)
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@8.57.1)
+      eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -12989,7 +13037,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1):
+  eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.8
@@ -13000,7 +13048,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@8.57.1)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
       hasown: 2.0.2
       is-core-module: 2.15.1
       is-glob: 4.0.3
@@ -13410,6 +13458,15 @@ snapshots:
       react: 19.0.0-rc-02c0e824-20241028
       react-dom: 19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028)
 
+  framer-motion@11.13.1(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028):
+    dependencies:
+      motion-dom: 11.13.0
+      motion-utils: 11.13.0
+      tslib: 2.8.1
+    optionalDependencies:
+      react: 19.0.0-rc-02c0e824-20241028
+      react-dom: 19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028)
+
   fs-monkey@1.0.6:
     optional: true
 
@@ -13711,7 +13768,7 @@ snapshots:
       parent-module: 1.0.1
       resolve-from: 4.0.0
 
-  import-in-the-middle@1.11.3:
+  import-in-the-middle@1.11.2:
     dependencies:
       acorn: 8.14.0
       acorn-import-attributes: 1.9.5(acorn@8.14.0)
@@ -14072,11 +14129,11 @@ snapshots:
     dependencies:
       '@langchain/core': 0.2.36(openai@4.76.0(zod@3.23.8))
       '@langchain/openai': 0.3.14(@langchain/core@0.2.36(openai@4.76.0(zod@3.23.8)))
-      '@langchain/textsplitters': 0.0.3(openai@4.76.0(zod@3.23.8))
+      '@langchain/textsplitters': 0.1.0(@langchain/core@0.2.36(openai@4.76.0(zod@3.23.8)))
       js-tiktoken: 1.0.15
       js-yaml: 4.1.0
       jsonpointer: 5.0.1
-      langsmith: 0.2.10(openai@4.76.0(zod@3.23.8))
+      langsmith: 0.2.11(openai@4.76.0(zod@3.23.8))
       openapi-types: 12.1.3
       p-retry: 4.6.2
       uuid: 10.0.0
@@ -14103,7 +14160,7 @@ snapshots:
     optionalDependencies:
       openai: 4.76.0(zod@3.23.8)
 
-  langsmith@0.2.10(openai@4.76.0(zod@3.23.8)):
+  langsmith@0.2.11(openai@4.76.0(zod@3.23.8)):
     dependencies:
       '@types/uuid': 10.0.0
       commander: 10.0.1
@@ -14631,6 +14688,18 @@ snapshots:
       ufo: 1.5.4
 
   module-details-from-path@1.0.3: {}
+
+  motion-dom@11.13.0: {}
+
+  motion-utils@11.13.0: {}
+
+  motion@11.13.1(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028):
+    dependencies:
+      framer-motion: 11.13.1(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028)
+      tslib: 2.8.1
+    optionalDependencies:
+      react: 19.0.0-rc-02c0e824-20241028
+      react-dom: 19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028)
 
   ms@2.1.3: {}
 
@@ -15850,9 +15919,9 @@ snapshots:
 
   sprintf-js@1.0.3: {}
 
-  sswr@2.1.0(svelte@5.7.1):
+  sswr@2.1.0(svelte@5.8.1):
     dependencies:
-      svelte: 5.7.1
+      svelte: 5.8.1
       swrev: 4.0.0
 
   stackback@0.0.2: {}
@@ -16027,7 +16096,7 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  svelte@5.7.1:
+  svelte@5.8.1:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@jridgewell/sourcemap-codec': 1.5.0
