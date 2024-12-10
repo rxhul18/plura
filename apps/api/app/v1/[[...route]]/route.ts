@@ -53,5 +53,3 @@ const DELETE = handle(app);
 const OPTIONS = handle(app);
 
 export { GET, PATCH, POST, DELETE, OPTIONS };
-
-

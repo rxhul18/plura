@@ -3,7 +3,7 @@ import ProgressBar from "@/components/custom/progress.bar";
 import { AppSidebar } from "@/components/custom/sidebar/sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { cookies } from "next/headers";
-async function RouteLayout({children}: {children: React.ReactNode}) {
+async function RouteLayout({ children }: { children: React.ReactNode }) {
   const cookieStore = await cookies();
   const defaultOpen = cookieStore.get("plura-sidebar:state")?.value === "true";
   return (

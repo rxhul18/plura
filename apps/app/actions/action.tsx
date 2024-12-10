@@ -10,11 +10,11 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import Proceed from "@/components/custom/onboarding/proceed";
 import WorkspaceForm from "@/components/custom/onboarding/workspace-form";
-import {sleep } from "@/lib/utils";
-import { CoreMessage, generateId,ToolInvocation } from "ai";
+import { sleep } from "@/lib/utils";
+import { CoreMessage, generateId, ToolInvocation } from "ai";
 export type ServerMessage = {
   id?: number;
-  name?: "proceed" | "workspace" ;
+  name?: "proceed" | "workspace";
   role: "user" | "assistant";
   content: string;
 };
@@ -23,15 +23,13 @@ export type ClientMessage = {
   id: number;
   role: "user" | "assistant";
   display: ReactNode;
-  toolInvocations?: ToolInvocation[]
+  toolInvocations?: ToolInvocation[];
 };
 
-export const sendMessage = async (
-  message: string
-): Promise<ClientMessage> => {
+export const sendMessage = async (message: string): Promise<ClientMessage> => {
   const history = getMutableAIState<typeof AI>();
-  console.log(history.get().length)
-  console.log("ai",history.get())
+  console.log(history.get().length);
+  console.log("ai", history.get());
 
   history.update([...history.get(), { role: "user", content: message }]);
 
@@ -123,12 +121,12 @@ export const sendMessage = async (
     display: response.value,
   };
 };
- export const sendAiGreeting = async ():Promise<ClientMessage[]> => {
-  const session= await getSession()
-  const {name,email} = session!.user
-  const contentString = `Hi ${name}, welcome to Plura AI!.Your email is ${email}.I am going to help you with oboarding your acccount`
+export const sendAiGreeting = async (): Promise<ClientMessage[]> => {
+  const session = await getSession();
+  const { name, email } = session!.user;
+  const contentString = `Hi ${name}, welcome to Plura AI!.Your email is ${email}.I am going to help you with oboarding your acccount`;
   const history = getMutableAIState<typeof AI>();
-  console.log("greeting history", history.get())
+  console.log("greeting history", history.get());
   const value = await streamUI({
     model: togetherai("meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo"),
     system: ` always reply the exact same text exactly as it is: ${contentString}
@@ -148,9 +146,11 @@ export const sendMessage = async (
     },
   });
 
-  return [{
-    id: Date.now(),
-    role: "assistant" as const,
-    display: value.value,
-  }]
- }
+  return [
+    {
+      id: Date.now(),
+      role: "assistant" as const,
+      display: value.value,
+    },
+  ];
+};

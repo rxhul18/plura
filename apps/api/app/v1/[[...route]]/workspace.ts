@@ -76,7 +76,7 @@ const app = new Hono()
   })
   .post("/", zValidator("form", workspaceSchema), async (c) => {
     const session = await auth.api.getSession({
-    headers: c.req.raw.headers,
+      headers: c.req.raw.headers,
     });
     const userId = session?.user.id;
     const body = c.req.valid("form");
@@ -105,9 +105,9 @@ const app = new Hono()
   })
   .delete("/:id", async (c) => {
     const workspaceId = c.req.param("id");
-     if (!workspaceId) {
-       return c.json({ message: "missing workspace id" }, 400);
-     }
+    if (!workspaceId) {
+      return c.json({ message: "missing workspace id" }, 400);
+    }
     const session = await auth.api.getSession({
       headers: c.req.raw.headers,
     });

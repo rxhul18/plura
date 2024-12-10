@@ -15,7 +15,6 @@ async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en" suppressHydrationWarning>
       <PosthogProvider>
@@ -29,7 +28,7 @@ async function RootLayout({
             disableTransitionOnChange
           >
             <Toaster />
-           {children}
+            {children}
           </ThemeProvider>
         </body>
       </PosthogProvider>

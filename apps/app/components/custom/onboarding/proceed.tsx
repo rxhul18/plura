@@ -9,28 +9,28 @@ export default function Proceed() {
   const { sendMessage } = useActions<typeof AI>();
   const [messages, setMessages] = useUIState<typeof AI>();
   const [aiMessages, setAiMessages] = useAIState<typeof AI>();
-const handleClick = async (reply: "yes"|"no") => {
-  setActiveButton(reply);
-  try {
-    const response = await sendMessage(reply);
-    setMessages((currentMessages) => [...currentMessages, response]);;
-  } catch (error) {
-    setActiveButton(null);
-    console.log("error", error);
-  }
-};
-useEffect(() => {
-
-  const userMessages=aiMessages.filter((message)=>  message.role==="user")
-  const lastMessage=userMessages[userMessages.length-1]
-  if (lastMessage.content=="yes") {
-    setActiveButton("yes");
-  }
-  if(lastMessage.content=="no"){
-    setActiveButton("no")
-  }
-
-}, [aiMessages]);
+  const handleClick = async (reply: "yes" | "no") => {
+    setActiveButton(reply);
+    try {
+      const response = await sendMessage(reply);
+      setMessages((currentMessages) => [...currentMessages, response]);
+    } catch (error) {
+      setActiveButton(null);
+      console.log("error", error);
+    }
+  };
+  useEffect(() => {
+    const userMessages = aiMessages.filter(
+      (message) => message.role === "user",
+    );
+    const lastMessage = userMessages[userMessages.length - 1];
+    if (lastMessage.content == "yes") {
+      setActiveButton("yes");
+    }
+    if (lastMessage.content == "no") {
+      setActiveButton("no");
+    }
+  }, [aiMessages]);
 
   return (
     <div className="p-1 bg-transparent rounded-lg shadow-md">
