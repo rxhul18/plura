@@ -81,19 +81,19 @@ importers:
       '@prisma/client':
         specifier: ^5.22.0
         version: 5.22.0(prisma@5.22.0)
-      '@repo/auth':
+      '@plura/auth':
         specifier: workspace:*
         version: link:../../packages/auth
-      '@repo/cache':
+      '@plura/cache':
         specifier: workspace:*
         version: link:../../packages/cache
-      '@repo/crypt':
+      '@plura/crypt':
         specifier: workspace:*
         version: link:../../packages/crypt
-      '@repo/db':
+      '@plura/db':
         specifier: workspace:*
         version: link:../../packages/database
-      '@repo/mail':
+      '@plura/mail':
         specifier: workspace:*
         version: link:../../packages/mail
       '@repo/types':
@@ -193,10 +193,10 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.1.3
         version: 1.1.4(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028)
-      '@repo/auth':
+      '@plura/auth':
         specifier: workspace:*
         version: link:../../packages/auth
-      '@repo/db':
+      '@plura/db':
         specifier: workspace:*
         version: link:../../packages/database
       '@repo/types':
@@ -381,10 +381,10 @@ importers:
 
   apps/triggers:
     dependencies:
-      '@repo/cache':
+      '@plura/cache':
         specifier: workspace:*
         version: link:../../packages/cache
-      '@repo/db':
+      '@plura/db':
         specifier: workspace:*
         version: link:../../packages/database
       '@supabase/supabase-js':
@@ -445,13 +445,13 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.1.4
         version: 1.1.4(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028)
-      '@repo/auth':
+      '@plura/auth':
         specifier: workspace:*
         version: link:../../packages/auth
-      '@repo/cache':
+      '@plura/cache':
         specifier: workspace:*
         version: link:../../packages/cache
-      '@repo/db':
+      '@plura/db':
         specifier: workspace:*
         version: link:../../packages/database
       '@repo/types':
@@ -545,7 +545,7 @@ importers:
 
   packages/auth:
     dependencies:
-      '@repo/db':
+      '@plura/db':
         specifier: workspace:*
         version: link:../database
       '@repo/typescript-config':
@@ -651,7 +651,7 @@ importers:
         specifier: ^0.3.6
         version: 0.3.6(@langchain/anthropic@0.2.18(openai@4.76.0(zod@3.23.8)))(@langchain/core@0.2.36(openai@4.76.0(zod@3.23.8)))(@langchain/mistralai@0.0.28(openai@4.76.0(zod@3.23.8)))(axios@1.7.4)(cheerio@1.0.0)(openai@4.76.0(zod@3.23.8))
     devDependencies:
-      '@repo/cache':
+      '@plura/cache':
         specifier: workspace:*
         version: link:../cache
       '@repo/typescript-config':

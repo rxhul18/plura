@@ -1,4 +1,4 @@
-import { cache } from "@repo/cache";
+import { cache } from "@plura/cache";
 import { logger, schedules, wait } from "@trigger.dev/sdk/v3";
 import { createClient } from '@supabase/supabase-js';
 

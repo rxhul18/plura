@@ -1,6 +1,6 @@
 import { Hono } from "hono";
-import { prisma } from "@repo/db";
-import { auth } from "@repo/auth";
+import { prisma } from "@plura/db";
+import { auth } from "@plura/auth";
 
 const app = new Hono()
   .get("/self", async (c) => {

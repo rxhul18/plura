@@ -1,6 +1,6 @@
 import { betterAuth, BetterAuthOptions } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { prisma } from "@repo/db";
+import { prisma } from "@plura/db";
 import { multiSession } from "better-auth/plugins";
 
 const BaseDomain = process.env.NODE_ENV === "production" ? process.env.API_DOMAIN as string : "http://localhost:3001";

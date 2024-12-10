@@ -1,6 +1,6 @@
 import { RAGChat, custom } from "@upstash/rag-chat";
 import { ragAiConfig } from "./config";
-import { cache } from "@repo/cache";
+import { cache } from "@plura/cache";
 
 export const ragAi = new RAGChat({
   model: custom(ragAiConfig.model, {

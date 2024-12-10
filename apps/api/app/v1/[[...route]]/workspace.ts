@@ -1,8 +1,8 @@
 import { zValidator } from "@hono/zod-validator";
-import { prisma } from "@repo/db";
+import { prisma } from "@plura/db";
 import { Hono } from "hono";
 import { workspaceSchema } from "@repo/types";
-import { auth } from "@repo/auth";
+import { auth } from "@plura/auth";
 
 const app = new Hono()
   .get("/all", async (c) => {
