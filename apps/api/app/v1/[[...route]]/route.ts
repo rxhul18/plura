@@ -15,8 +15,6 @@ export const runtime = "edge";
 
 const app = new Hono().basePath("/v1");
 
-<<<<<<< HEAD:apps/api/app/api/[[...route]]/route.ts
-=======
 const allowedOrigins = [
   "http://localhost:3002",
   "http://localhost:3003",
@@ -36,7 +34,6 @@ app.use(
     credentials: true,
   }),
 );
->>>>>>> main:apps/api/app/v1/[[...route]]/route.ts
 
 app.route("/health", health);
 app.route("/session", session);
