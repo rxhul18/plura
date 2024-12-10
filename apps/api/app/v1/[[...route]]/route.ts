@@ -21,6 +21,7 @@ const allowedOrigins = [
   "http://localhost:3004",
   "https://www.plura.pro",
   "https://app.plura.pro",
+  "https://status.plura.pro",
 ];
 
 app.use(
@@ -52,3 +53,5 @@ const DELETE = handle(app);
 const OPTIONS = handle(app);
 
 export { GET, PATCH, POST, DELETE, OPTIONS };
+
+
