@@ -21,6 +21,7 @@ const allowedOrigins = [
   "http://localhost:3004",
   "https://www.plura.pro",
   "https://app.plura.pro",
+  "https://status.plura.pro",
 ];
 
 app.use(

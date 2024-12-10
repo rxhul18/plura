@@ -23,6 +23,7 @@ const app = new Hono()
         id: currentUser.user.id,
       },
     });
+
     return c.json(
       {
         user,
