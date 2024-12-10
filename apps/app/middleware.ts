@@ -13,7 +13,7 @@ const appDomain = process.env.NODE_ENV === "production" ? "https://app.plura.pro
 
 export default async function authMiddleware(request: NextRequest) {
   const { data: session } = await betterFetch<Session>(
-    `${baseDomain}/api/auth/get-session`,
+    `${baseDomain}/v1/auth/get-session`,
     {
       baseURL: request.nextUrl.origin,
       headers: {

@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from 'react';
 import {
   Accordion,
@@ -10,9 +9,29 @@ import {
 import { Card } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { IconWifi } from '@tabler/icons-react';
+import Link from 'next/link';
+import StatusTracker, { StatusData } from './status.tracker';
 
-export default function StatusCard() {
-  // Track the state of open accordion items (if needed elsewhere)
+const calculateUptime = (statusData: StatusData[]): number => {
+  type StatusT = 'operational' | 'degraded' | 'down' | 'warning';
+  const weights: Record<StatusT, number> = {
+    operational: 1, // Full uptime
+    degraded: 0.8,  // Partial uptime
+    warning: 0.5,   // Reduced uptime
+    down: 0,        // No uptime
+  };
+
+  const totalStatuses = statusData.length;
+  if (totalStatuses === 0) return 0;
+  const uptimeScore = statusData.reduce(
+    (sum, { status }) => sum + (weights[status] || 0),
+    0
+  );
+
+  return parseFloat(((uptimeScore / totalStatuses) * 100).toFixed(2));
+};
+
+export default function StatusCard({wwwData}:{wwwData: StatusData[]}) {
   const [openItems, setOpenItems] = useState<string[]>([]);
 
   const handleToggle = (value: string) => {
@@ -45,7 +64,15 @@ export default function StatusCard() {
             </Badge>
           </AccordionTrigger>
           <AccordionContent className="p-5">
-            Yes. It adheres to the WAI-ARIA design pattern.
+          <Card className="mx-auto bg-transparent shadow-none">
+      <p className="text-tremor-default flex items-center justify-between font-semibold">
+        <Link href={"https://www.plura.pro"} rel="noopener noreferrer" target="_blank">
+        <span>{new URL("https://www.plura.pro").host}</span>
+        </Link>
+        <span className="text-emerald-500">{calculateUptime(wwwData)}% uptime</span>
+      </p>
+      <StatusTracker data={wwwData}/>
+    </Card>
           </AccordionContent>
         </AccordionItem>
 

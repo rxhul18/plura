@@ -7,25 +7,27 @@ import React from 'react'
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:border-border">
+    <header className="sticky top-0 z-[500] w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:border-border">
       <div className="container flex h-14 max-w-screen-2xl items-center justify-between px-3">
-      <Link href="/" className="mr-4 flex items-center space-x-2 lg:mr-6">
-        <Image
-          src="/images/plura-logo.jpg"
-          alt="logo"
-          width={50}
-          height={50}
-          className="rounded-full"
-        />
-        <span className="hidden font-bold text-lg lg:inline-block">
-          Plura Ai
-        </span>
-        <Badge className='hidden md:block'>Beta</Badge>
-      </Link>
+      <Link href="/" className="flex flex-row items-center gap-2">
+          <Image
+            src="/images/plura-logo.png"
+            alt="logo"
+            width={30}
+            height={30}
+            className="rounded-md"
+          />
+          <p className="font-bold text-xl tracking-tighter">Plura Ai</p>
+          <Badge variant={"outline"} className="px-2">
+            Beta
+          </Badge>
+        </Link>
 
+        <Link href={"https://l.devwtf.in/plura-dc"}>
       <Button size={"sm"} variant={"secondary"} className="ml-4">
               Get Updates
             </Button>
+        </Link>
       </div>
     </header>
   )

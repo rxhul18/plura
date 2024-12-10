@@ -11,7 +11,7 @@ export const siteStatusTask = schedules.task({
   run: async () => {
     const urls = {
       WEB: "https://www.plura.pro",
-      API: "https://api.plura.pro/api/health",
+      API: "https://api.plura.pro/v1/health",
       APP: "https://app.plura.pro/events",
     };
     
@@ -68,11 +68,14 @@ async function sendDiscordNotification(
   error: string | null = null
 ) {
   const ROLE_ID = "1308042212319428668";
-  const downMsg = `🚨 Service **${serviceName}** is experiencing issues!`;
-  const upMsg = `📢 Service **${serviceName}** is having high latency!`;
+  const downMsg = `🚨 Service **${serviceName}** is experiencing issues! 🚨`;
+  const upMsg = `⚠️ Service **${serviceName}** is having high latency! ⚠️`;
   const NotifyMsg = status === "UP" ? upMsg : downMsg;
   const message = {
-    content: `<@&${ROLE_ID}> ${NotifyMsg}`,
+    content: `
+<@&${ROLE_ID}>
+${NotifyMsg}
+`,
     embeds: [
       {
         title: `Status Alert for ${serviceName}`,

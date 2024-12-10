@@ -13,7 +13,7 @@ import {
 import { Card } from "@/components/ui/card";
 import { siteConfig } from "@/config/site.config";
 import Image from "next/image";
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type AccordionItem = {
   id: string;

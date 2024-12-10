@@ -21,8 +21,8 @@ export default function About() {
   const [contributors, setContributors] = useState<ContributorData[]>([]);
   const fetchUrl =
     process.env.NODE_ENV === "production"
-      ? "https://app.plura.pro/api/contributors"
-      : "http://localhost:3001/api/contributors";
+      ? "https://api.plura.pro/v1/contributors"
+      : "http://localhost:3001/v1/contributors";
 
   useEffect(() => {
     const fetchContributors = async () => {

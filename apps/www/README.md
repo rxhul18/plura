@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Setting Up Your Environment
 
-## Getting Started
+To set up your environment for the project, follow these steps:
 
-First, run the development server:
+1. **Create a `.env` file** in the root of your project. You can use the following template:
+   ```bash
+   # Required: Your Supabase URL
+   SUPABASE_URL=your_supabase_url
+   
+   # Required: Your Supabase API Key
+   SUPABASE_KEY=your_supabase_key
+   
+   # Required: PostgreSQL connection string
+   DATABASE_URL=postgresql://user:password@localhost:5432/mydb
+   
+   # Required: Upstash Redis configuration (https://upstash.com)
+   UPSTASH_REDIS_REST_TOKEN=your_upstash_redis_rest_token
+   UPSTASH_REDIS_REST_URL=your_upstash_redis_rest_url
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. **Install Prisma** and set up your database:
+   ```bash
+   pnpm install @prisma/client
+   npx prisma init
+  ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Configure your Prisma schema** in `prisma/schema.prisma` to connect to your Supabase database:
+  ```prisma
+   datasource db {
+     provider = "postgresql"
+    url      = env("DATABASE_URL")
+  }
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. **Run the Prisma migrations** to set up your database:
+   ```bash
+   pnpm prisma migrate dev --name init
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+5. **Testing the Setup**:
+- You can test your setup by running the development server:
+   ```bash
+   pnpm dev
+   ```
+   - Access your application at [Login](http://localhost:3003/auth).
 
-## Learn More
+    - Access your application at [Upastash](http://localhost:3001/api/health).
+   
+## Need Help?
 
-To learn more about Next.js, take a look at the following resources:
+- Check our [Contributing Guide](../../CONTRIBUTING.md)
+- Join our [Discord Community](https://discord.gg/XtybuwJV)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

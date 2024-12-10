@@ -56,17 +56,15 @@ export function MainNav() {
                 </NavigationMenuTrigger>
               </Link>
               <NavigationMenuContent>
-                <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                <ul className="grid gap-3 p-4 md:w-[600px] grid-cols-2 grid-flow-col max-h-[80vh]">
                   <li className="row-span-3">
                     <NavigationMenuLink asChild>
                       <Link
-                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/40 to-muted p-6 no-underline outline-none transition-all duration-300 ease-in-out hover:scale-[1.02] focus:shadow-md hover:from-muted/60 hover:to-muted group"
+                        className="flex h-full w-full select-none flex-col justify-end rounded-xl bg-gradient-to-b from-muted/40 to-muted p-2 no-underline outline-none transition-all duration-300 ease-in-out hover:scale-[1.02] focus:shadow-md hover:from-muted/60 hover:to-muted group"
                         href="/"
                       >
                         {/* <Icons.logo className="h-6 w-6" /> */}
-                        <div className="mb-2 mt-4 text-lg font-medium">
-                          shadcn/ui
-                        </div>
+                        <h3 className=" text-lg font-medium">Feature 1</h3>
                         <p className="text-sm leading-tight text-muted-foreground/60 group-hover:text-muted-foreground">
                           Beautifully designed components built with Radix UI
                           and Tailwind CSS.
@@ -74,43 +72,50 @@ export function MainNav() {
                       </Link>
                     </NavigationMenuLink>
                   </li>
-                  <li className="row-span-3">
-                    <ul className="flex flex-col gap-3">
-                      <li>
-                        <NavigationMenuLink asChild>
-                          <Link
-                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/40 to-muted p-6 no-underline outline-none transition-all duration-300 ease-in-out hover:scale-[1.02] focus:shadow-md hover:from-muted/60 hover:to-muted group"
-                            href="/"
-                          >
-                            {/* <Icons.logo className="h-6 w-6" /> */}
-                            <div className="mb-2 mt-4 text-lg font-medium">
-                              shadcn/ui
-                            </div>
-                            <p className="text-sm leading-tight text-muted-foreground/60 group-hover:text-muted-foreground">
-                              Beautifully designed components built with Radix
-                              UI and Tailwind CSS.
-                            </p>
-                          </Link>
-                        </NavigationMenuLink>
-                      </li>
-                      <li>
-                        <NavigationMenuLink asChild>
-                          <Link
-                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/40 to-muted p-6 no-underline outline-none transition-all duration-300 ease-in-out hover:scale-[1.02] focus:shadow-md hover:from-muted/60 hover:to-muted group"
-                            href="/"
-                          >
-                            {/* <Icons.logo className="h-6 w-6" /> */}
-                            <div className="mb-2 mt-4 text-lg font-medium">
-                              shadcn/ui
-                            </div>
-                            <p className="text-sm leading-tight text-muted-foreground/60 group-hover:text-muted-foreground">
-                              Beautifully designed components built with Radix
-                              UI and Tailwind CSS.
-                            </p>
-                          </Link>
-                        </NavigationMenuLink>
-                      </li>
-                    </ul>
+                  <li className="row-span-1">
+                    <NavigationMenuLink asChild>
+                      <Link
+                        className="flex h-full w-full select-none flex-col justify-end rounded-xl bg-gradient-to-b from-muted/40 to-muted p-6 no-underline outline-none transition-all duration-300 ease-in-out hover:scale-[1.02] focus:shadow-md hover:from-muted/60 hover:to-muted group"
+                        href="/"
+                      >
+                        {/* <Icons.logo className="h-6 w-6" /> */}
+                        <h3 className="text-lg font-medium">Feature 1</h3>
+                        <p className="text-sm leading-tight text-muted-foreground/60 group-hover:text-muted-foreground">
+                          Beautifully designed components built with Radix UI
+                          and Tailwind CSS.
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                  </li>
+                  <li className="row-span-1">
+                    <NavigationMenuLink asChild>
+                      <Link
+                        className="flex h-full w-full select-none flex-col justify-end rounded-xl bg-gradient-to-b from-muted/40 to-muted p-6 no-underline outline-none transition-all duration-300 ease-in-out hover:scale-[1.02] focus:shadow-md hover:from-muted/60 hover:to-muted group"
+                        href="/"
+                      >
+                        {/* <Icons.logo className="h-6 w-6" /> */}
+                        <h3 className="text-lg font-medium">Feature 1</h3>
+                        <p className="text-sm leading-tight text-muted-foreground/60 group-hover:text-muted-foreground">
+                          Beautifully designed components built with Radix UI
+                          and Tailwind CSS.
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                  </li>
+                  <li className="row-span-1">
+                    <NavigationMenuLink asChild>
+                      <Link
+                        className="flex h-full w-full select-none flex-col justify-end rounded-xl bg-gradient-to-b from-muted/40 to-muted p-6 no-underline outline-none transition-all duration-300 ease-in-out hover:scale-[1.02] focus:shadow-md hover:from-muted/60 hover:to-muted group"
+                        href="/"
+                      >
+                        {/* <Icons.logo className="h-6 w-6" /> */}
+                        <h3 className="text-lg font-medium">Feature 1</h3>
+                        <p className="text-sm leading-tight text-muted-foreground/60 group-hover:text-muted-foreground">
+                          Beautifully designed components built with Radix UI
+                          and Tailwind CSS.
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
                   </li>
                 </ul>
               </NavigationMenuContent>
