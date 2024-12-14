@@ -32,10 +32,15 @@ const calculateUptime = (statusData: StatusData[]): number => {
 };
 
 export default function StatusCard({
-  statusDataList,
+  webStatusDataList,
+  dbStatusDataList,
 }: {
-  statusDataList: {
-    url: string;
+  webStatusDataList: {
+    label: string;
+    statusData: StatusData[];
+  }[];
+  dbStatusDataList: {
+    label: string;
     statusData: StatusData[];
   }[];
 }) {
@@ -75,19 +80,19 @@ export default function StatusCard({
             </Badge>
           </AccordionTrigger>
           <AccordionContent className="p-5">
-            {statusDataList?.map((item) => {
+            {webStatusDataList?.map((item) => {
               return (
                 <Card
                   className="mx-auto bg-transparent shadow-none mb-3"
-                  key={item?.url}
+                  key={item?.label}
                 >
                   <p className="text-tremor-default flex items-center justify-between font-semibold">
                     <Link
-                      href={item?.url}
+                      href={item?.label}
                       rel="noopener noreferrer"
                       target="_blank"
                     >
-                      <span>{new URL(item?.url).host}</span>
+                      <span>{new URL(item?.label).host}</span>
                     </Link>
                     <span className="text-emerald-500">
                       {calculateUptime(item?.statusData)}% uptime
@@ -117,7 +122,22 @@ export default function StatusCard({
             </Badge>
           </AccordionTrigger>
           <AccordionContent className="p-5">
-            Yes. It adheres to the WAI-ARIA design pattern.
+            {dbStatusDataList?.map((item) => {
+              return (
+                <Card
+                  className="mx-auto bg-transparent shadow-none mb-3"
+                  key={item?.label}
+                >
+                  <p className="text-tremor-default flex items-center justify-between font-semibold">
+                    <span>{item?.label}</span>
+                    <span className="text-emerald-500">
+                      {calculateUptime(item?.statusData)}% uptime
+                    </span>
+                  </p>
+                  <StatusTracker data={item?.statusData} />
+                </Card>
+              );
+            })}
           </AccordionContent>
         </AccordionItem>
 

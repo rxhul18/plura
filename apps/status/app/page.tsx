@@ -10,6 +10,10 @@ interface StatusT {
     WEB: number;
     API: number;
     APP: number;
+    MASS_CREATED: number;
+    MASS_DELETE: number;
+    MASS_READ: number;
+    MASS_UPDATE: number;
   };
   statuses: {
     WEB: string;
@@ -26,6 +30,19 @@ const Page = () => {
   const [apiStatus, setApiStatus] = useState<StatusData[]>([]);
   const [appStatus, setAppStatus] = useState<StatusData[]>([]);
   const [isFetching, setIsFetching] = useState(true);
+  const [massCreatedData, setMassCreatedData] = useState<StatusData[]>([]);
+  const [massDeletedData, setMassDeletedData] = useState<StatusData[]>([]);
+  const [massReadData, setMassReadData] = useState<StatusData[]>([]);
+  const [massUpdatedData, setMassUpdatedData] = useState<StatusData[]>([]);
+
+  const getServiceStatus = (
+    latency: number,
+    originalStatus?: string
+  ): "operational" | "warning" | "down" => {
+    if (originalStatus === "DOWN" || latency >= 1000) return "down";
+    if (latency >= 700) return "warning";
+    return "operational";
+  };
 
   useEffect(() => {
     const BASE_API = "https://api.plura.pro";
@@ -48,15 +65,6 @@ const Page = () => {
           );
 
           if (todayStatus.length > 0) {
-            const getServiceStatus = (
-              latency: number,
-              originalStatus: string
-            ): "operational" | "warning" | "down" => {
-              if (originalStatus === "DOWN" || latency >= 1000) return "down";
-              if (latency >= 700) return "warning";
-              return "operational";
-            };
-
             const webData = todayStatus.map((status: StatusT) => ({
               status: getServiceStatus(
                 status.latencies.WEB,
@@ -100,27 +108,112 @@ const Page = () => {
       }
     };
 
+    const fetchDBData = async () => {
+      try {
+        setIsFetching(true);
+        const dbResponse = await fetch(`${BASE_API}/v1/status/db`);
+        const data = await dbResponse.json();
+
+        if (data?.dbStatus && data?.dbStatus.length > 0) {
+          const today = new Date().toISOString().split("T")[0];
+
+          const todayStatus = data?.dbStatus.filter((status: StatusT) =>
+            status?.timestamp.startsWith(today)
+          );
+
+          if (todayStatus?.length > 0) {
+            const massCreatedData = todayStatus?.map((status: StatusT) => ({
+              status: getServiceStatus(status?.latencies?.MASS_CREATED),
+              timestamp: status?.timestamp,
+              latency: status?.latencies?.MASS_CREATED,
+            }));
+
+            const massDeletedData = todayStatus?.map((status: StatusT) => ({
+              status: getServiceStatus(status?.latencies?.MASS_DELETE),
+              timestamp: status?.timestamp,
+              latency: status?.latencies?.MASS_DELETE,
+            }));
+
+            const massReadData = todayStatus?.map((status: StatusT) => ({
+              status: getServiceStatus(status?.latencies?.MASS_READ),
+              timestamp: status?.timestamp,
+              latency: status?.latencies?.MASS_READ,
+            }));
+
+            const massUpdatedData = todayStatus?.map((status: StatusT) => ({
+              status: getServiceStatus(status?.latencies?.MASS_UPDATE),
+              timestamp: status?.timestamp,
+              latency: status?.latencies?.MASS_UPDATE,
+            }));
+
+            setMassCreatedData(massCreatedData);
+            setMassDeletedData(massDeletedData);
+            setMassReadData(massReadData);
+            setMassUpdatedData(massUpdatedData);
+          } else {
+            setMassCreatedData([]);
+            setMassDeletedData([]);
+            setMassReadData([]);
+            setMassUpdatedData([]);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching status data:", error);
+      } finally {
+        setIsFetching(false);
+      }
+    };
+
     fetchStatusData();
-    const interval = setInterval(fetchStatusData, 4 * 60 * 1000);
-    return () => clearInterval(interval);
+    fetchDBData();
+
+    const statusDataInterval = setInterval(fetchStatusData, 6 * 60 * 1000);
+    const statusDBInterval = setInterval(fetchStatusData, 6 * 60 * 1000);
+
+    return () => {
+      clearInterval(statusDataInterval);
+      clearInterval(statusDBInterval);
+    };
   }, []);
 
   const statusDataList = useMemo(
     () => [
       {
-        url: "https://www.plura.pro",
+        label: "https://www.plura.pro",
         statusData: webStatus,
       },
       {
-        url: "https://api.plura.pro",
+        label: "https://api.plura.pro",
         statusData: apiStatus,
       },
       {
-        url: "https://app.plura.pro",
+        label: "https://app.plura.pro",
         statusData: appStatus,
       },
     ],
     [webStatus, apiStatus, appStatus]
+  );
+
+  const databaseList = useMemo(
+    () => [
+      {
+        label: "Mass Create",
+        statusData: massCreatedData,
+      },
+      {
+        label: "Mass Delete",
+        statusData: massDeletedData,
+      },
+      {
+        label: "Mass Read",
+        statusData: massReadData,
+      },
+      {
+        label: "Mass Update",
+        statusData: massUpdatedData,
+      },
+    ],
+    [massCreatedData, massDeletedData, massReadData, massUpdatedData]
   );
 
   return (
@@ -150,7 +243,10 @@ const Page = () => {
         </span>
       </div>
       <div className="flex w-full h-full px-10 md:px-40 gap-4">
-        <StatusCard statusDataList={statusDataList} />
+        <StatusCard
+          webStatusDataList={statusDataList}
+          dbStatusDataList={databaseList}
+        />
       </div>
     </div>
   );
