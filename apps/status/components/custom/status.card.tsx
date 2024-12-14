@@ -39,8 +39,6 @@ export default function StatusCard({
     statusData: StatusData[];
   }[];
 }) {
-  console.log("statusDataList :", statusDataList);
-
   const [openItems, setOpenItems] = useState<string[]>([]);
 
   const handleToggle = (value: string) => {
