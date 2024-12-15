@@ -56,6 +56,7 @@ export default function StatusCard({
 
   const isOpen = (value: string) => openItems.includes(value);
 
+  // return overall status with icon
   const getOverallStatus = (percentage: number) => {
     if (percentage < 10) {
       return (
@@ -78,12 +79,14 @@ export default function StatusCard({
     }
   };
 
+  // calculate overall uptime for web
   const webOverallUptime = calculateUptime(
     webStatusDataList.reduce((acc, curr) => {
       return acc.concat(curr?.statusData || []);
     }, [] as StatusData[])
   );
 
+  // calculate overall uptime for database
   const dbOverallUptime = calculateUptime(
     dbStatusDataList.reduce((acc, curr) => {
       return acc.concat(curr?.statusData || []);

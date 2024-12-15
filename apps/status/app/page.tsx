@@ -50,6 +50,7 @@ const Page = () => {
         ? "https://api.plura.pro"
         : "http://localhost:3001";
 
+    // fetch web server status
     const fetchStatusData = async () => {
       try {
         setIsFetching(true);
@@ -107,6 +108,7 @@ const Page = () => {
       }
     };
 
+    // fetch database status
     const fetchDBData = async () => {
       try {
         setIsFetching(true);
