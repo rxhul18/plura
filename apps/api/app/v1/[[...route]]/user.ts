@@ -28,7 +28,7 @@ const app = new Hono()
           message: "Oops! seems like your session is expired",
           status: 400,
         },
-        400
+        400,
       );
     }
 
@@ -68,10 +68,11 @@ const app = new Hono()
     const cursor = c.req.query("cursor");
     const take = parseInt(c.req.query("take") || "10");
     const cacheKey = `users:all:${cursor || "start"}:${take}`;
-    let response: { nextCursor: string | null, users: User[] } | null = null;
+    let response: { nextCursor: string | null; users: User[] } | null = null;
 
     try {
-      const cachedData: { nextCursor: string | null, users: User[] } | null = await cache.get(cacheKey);
+      const cachedData: { nextCursor: string | null; users: User[] } | null =
+        await cache.get(cacheKey);
       if (cachedData) {
         response = cachedData;
         console.log("Returned user list from cache");
@@ -142,7 +143,10 @@ const app = new Hono()
         try {
           await cache.set(cacheKey, user, { ex: CACHE_EXPIRY });
         } catch (cacheError) {
-          console.error("Error storing user data in cache (by ID):", cacheError);
+          console.error(
+            "Error storing user data in cache (by ID):",
+            cacheError,
+          );
         }
       }
     }
