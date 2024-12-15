@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { use, useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useScrollToBottom } from "@/hooks/use-scroll-to-bottom";
 import { sleep } from "@/lib/utils";
 
@@ -53,7 +53,7 @@ export default function Chatbox() {
       toast.error("Something went wrong");
     }
   };
-  let count = 0;
+  // let count = 0;
   useEffect(() => {
     const fetchAiGreeting = async () => {
       const response = await sendAiGreeting();

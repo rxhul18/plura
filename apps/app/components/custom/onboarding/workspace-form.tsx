@@ -4,8 +4,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
-  CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -28,6 +26,7 @@ export default function DialogDemo() {
   const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState("");
   const { sendMessage } = useActions<typeof AI>();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [messages, setMessages] = useUIState<typeof AI>();
   const [hasWorkspace, setHasWorkspace] = useState(false);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

@@ -3,7 +3,6 @@ import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { ThemeProvider } from "@/hooks/theme-provider";
 import { PosthogProvider } from "@/hooks/posthog";
-import { AI } from "@/lib/ai";
 import { Toaster } from "sonner";
 export const metadata: Metadata = {
   title: "Plura",
