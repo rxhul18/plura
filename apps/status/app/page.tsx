@@ -45,10 +45,11 @@ const Page = () => {
   };
 
   useEffect(() => {
-    const BASE_API =
-      process.env.NODE_ENV === "production"
-        ? "https://api.plura.pro"
-        : "http://localhost:3001";
+    const BASE_API = "https://api.plura.pro";
+    //   const BASE_API =
+    //   process.env.NODE_ENV === "production"
+    //     ? "https://api.plura.pro"
+    //     : "http://localhost:3001";
 
     // fetch web server status
     const fetchStatusData = async () => {
@@ -126,25 +127,25 @@ const Page = () => {
             const createdData = todayStatus?.map((status: StatusT) => ({
               status: getServiceStatus(status?.latencies?.MASS_CREATED),
               timestamp: status?.timestamp,
-              latency: status?.latencies?.MASS_CREATED,
+              latency: status?.totalLatency,
             }));
 
             const readData = todayStatus?.map((status: StatusT) => ({
               status: getServiceStatus(status?.latencies?.MASS_READ),
               timestamp: status?.timestamp,
-              latency: status?.latencies?.MASS_READ,
+              latency: status?.totalLatency,
             }));
 
             const updatedData = todayStatus?.map((status: StatusT) => ({
               status: getServiceStatus(status?.latencies?.MASS_UPDATE),
               timestamp: status?.timestamp,
-              latency: status?.latencies?.MASS_UPDATE,
+              latency: status?.totalLatency,
             }));
 
             const deletedData = todayStatus?.map((status: StatusT) => ({
               status: getServiceStatus(status?.latencies?.MASS_DELETE),
               timestamp: status?.timestamp,
-              latency: status?.latencies?.MASS_DELETE,
+              latency: status?.totalLatency,
             }));
 
             setCreatedData(createdData);

@@ -61,7 +61,7 @@ export default function StatusCard({
     if (percentage < 10) {
       return (
         <>
-          <IconWifi className="size-5 mr-2 text-red-500" /> Down
+          <IconWifi className="size-5 mr-2 text-neutral-500" /> Fetching ...
         </>
       );
     } else if (percentage < 20) {
