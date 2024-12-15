@@ -45,11 +45,10 @@ const Page = () => {
   };
 
   useEffect(() => {
-    const BASE_API = "https://api.plura.pro";
-    // const BASE_API =
-    //   process.env.NODE_ENV === "production"
-    //     ? "https://api.plura.pro"
-    //     : "http://localhost:3001";
+    const BASE_API =
+      process.env.NODE_ENV === "production"
+        ? "https://api.plura.pro"
+        : "http://localhost:3001";
 
     const fetchStatusData = async () => {
       try {
