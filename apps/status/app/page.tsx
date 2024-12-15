@@ -30,10 +30,10 @@ const Page = () => {
   const [apiStatus, setApiStatus] = useState<StatusData[]>([]);
   const [appStatus, setAppStatus] = useState<StatusData[]>([]);
   const [isFetching, setIsFetching] = useState(true);
-  const [massCreatedData, setMassCreatedData] = useState<StatusData[]>([]);
-  const [massDeletedData, setMassDeletedData] = useState<StatusData[]>([]);
-  const [massReadData, setMassReadData] = useState<StatusData[]>([]);
-  const [massUpdatedData, setMassUpdatedData] = useState<StatusData[]>([]);
+  const [createdData, setCreatedData] = useState<StatusData[]>([]);
+  const [readData, setReadData] = useState<StatusData[]>([]);
+  const [updatedData, setUpdatedData] = useState<StatusData[]>([]);
+  const [deletedData, setDeletedData] = useState<StatusData[]>([]);
 
   const getServiceStatus = (
     latency: number,
@@ -122,39 +122,39 @@ const Page = () => {
           );
 
           if (todayStatus?.length > 0) {
-            const massCreatedData = todayStatus?.map((status: StatusT) => ({
+            const createdData = todayStatus?.map((status: StatusT) => ({
               status: getServiceStatus(status?.latencies?.MASS_CREATED),
               timestamp: status?.timestamp,
               latency: status?.latencies?.MASS_CREATED,
             }));
 
-            const massDeletedData = todayStatus?.map((status: StatusT) => ({
-              status: getServiceStatus(status?.latencies?.MASS_DELETE),
-              timestamp: status?.timestamp,
-              latency: status?.latencies?.MASS_DELETE,
-            }));
-
-            const massReadData = todayStatus?.map((status: StatusT) => ({
+            const readData = todayStatus?.map((status: StatusT) => ({
               status: getServiceStatus(status?.latencies?.MASS_READ),
               timestamp: status?.timestamp,
               latency: status?.latencies?.MASS_READ,
             }));
 
-            const massUpdatedData = todayStatus?.map((status: StatusT) => ({
+            const updatedData = todayStatus?.map((status: StatusT) => ({
               status: getServiceStatus(status?.latencies?.MASS_UPDATE),
               timestamp: status?.timestamp,
               latency: status?.latencies?.MASS_UPDATE,
             }));
 
-            setMassCreatedData(massCreatedData);
-            setMassDeletedData(massDeletedData);
-            setMassReadData(massReadData);
-            setMassUpdatedData(massUpdatedData);
+            const deletedData = todayStatus?.map((status: StatusT) => ({
+              status: getServiceStatus(status?.latencies?.MASS_DELETE),
+              timestamp: status?.timestamp,
+              latency: status?.latencies?.MASS_DELETE,
+            }));
+
+            setCreatedData(createdData);
+            setReadData(readData);
+            setUpdatedData(updatedData);
+            setDeletedData(deletedData);
           } else {
-            setMassCreatedData([]);
-            setMassDeletedData([]);
-            setMassReadData([]);
-            setMassUpdatedData([]);
+            setCreatedData([]);
+            setDeletedData([]);
+            setReadData([]);
+            setUpdatedData([]);
           }
         }
       } catch (error) {
@@ -167,8 +167,8 @@ const Page = () => {
     fetchStatusData();
     fetchDBData();
 
-    const statusDataInterval = setInterval(fetchStatusData, 6 * 60 * 1000);
-    const statusDBInterval = setInterval(fetchStatusData, 6 * 60 * 1000);
+    const statusDataInterval = setInterval(fetchStatusData, 20 * 1000); // call every 20s
+    const statusDBInterval = setInterval(fetchStatusData, 20 * 1000); // call every 20s
 
     return () => {
       clearInterval(statusDataInterval);
@@ -197,23 +197,23 @@ const Page = () => {
   const databaseList = useMemo(
     () => [
       {
-        label: "Mass Create",
-        statusData: massCreatedData,
+        label: "POST",
+        statusData: createdData,
       },
       {
-        label: "Mass Delete",
-        statusData: massDeletedData,
+        label: "GET",
+        statusData: readData,
       },
       {
-        label: "Mass Read",
-        statusData: massReadData,
+        label: " PATCH",
+        statusData: updatedData,
       },
       {
-        label: "Mass Update",
-        statusData: massUpdatedData,
+        label: "DELETE",
+        statusData: deletedData,
       },
     ],
-    [massCreatedData, massDeletedData, massReadData, massUpdatedData]
+    [createdData, readData, updatedData, deletedData]
   );
 
   return (

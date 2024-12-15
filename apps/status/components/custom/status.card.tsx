@@ -21,7 +21,7 @@ const calculateUptime = (statusData: StatusData[]): number => {
     down: 0, // No uptime
   };
 
-  const totalStatuses = statusData.length;
+  const totalStatuses = statusData?.length;
   if (totalStatuses === 0) return 0;
   const uptimeScore = statusData.reduce(
     (sum, { status }) => sum + (weights[status] || 0),
@@ -56,6 +56,40 @@ export default function StatusCard({
 
   const isOpen = (value: string) => openItems.includes(value);
 
+  const getOverallStatus = (percentage: number) => {
+    if (percentage < 10) {
+      return (
+        <>
+          <IconWifi className="size-5 mr-2 text-red-500" /> Down
+        </>
+      );
+    } else if (percentage < 20) {
+      return (
+        <>
+          <IconWifi className="size-5 mr-2 text-yellow-500" /> Warning
+        </>
+      );
+    } else {
+      return (
+        <>
+          <IconWifi className="size-5 mr-2 text-green-500" /> Operational
+        </>
+      );
+    }
+  };
+
+  const webOverallUptime = calculateUptime(
+    webStatusDataList.reduce((acc, curr) => {
+      return acc.concat(curr?.statusData || []);
+    }, [] as StatusData[])
+  );
+
+  const dbOverallUptime = calculateUptime(
+    dbStatusDataList.reduce((acc, curr) => {
+      return acc.concat(curr?.statusData || []);
+    }, [] as StatusData[])
+  );
+
   return (
     <Card className="w-full p-2 bg-secondary rounded-xl">
       <Accordion
@@ -76,7 +110,7 @@ export default function StatusCard({
                   : "bg-secondary hover:bg-secondary"
               }`}
             >
-              <IconWifi className="size-5 mr-2 text-green-500" /> Operational
+              {getOverallStatus(webOverallUptime)}
             </Badge>
           </AccordionTrigger>
           <AccordionContent className="p-5">
@@ -118,7 +152,7 @@ export default function StatusCard({
                   : "bg-secondary hover:bg-secondary"
               }`}
             >
-              <IconWifi className="size-5 mr-2 text-yellow-500" /> Operational
+              {getOverallStatus(dbOverallUptime)}
             </Badge>
           </AccordionTrigger>
           <AccordionContent className="p-5">
@@ -141,7 +175,7 @@ export default function StatusCard({
           </AccordionContent>
         </AccordionItem>
 
-        <AccordionItem value="item-3">
+        {/* <AccordionItem value="item-3">
           <AccordionTrigger
             className="flex w-full items-center justify-between rounded-xl hover:no-underline bg-background px-5 data-[state=open]:bg-transparent"
             onClick={() => handleToggle("item-3")}
@@ -160,7 +194,7 @@ export default function StatusCard({
           <AccordionContent className="p-5">
             Yes. It adheres to the WAI-ARIA design pattern.
           </AccordionContent>
-        </AccordionItem>
+        </AccordionItem> */}
       </Accordion>
     </Card>
   );
