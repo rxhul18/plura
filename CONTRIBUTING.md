@@ -24,11 +24,6 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 1. [Web App README](apps/www/README.md)
 
-### Setup the Status
-
-1. [Status README](apps/status/README.md)
-
-
 ## Pull Request Process
 
 1. Ensure any install or build dependencies are removed before the end of the layer when doing a

@@ -1,5 +1,3 @@
-# WWW Setup
-
 ## Setting Up Your Environment
 
 To set up your environment for the project, follow these steps:
