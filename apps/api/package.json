@@ -24,7 +24,7 @@
     "@plura/cache": "workspace:*",
     "@plura/crypt":"workspace:*",
     "hono": "^4.6.9",
-    "next": "15.0.3",
+    "next": "15.0.4",
     "prisma": "^5.22.0",
     "react": "19.0.0-rc-02c0e824-20241028",
     "react-dom": "19.0.0-rc-02c0e824-20241028",
