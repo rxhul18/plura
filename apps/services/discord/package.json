@@ -2,7 +2,7 @@
   "name": "plura-discord",
   "version": "1.0.0",
   "description": "",
-  "main": "src/main.ts",
+  "main": "src/main.js",
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/main.ts",
