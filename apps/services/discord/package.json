@@ -2,14 +2,17 @@
   "name": "plura-discord",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "dev": "tsx watch src/main.ts",
-    "start": "node dist/main.ts",
-    "build": "tsup src/main.ts --minify"
+    "start": "node dist/main.js",
+    "build": "tsup src/main.ts --minify",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit",
+    "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
+    "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache"
   },
   "keywords": [],
-  "author": "",
+  "author": "@plura-ai",
   "license": "ISC",
   "dependencies": {
     "@discordjs/voice": "^0.18.0",
