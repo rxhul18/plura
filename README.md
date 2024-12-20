@@ -23,10 +23,7 @@ Plura is a SaaS platform that redefines AI-powered communication and interaction
 
 ## 💻 Tech Stack
 
-<div align="center">
-<img src="https://tech-orbit.wontory.dev/api?title=&tech=Vercel,Next.js,Tailwind%20CSS,Node.js,GraphQL,PostgreSQL,Redis,Turborepo,TypeScript,React,Prisma&size=1350&duration=15" alt="Plura" width="400">
-</div>
-
+Coming soon 
 
 ## 🤝 Contributing
 Contributions are very welcome! A contribution can be as small as a ⭐ or even finding and creating issues.
