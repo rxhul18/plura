@@ -2,7 +2,7 @@
 
 # Contributing
 
-When contributing to this repository, please first search throught the issues in the repository and commit "assign me" if you wish to work on that ,
+When contributing to this repository, please first search through the issues in the repository and commit "assign me" if you wish to work on that ,
 then owners of this repository will let you know by latest by assigning you the issue.
 
 Please note we have a code of conduct, please follow it in all your interactions with the project.
