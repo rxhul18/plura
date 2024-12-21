@@ -40,8 +40,12 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 ### Our Responsibilities
 
-Project owners are responsible for taking care of the repository and guiding you 
-to the right way. So please follow to what they say and do in there command
+Project maintainers are responsible for:
+- Providing guidance to contributors
+- Maintaining repository quality and standards
+- Setting clear expectations for contributions
+
+Contributors are expected to follow maintainer guidance and project guidelines.
 
 Project maintainers have the right and responsibility to remove, edit, or
 reject comments, commits, code, wiki edits, issues, and other contributions
