@@ -10,16 +10,15 @@ Plura is a SaaS platform that redefines AI-powered communication and interaction
   Coming soon 
 
 ## 🔑 Key Features
-- 🔗**Multi-Channel Connectivity**: Connect agents to websites, WhatsApp, Discord, Instagram, and more
+- 🔗**Multi-Channel Connectivity**: Connect agents to websites, WhatsApp, Discord, and more
 - 🧠**Custom AI Training**: Easily teach your AI agents with specific, information
 - 💬 **Chat with Collections**: Interact with specific knowledge bases.
-- 🔍 **Powerful Search**: Quickly find any saved information.
 - 🏠 **Self Hostable**: Open source and easy to deploy locally.
 
 
 ## 🏗 System Architecture
 
--Coming soon
+Coming soon
 
 ## 💻 Tech Stack
 
@@ -28,7 +27,7 @@ Coming soon
 ## 🤝 Contributing
 Contributions are very welcome! A contribution can be as small as a ⭐ or even finding and creating issues.
 
-- for joining our community, please Contact [Saidev Dhal](https://github.com/Skidgod4444/)
+- for joining our community, please Contact [Saidev Dhal](https://cal.com/saidevdhal)
 - for contributing to our code, please follow the contribution guidelines below
 
 ### Contribution Guidelines 
@@ -41,8 +40,8 @@ Distributed under the MIT License.
 
 ## 📞 Contact
 
-- Project Link: [GitHub Repository](https://github.com/Skidgod4444/plura)
-- Discord: [Discord](https://discord.gg/plura)
+- Mail: [connect.saidev@gmail.com](mailto:connect.saidev@gmail.com)
+- Discord: [Discord](https://l.devwtf.in/plura-dc)
 ---
 
 ### Contributing
