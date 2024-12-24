@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
-import exportFromJSON from "export-from-json";
-import { Download, List } from "lucide-react";
+// import exportFromJSON from "export-from-json"; 
+import { List } from "lucide-react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -71,62 +71,62 @@ export function DataTable<TData, TValue>({
     },
   });
 
-  const handleDownload = async () => {
-    const selectedRows = table.getSelectedRowModel().rows;
-    const exportType = exportFromJSON.types.csv;
+  // const handleDownload = async () => {
+  //   const selectedRows = table.getSelectedRowModel().rows;
+  //   const exportType = exportFromJSON.types.csv;
 
-    // Get visible columns (excluding the select column)
-    const visibleColumns = table
-      .getAllColumns()
-      .filter((column) => column.getIsVisible() && column.id !== "select")
-      .map((column) => column.id);
+  //   // Get visible columns (excluding the select column)
+  //   const visibleColumns = table
+  //     .getAllColumns()
+  //     .filter((column) => column.getIsVisible() && column.id !== "select")
+  //     .map((column) => column.id);
 
-    // Function to filter object properties based on visible columns
-    const filterVisibleFields = (row: Record<string, unknown>) => {
-      const filteredRow: Record<string, unknown> = {};
-      visibleColumns.forEach((columnId) => {
-        filteredRow[columnId] = row[columnId];
-      });
-      return filteredRow;
-    };
+  //   // Function to filter object properties based on visible columns
+  //   const filterVisibleFields = (row: Record<string, unknown>) => {
+  //     const filteredRow: Record<string, unknown> = {};
+  //     visibleColumns.forEach((columnId) => {
+  //       filteredRow[columnId] = row[columnId];
+  //     });
+  //     return filteredRow;
+  //   };
 
-    // If there are selected rows, download only those
-    if (selectedRows && selectedRows.length > 0) {
-      const selectedData = selectedRows
-        .map((row) => row.original as Record<string, unknown>)
-        .map(filterVisibleFields);
+  //   // If there are selected rows, download only those
+  //   if (selectedRows && selectedRows.length > 0) {
+  //     const selectedData = selectedRows
+  //       .map((row) => row.original as Record<string, unknown>)
+  //       .map(filterVisibleFields);
 
-      exportFromJSON({
-        data: selectedData,
-        fileName: "SelectedMailsData",
-        exportType,
-      });
-      return;
-    }
+  //     exportFromJSON({
+  //       data: selectedData,
+  //       fileName: "SelectedMailsData",
+  //       exportType,
+  //     });
+  //     return;
+  //   }
 
-    // If no rows are selected, download all data
-    if (!data || data.length === 0) {
-      return;
-    }
+  //   // If no rows are selected, download all data
+  //   if (!data || data.length === 0) {
+  //     return;
+  //   }
 
-    const filteredData = (data as Record<string, unknown>[]).map(
-      filterVisibleFields,
-    );
-    exportFromJSON({
-      data: filteredData,
-      fileName: "AllMailsData",
-      exportType,
-    });
-  };
+  //   const filteredData = (data as Record<string, unknown>[]).map(
+  //     filterVisibleFields,
+  //   );
+  //   exportFromJSON({
+  //     data: filteredData,
+  //     fileName: "AllMailsData",
+  //     exportType,
+  //   });
+  // };
 
   return (
     <div>
       <div className="flex items-center py-4 w-full justify-between gap-2">
         <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("Email")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter Integrations..."
+          value={(table.getColumn("Integration")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("Email")?.setFilterValue(event.target.value)
+            table.getColumn("Integration")?.setFilterValue(event.target.value)
           }
         />
         <div className="flex gap-2">
@@ -156,10 +156,10 @@ export function DataTable<TData, TValue>({
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button onClick={handleDownload} className="flex items-center gap-2">
+          {/* <Button onClick={handleDownload} className="flex items-center gap-2">
             <Download className="h-4 w-4" />
             <span className="hidden md:inline-block">Download</span>
-          </Button>
+          </Button> */}
         </div>
       </div>
       <div className="rounded-md border">
@@ -172,10 +172,10 @@ export function DataTable<TData, TValue>({
                     <TableHead
                       key={header.id}
                       className={`${
-                        header.column.id === "Source"
-                          ? "hidden md:table-cell" // Add this class for the Source column
-                          : ""
-                      }`}
+                        header.column.id === "Services"
+                        ? "hidden md:table-cell"
+                        : ""} ${header.column.id === "IntegrationId"
+                        ? "hidden md:table-cell": ""}`}
                     >
                       {header.isPlaceholder
                         ? null
@@ -200,10 +200,10 @@ export function DataTable<TData, TValue>({
                     <TableCell
                       key={cell.id}
                       className={`${
-                        cell.column.id === "Source"
-                          ? "hidden md:table-cell" // Add this class for the Source Row
-                          : ""
-                      }`}
+                        cell.column.id === "Services"
+                        ? "hidden md:table-cell"
+                        : ""} ${cell.column.id === "IntegrationId"
+                        ? "hidden md:table-cell": ""}`}
                     >
                       {flexRender(
                         cell.column.columnDef.cell,

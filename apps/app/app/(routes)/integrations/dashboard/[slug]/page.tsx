@@ -4,133 +4,23 @@ import { DataTable } from "./data-table";
 async function getData(): Promise<Mail[]> {
   // Fetch data from your API here.
   return [
-    {
-      Email: "saidevdhal@gmail.com",
-      Source: "Agent2",
-      date: "13-03-2023",
-      id: "bsd456ghty",
-    },
-    {
-      Email: "sarahsmith@gmail.com",
-      Source: "Agent2",
-      date: "13-03-2023",
-      id: "bsd456ghty",
-    },
-    {
-      Email: "rahulshah0728@gmail.com",
-      Source: "Agent1",
-      date: "12-01-2023",
-      id: "asd123nadsf",
-    },
-    {
-      Email: "gautam@gmail.com",
-      Source: "Agent1",
-      date: "14-02-2023",
-      id: "csd789jklu",
-    },
-    {
-      Email: "ayush@gmail.com",
-      Source: "Agent2",
-      date: "15-05-2023",
-      id: "dsd012mnop",
-    },
-    {
-      Email: "piyushgarg@gmail.com",
-      Source: "Agent1",
-      date: "16-04-2023",
-      id: "esd345qrst",
-    },
-    {
-      Email: "hiteshchoudhary@gmail.com",
-      Source: "Agent2",
-      date: "17-07-2023",
-      id: "fsd678uvwx",
-    },
-    {
-      Email: "rahuldev@gmail.com",
-      Source: "Agent1",
-      date: "18-06-2023",
-      id: "gsd901yzab",
-    },
-    {
-      Email: "shaurya@gmail.com",
-      Source: "Agent2",
-      date: "19-09-2023",
-      id: "hsd234cdef",
-    },
-    {
-      Email: "narendrachoudhary@gmail.com",
-      Source: "Agent1",
-      date: "20-08-2023",
-      id: "isd567ghij",
-    },
-    {
-      Email: "anshshukla@gmail.com",
-      Source: "Agent2",
-      date: "21-11-2023",
-      id: "jsd890klmn",
-    },
-    {
-      Email: "williamtaylor@gmail.com",
-      Source: "Agent1",
-      date: "22-10-2023",
-      id: "ksd123opqr",
-    },
-    {
-      Email: "rithik@gmail.com",
-      Source: "Agent2",
-      date: "23-12-2023",
-      id: "lsd456stuv",
-    },
-    {
-      Email: "mehulshah18@gmail.com",
-      Source: "Agent2",
-      date: "23-12-2023",
-      id: "lsd456stuv",
-    },
-    {
-      Email: "shreyashjambhulkar@gmail.com",
-      Source: "Agent2",
-      date: "23-12-2023",
-      id: "lsd456stuv",
-    },
-    {
-      Email: "kavitagupta@gmail.com",
-      Source: "Agent2",
-      date: "23-12-2023",
-      id: "lsd456stuv",
-    },
-    {
-      Email: "shrinivash@gmail.com",
-      Source: "Agent2",
-      date: "23-12-2023",
-      id: "lsd456stuv",
-    },
-    {
-      Email: "rahul18@gmail.com",
-      Source: "Agent2",
-      date: "23-12-2023",
-      id: "lsd456stuv",
-    },
-    {
-      Email: "omkarpathak@gmail.com",
-      Source: "Agent2",
-      date: "23-12-2023",
-      id: "lsd456stuv",
-    },
-    {
-      Email: "divyasingh@gmail.com",
-      Source: "Agent2",
-      date: "23-12-2023",
-      id: "lsd456stuv",
-    },
-    {
-      Email: "sohampawar@gmail.com",
-      Source: "Agent2",
-      date: "23-12-2023",
-      id: "lsd456stuv",
-    },
+    { IntegrationId: "INT001", Integration: "Salesforce", Status: "Running", Services: "01" },
+    { IntegrationId: "INT002", Integration: "HubSpot", Status: "Paused", Services: "03" },
+    { IntegrationId: "INT003", Integration: "Slack", Status: "Stopped", Services: "05" },
+    { IntegrationId: "INT004", Integration: "Zoom", Status: "Running", Services: "02" },
+    { IntegrationId: "INT005", Integration: "Asana", Status: "Paused", Services: "04" },
+    { IntegrationId: "INT006", Integration: "Trello", Status: "Stopped", Services: "01" },
+    { IntegrationId: "INT007", Integration: "Jira", Status: "Running", Services: "03" },
+    { IntegrationId: "INT008", Integration: "Zendesk", Status: "Paused", Services: "02" },
+    { IntegrationId: "INT009", Integration: "Google Drive", Status: "Stopped", Services: "05" },
+    { IntegrationId: "INT010", Integration: "Dropbox", Status: "Running", Services: "04" },
+    { IntegrationId: "INT011", Integration: "GitHub", Status: "Paused", Services: "02" },
+    { IntegrationId: "INT012", Integration: "Bitbucket", Status: "Stopped", Services: "03" },
+    { IntegrationId: "INT013", Integration: "Mailchimp", Status: "Running", Services: "01" },
+    { IntegrationId: "INT014", Integration: "Shopify", Status: "Paused", Services: "05" },
+    { IntegrationId: "INT015", Integration: "WordPress", Status: "Stopped", Services: "04" },
   ];
+
 }
 
 export default async function Mails() {

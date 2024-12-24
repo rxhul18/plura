@@ -21,12 +21,13 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { DraggableNode } from "./draggable-node";
 
 
 // Menu items.
 const items = [
-  { title: "Home", url: "#", icon: Home },
-  { title: "Inbox", url: "#", icon: Inbox },
+  { title: "Agent", url: "#", icon: Home },
+  { title: "Memory", url: "#", icon: Inbox },
 ];
 
 const services = [
@@ -49,36 +50,25 @@ export function AppSidebar() {
           </main>
           {/* <SidebarGroupLabel>Application</SidebarGroupLabel> */}
           <SidebarGroupContent className="mt-5 flex flex-col h-screen">
-            <div className="flex-grow">
-              <SidebarMenu>
-                {items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <a href={item.url} className="flex items-center gap-2 p-2 hover:bg-gray-100">
-                        <item.icon className="w-5 h-5" />
-                        <span>{item.title}</span>
-                      </a>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-              <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="w-full justify-between">
-                    Select Service
-                    <ChevronDown className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-auto">
-                  {services.map((service) => (
-                    <DropdownMenuItem key={service.value}>
-                      {service.name}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-            
+            <aside>
+              <div className="mb-4">
+                <h3 className="text-md font-semibold mb-2">Agent</h3>
+                <DraggableNode type="searchSelect" label="Search & Select Node" />
+                {/* <DraggableNode type="input" label="Input Node" />
+                <DraggableNode type="output" label="Output Node" /> */}
+              </div>
+              <div className="mb-4">
+                <h3 className="text-md font-semibold mb-2">Memory</h3>
+                <DraggableNode type="searchSelect" label="Search & Select Node" />
+              </div>
+              <div className="mb-4">
+                <h3 className="text-md font-semibold mb-2">Services</h3>
+                <DraggableNode type="searchSelect" label="Search & Select Node" />
+                <DraggableNode type="searchSelect" label="Search & Select Node" />
+                <DraggableNode type="searchSelect" label="Search & Select Node" />
+                <DraggableNode type="searchSelect" label="Search & Select Node" />
+              </div>
+            </aside>
             <Button 
               className="w-full mt-auto mb-4" 
               variant="default"
@@ -88,6 +78,8 @@ export function AppSidebar() {
             </Button>
           </SidebarGroupContent>
         </SidebarGroup>
+        
+       
       </SidebarContent>
     </Sidebar>
   );

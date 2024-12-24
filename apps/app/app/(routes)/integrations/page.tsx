@@ -1,32 +1,105 @@
-// import React, { Children } from 'react'  
-import { Background, ReactFlow } from "@xyflow/react"
+'use client';
 
+import { useCallback, useState } from 'react';
+import {
+  ReactFlow,
+  Background,
+  Connection,
+  Edge,
+  Node,
+  addEdge,
+  useNodesState,
+  useEdgesState,
+  XYPosition
+} from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+
+import { SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/custom/sidebar/integration-sidebar';
+import { SearchSelectNode } from '@/components/custom/nodes/search-select-node';
 
-const initialNodes = [
-  { id: '1', position: { x: 0, y: 0 }, data: { label: '1' } },
-  { id: '2', position: { x: 0, y: 100 }, data: { label: '2' } },
-];
-const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
+// Define node types
+const nodeTypes = {
+  searchSelect: SearchSelectNode,
+};
 
+const initialNodes: Node[] = [];
+const initialEdges: Edge[] = [];
+
+let id = 0;
+const getId = () => `dndnode_${id++}`;
 
 export default function Integration() {
-  return (
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
+  const onConnect = useCallback(
+    (params: Connection) => setEdges((eds) => addEdge(params, eds)),
+    [setEdges],
+  );
+
+  const onDragOver = useCallback((event: React.DragEvent) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+  }, []);
+
+  const onDrop = useCallback(
+    (event: React.DragEvent) => {
+      event.preventDefault();
+
+      const type = event.dataTransfer.getData('application/reactflow');
+
+      // Check if the dropped element is valid
+      if (typeof type === 'undefined' || !type) {
+        return;
+      }
+
+      // Get the reactflow wrapper bounds
+      const reactflowBounds = document.querySelector('.react-flow')?.getBoundingClientRect();
+      
+      if (reactflowBounds) {
+        const newNode = {
+          id: getId(),
+          type: type === 'searchSelect' ? 'searchSelect' : 'default',
+          position: {
+            x: event.clientX - reactflowBounds.left,
+            y: event.clientY - reactflowBounds.top,
+          },
+          data: { label: `${type} node` },
+        };
+
+        setNodes((nds) => nds.concat(newNode));
+      }
+    },
+    [setNodes],
+  );
+
+  return (
     <div className="flex">
       <div className="flex w-full">
-        {/* <div style={{ width: '80vw', height: '100vh' }}> */}
-        <ReactFlow nodes={initialNodes} edges={initialEdges} className="border border-gray-800 rounded-md">
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          onDragOver={onDragOver}
+          onDrop={onDrop}
+          nodeTypes={nodeTypes}
+          className="border border-gray-800 rounded-md"
+        >
           <Background />
         </ReactFlow>
       </div>
       <div>
-        <SidebarProvider>
+        <SidebarProvider 
+          style={{
+            "--sidebar-width": "18rem",
+          }}
+        >
           <AppSidebar />
         </SidebarProvider>
       </div>
     </div>
-  )
+  );
 }
