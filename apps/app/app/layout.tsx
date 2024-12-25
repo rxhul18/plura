@@ -4,7 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/hooks/theme-provider";
 import { PosthogProvider } from "@/hooks/posthog";
 import { Toaster } from "sonner";
-import { Monitoring } from "react-scan/monitoring/next"; 
+import { Monitoring } from "react-scan/monitoring/next";
 
 export const metadata: Metadata = {
   title: "Plura",
@@ -23,9 +23,9 @@ async function RootLayout({
           className={`min-h-screen bg-background font-sans ${GeistSans.variable} antialiased`}
         >
           <Monitoring
-          apiKey="TEbNIGehwMWj3N72CP-5eDGwOZC4G8z0"
-          url="https://monitoring.react-scan.com/api/v1/ingest"
-        />
+            apiKey="TEbNIGehwMWj3N72CP-5eDGwOZC4G8z0"
+            url="https://monitoring.react-scan.com/api/v1/ingest"
+          />
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
