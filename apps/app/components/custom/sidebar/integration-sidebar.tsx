@@ -1,6 +1,6 @@
 "use client";
 import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import {
   Sidebar,
@@ -8,38 +8,30 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
 } from "@/components/ui/sidebar";
+
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DraggableNode } from "./draggable-node";
 
-
-// Menu items.
-const items = [
-  { title: "Agent", url: "#", icon: Home },
-  { title: "Memory", url: "#", icon: Inbox },
-];
-
-const services = [
-  { name: "Email Service", value: "email" },
-  { name: "SMS Gateway", value: "sms" },
-  { name: "Payment Gateway", value: "payment" },
-  { name: "Cloud Storage", value: "storage" },
-  { name: "Analytics", value: "analytics" },
-]
-
-export function AppSidebar() {
+export function AppSidebar({ deletedNodeIds = [] }: { deletedNodeIds?: string[] }) {
   const [isOpen, setIsOpen] = useState(true);
+  const [usedNodes, setUsedNodes] = useState<Set<string>>(new Set());
+
+  // Remove deleted nodes from usedNodes
+  useEffect(() => {
+    if (deletedNodeIds.length > 0) {
+      setUsedNodes(prev => {
+        const newSet = new Set(prev);
+        deletedNodeIds.forEach(id => newSet.delete(id));
+        return newSet;
+      });
+    }
+  }, [deletedNodeIds]);
+
+  const handleNodeDrop = (nodeId: string) => {
+    setUsedNodes(prev => new Set([...prev, nodeId]));
+  };
 
   return (
     <Sidebar side="right" collapsible="icon" variant="floating">
@@ -48,25 +40,64 @@ export function AppSidebar() {
           <main>
             <SidebarTrigger />
           </main>
-          {/* <SidebarGroupLabel>Application</SidebarGroupLabel> */}
           <SidebarGroupContent className="mt-5 flex flex-col h-screen">
             <aside>
               <div className="mb-4">
                 <h3 className="text-md font-semibold mb-2">Agent</h3>
-                <DraggableNode type="searchSelect" label="Search & Select Node" />
-                {/* <DraggableNode type="input" label="Input Node" />
-                <DraggableNode type="output" label="Output Node" /> */}
+                {!usedNodes.has('agent') && (
+                  <DraggableNode 
+                    type="searchSelect" 
+                    label="Search & Select Node" 
+                    id="agent"
+                    onDrop={handleNodeDrop}
+                  />
+                )}
               </div>
               <div className="mb-4">
                 <h3 className="text-md font-semibold mb-2">Memory</h3>
-                <DraggableNode type="searchSelect" label="Search & Select Node" />
+                {!usedNodes.has('memory') && (
+                  <DraggableNode 
+                    type="searchSelect" 
+                    label="Search & Select Node" 
+                    id="memory"
+                    onDrop={handleNodeDrop}
+                  />
+                )}
               </div>
               <div className="mb-4">
                 <h3 className="text-md font-semibold mb-2">Services</h3>
-                <DraggableNode type="searchSelect" label="Search & Select Node" />
-                <DraggableNode type="searchSelect" label="Search & Select Node" />
-                <DraggableNode type="searchSelect" label="Search & Select Node" />
-                <DraggableNode type="searchSelect" label="Search & Select Node" />
+                {!usedNodes.has('service1') && (
+                  <DraggableNode 
+                    type="searchSelect" 
+                    label="Search & Select Node" 
+                    id="service1"
+                    onDrop={handleNodeDrop}
+                  />
+                )}
+                {!usedNodes.has('service2') && (
+                  <DraggableNode 
+                    type="searchSelect" 
+                    label="Search & Select Node" 
+                    id="service2"
+                    onDrop={handleNodeDrop}
+                  />
+                )}
+                {!usedNodes.has('service3') && (
+                  <DraggableNode 
+                    type="searchSelect" 
+                    label="Search & Select Node" 
+                    id="service3"
+                    onDrop={handleNodeDrop}
+                  />
+                )}
+                {!usedNodes.has('service4') && (
+                  <DraggableNode 
+                    type="searchSelect" 
+                    label="Search & Select Node" 
+                    id="service4"
+                    onDrop={handleNodeDrop}
+                  />
+                )}
               </div>
             </aside>
             <Button 
@@ -78,8 +109,6 @@ export function AppSidebar() {
             </Button>
           </SidebarGroupContent>
         </SidebarGroup>
-        
-       
       </SidebarContent>
     </Sidebar>
   );

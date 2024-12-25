@@ -1,8 +1,8 @@
 'use client';
 
-import { Handle, Position } from '@xyflow/react';
+import { Handle, Position, useReactFlow } from '@xyflow/react';
 import { useState } from 'react';
-import { Search } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 
 const options = [
   { id: '1', label: 'Agent 1' },
@@ -18,9 +18,13 @@ interface SearchSelectNodeProps {
     selected?: string;
   };
   id: string;
+  onDelete?: (nodeId: string) => void;
 }
 
-export function SearchSelectNode({ data, id }: SearchSelectNodeProps) {
+export function SearchSelectNode({ data, id, onDelete }: SearchSelectNodeProps) {
+
+  const { setNodes } = useReactFlow();
+
   const [searchTerm, setSearchTerm] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(data.selected || '');
@@ -83,7 +87,20 @@ export function SearchSelectNode({ data, id }: SearchSelectNodeProps) {
           </button>
         </div>
       )}
-      
+      <button
+        aria-label="Delete Node Provider"
+        className="text-red-500 bg-transparent p-1 hover:bg-gray-100 rounded-full pointer-events-auto"
+        onClick={() => {
+          if (onDelete) {
+            onDelete(id);
+          } else {
+            setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
+          }
+        }}
+      >
+        <X size={16} />
+      </button>
+
       <Handle type="source" position={Position.Bottom} className="w-2 h-2" />
     </div>
   );
