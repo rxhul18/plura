@@ -81,9 +81,9 @@ export async function decrypt(encryptedData:EncryptedData,key:Uint8Array):Promis
   }
   catch (error: unknown){
     if(error instanceof Error){
-      throw new Error("Encryption failed: " + error.message);
+      throw new Error("Decryption failed: " + error.message);
     } else {
-      throw new Error("Encryption failed: unknown error");
+      throw new Error("Decryption failed: unknown error");
     }
   }
 }
