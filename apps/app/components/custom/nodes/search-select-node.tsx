@@ -5,11 +5,11 @@ import { useState } from 'react';
 import { Search, X } from 'lucide-react';
 
 const options = [
-  { id: '1', label: 'Agent 1' },
-  { id: '2', label: 'Agent 2' },
-  { id: '3', label: 'Agent 3' },
-  { id: '4', label: 'Agent 4' },
-  { id: '5', label: 'Agent 5' },
+  { id: '1', label: 'Services 1' },
+  { id: '2', label: 'Services 2' },
+  { id: '3', label: 'Services 3' },
+  { id: '4', label: 'Services 4' },
+  { id: '5', label: 'Services 5' },
 ];
 
 interface SearchSelectNodeProps {
@@ -101,7 +101,7 @@ export function SearchSelectNode({ data, id, onDelete }: SearchSelectNodeProps) 
         <X size={16} />
       </button>
 
-      <Handle type="source" position={Position.Bottom} className="w-2 h-2" />
+     
     </div>
   );
 } 

@@ -34,7 +34,7 @@ export function AppSidebar({ deletedNodeIds = [] }: { deletedNodeIds?: string[] 
   };
 
   return (
-    <Sidebar side="right" collapsible="icon" variant="floating">
+    <Sidebar side="right" collapsible="none" variant="floating">
       <SidebarContent>
         <SidebarGroup>
           <main>
@@ -46,7 +46,7 @@ export function AppSidebar({ deletedNodeIds = [] }: { deletedNodeIds?: string[] 
                 <h3 className="text-md font-semibold mb-2">Agent</h3>
                 {!usedNodes.has('agent') && (
                   <DraggableNode 
-                    type="searchSelect" 
+                    type="agentNode" 
                     label="Search & Select Node" 
                     id="agent"
                     onDrop={handleNodeDrop}
@@ -57,7 +57,7 @@ export function AppSidebar({ deletedNodeIds = [] }: { deletedNodeIds?: string[] 
                 <h3 className="text-md font-semibold mb-2">Memory</h3>
                 {!usedNodes.has('memory') && (
                   <DraggableNode 
-                    type="searchSelect" 
+                    type="memoryNode" 
                     label="Search & Select Node" 
                     id="memory"
                     onDrop={handleNodeDrop}

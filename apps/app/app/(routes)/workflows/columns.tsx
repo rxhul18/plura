@@ -4,23 +4,27 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
+import Link from "next/link";
 // import { Checkbox } from "@/components/ui/checkbox";
 
 export type Mail = {
-    IntegrationId: string,
-    Integration: string,
+    WorkflowId: string,
+    Workflow: string,
     Status: "Running" | "Paused" | "Stopped",
     Services: string,
 };
 
 export const columns: ColumnDef<Mail>[] = [
     {
-        accessorKey: "IntegrationId",
+        accessorKey: "WorkflowId",
         header: "ID",
+        cell: ({ row }) => {
+            return <Link href={`/workflows/${row.getValue("WorkflowId")}`}>{row.getValue("WorkflowId")}</Link>;
+        }
     },
     {
-        accessorKey: "Integration",
-        header: "Integration",
+        accessorKey: "Workflow",
+        header: "Workflows",
     },
     {
         accessorKey: "Status",

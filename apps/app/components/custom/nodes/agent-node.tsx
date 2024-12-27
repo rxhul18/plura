@@ -1,8 +1,8 @@
 'use client';
 
-import { Handle, Position } from '@xyflow/react';
+import { Handle, Position, useReactFlow } from '@xyflow/react';
 import { useState } from 'react';
-import { Search } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 
 const options = [
   { id: '1', label: 'Agent 1' },
@@ -18,9 +18,13 @@ interface AgentNodeProps {
     selected?: string;
   };
   id: string;
+  onDelete?: (nodeId: string) => void;
 }
 
-export function AgentNode({ data, id }: AgentNodeProps) {
+export function AgentNode({ data, id, onDelete }: AgentNodeProps) {
+
+  const { setNodes } = useReactFlow();
+
   const [searchTerm, setSearchTerm] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(data.selected || '');
@@ -37,7 +41,7 @@ export function AgentNode({ data, id }: AgentNodeProps) {
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-4 min-w-[200px]">
-      <Handle type="target" position={Position.Top} className="w-2 h-2" />
+    
       
       {!selected ? (
         <div>
@@ -51,7 +55,7 @@ export function AgentNode({ data, id }: AgentNodeProps) {
                   setIsOpen(true);
                 }}
                 className="w-full px-3 py-2 border rounded-md pr-10"
-                placeholder="Search services..."
+                placeholder="Search Agent..."
                 onClick={() => setIsOpen(true)}
               />
               <Search className="absolute right-3 top-2.5 h-5 w-5 text-gray-400" />
@@ -83,7 +87,20 @@ export function AgentNode({ data, id }: AgentNodeProps) {
           </button>
         </div>
       )}
-      
+      <button
+        aria-label="Delete Node Provider"
+        className="text-red-500 bg-transparent p-1 hover:bg-gray-100 rounded-full pointer-events-auto"
+        onClick={() => {
+          if (onDelete) {
+            onDelete(id);
+          } else {
+            setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
+          }
+        }}
+      >
+        <X size={16} />
+      </button>
+
       <Handle type="source" position={Position.Bottom} className="w-2 h-2" />
     </div>
   );

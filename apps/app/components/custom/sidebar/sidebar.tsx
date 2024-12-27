@@ -11,6 +11,7 @@ import {
   FlaskConical,
   ArchiveRestore,
   Codepen,
+  Workflow
 } from "lucide-react";
 
 import {
@@ -44,6 +45,11 @@ const items = [
     title: "Integrations",
     url: "/integrations",
     icon: Waypoints,
+  },
+  {
+    title: "Workflows",
+    url: "/workflows",
+    icon: Workflow,
   },
   {
     title: "Events",

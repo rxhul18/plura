@@ -123,10 +123,10 @@ export function DataTable<TData, TValue>({
     <div>
       <div className="flex items-center py-4 w-full justify-between gap-2">
         <Input
-          placeholder="Filter Integrations..."
-          value={(table.getColumn("Integration")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter Workflows..."
+          value={(table.getColumn("Workflow")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("Integration")?.setFilterValue(event.target.value)
+            table.getColumn("Workflow")?.setFilterValue(event.target.value)
           }
         />
         <div className="flex gap-2">
@@ -174,7 +174,7 @@ export function DataTable<TData, TValue>({
                       className={`${
                         header.column.id === "Services"
                         ? "hidden md:table-cell"
-                        : ""} ${header.column.id === "IntegrationId"
+                        : ""} ${header.column.id === "WorkflowId"
                         ? "hidden md:table-cell": ""}`}
                     >
                       {header.isPlaceholder
@@ -202,7 +202,7 @@ export function DataTable<TData, TValue>({
                       className={`${
                         cell.column.id === "Services"
                         ? "hidden md:table-cell"
-                        : ""} ${cell.column.id === "IntegrationId"
+                        : ""} ${cell.column.id === "WorkflowId"
                         ? "hidden md:table-cell": ""}`}
                     >
                       {flexRender(
