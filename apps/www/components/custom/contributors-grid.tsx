@@ -29,21 +29,23 @@ export default function ContributorsGrid({ data }: ContributorsGridProps) {
         {data.map((contributor, i) => (
           <Tooltip key={contributor.id}>
             <BlurFade delay={0.25 * i}>
-            <TooltipTrigger>
-              <div className="flex items-center gap-2 rounded-lg shadow-sm hover:shadow-md transition-all cursor-help">
-                <Avatar className="w-6 h-6">
-                  <AvatarImage
-                    src={contributor.avatar_url}
-                    alt={contributor.login}
-                    className="rounded-full grayscale"
-                  />
-                  <AvatarFallback>
-                    {contributor.login.charAt(0).toUpperCase()}
-                  </AvatarFallback>
-                </Avatar>
-                <p className="text-sm/2 select-none">{contributor.login.toLowerCase()}</p>
-              </div>
-            </TooltipTrigger>
+              <TooltipTrigger>
+                <div className="flex items-center gap-2 rounded-lg shadow-sm hover:shadow-md transition-all cursor-help">
+                  <Avatar className="w-6 h-6">
+                    <AvatarImage
+                      src={contributor.avatar_url}
+                      alt={contributor.login}
+                      className="rounded-full grayscale"
+                    />
+                    <AvatarFallback>
+                      {contributor.login.charAt(0).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                  <p className="text-sm/2 select-none">
+                    {contributor.login.toLowerCase()}
+                  </p>
+                </div>
+              </TooltipTrigger>
             </BlurFade>
             <TooltipContent className="w-full items-center justify-center px-6 py-3 border border-border/60 bg-secondary/20 backdrop-blur-lg supports-[backdrop-filter]:bg-secondary/30 dark:border-border rounded-2xl shadow-xl flex flex-col gap-2">
               <span className="flex flex-row items-center gap-2">
@@ -57,25 +59,27 @@ export default function ContributorsGrid({ data }: ContributorsGridProps) {
                     {contributor.login.charAt(0).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
-                <p className="select-none text-primary font-medium text-sm">{contributor.login}</p>
+                <p className="select-none text-primary font-medium text-sm">
+                  {contributor.login}
+                </p>
                 <Link
-            href={contributor.github_link}
-            target="_blank"
-            rel="noreferrer"
-            className="hidden md:flex ml-3"
-          >
-            <div
-              className={cn(
-                buttonVariants({
-                  variant: "secondary",
-                }),
-                "h-6 w-6 px-0",
-              )}
-            >
-              <Icons.gitHub className="h-5 w-5 fill-current" />
-              <span className="sr-only">GitHub</span>
-            </div>
-          </Link>
+                  href={contributor.github_link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hidden md:flex ml-3"
+                >
+                  <div
+                    className={cn(
+                      buttonVariants({
+                        variant: "secondary",
+                      }),
+                      "h-6 w-6 px-0",
+                    )}
+                  >
+                    <Icons.gitHub className="h-5 w-5 fill-current" />
+                    <span className="sr-only">GitHub</span>
+                  </div>
+                </Link>
               </span>
             </TooltipContent>
           </Tooltip>

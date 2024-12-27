@@ -15,14 +15,14 @@ interface ContributorData {
   id: number;
   avatar_url?: string;
   github_link: string;
-};
+}
 
 export default function About() {
   const [contributors, setContributors] = useState<ContributorData[]>([]);
   const fetchUrl = "https://api.plura.pro/v1/contributors";
-    // process.env.NODE_ENV === "production"
-    //   ? "https://api.plura.pro/v1/contributors"
-    //   : "http://localhost:3001/v1/contributors";
+  // process.env.NODE_ENV === "production"
+  //   ? "https://api.plura.pro/v1/contributors"
+  //   : "http://localhost:3001/v1/contributors";
 
   useEffect(() => {
     const fetchContributors = async () => {
@@ -73,10 +73,13 @@ export default function About() {
             </Card>
           </div>
         </section>
-        <section id="contributors" className="flex items-center justify-center w-full border-t-2 border-dashed">
-        <div className="px-8 md:px-12">
-        <ContributorsGrid data={contributors} />
-        </div>
+        <section
+          id="contributors"
+          className="flex items-center justify-center w-full border-t-2 border-dashed"
+        >
+          <div className="px-8 md:px-12">
+            <ContributorsGrid data={contributors} />
+          </div>
         </section>
       </div>
     </section>
