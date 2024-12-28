@@ -4,10 +4,12 @@ import { Hono } from "hono";
 import { workspaceSchema } from "@repo/types";
 import { auth } from "@plura/auth";
 import { cache } from "@plura/cache";
-import { encrypt } from "@plura/crypt"
+import { encrypt } from "@plura/crypt";
 
 const CACHE_EXPIRY = 300; // Cache expiry time in seconds
-const ENCRYPTION_KEY = new Uint8Array(JSON.parse(process.env.ENCRYPTION_KEY || '[]'));
+const ENCRYPTION_KEY = new Uint8Array(
+  JSON.parse(process.env.ENCRYPTION_KEY || "[]"),
+);
 type Workspace = {
   id: string;
   name: string;
@@ -171,7 +173,7 @@ const app = new Hono()
     if (!userId) {
       return c.json({ message: "Missing user id", status: 400 }, 400);
     }
-    const name =await encrypt(body.name, ENCRYPTION_KEY);
+    const name = await encrypt(body.name, ENCRYPTION_KEY);
 
     const workspace = await prisma.workspace.create({
       data: {
