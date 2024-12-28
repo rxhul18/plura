@@ -424,9 +424,6 @@ importers:
       '@plura/cache':
         specifier: workspace:*
         version: link:../../packages/cache
-      '@plura/crypt':
-        specifier: workspace:*
-        version: link:../../packages/crypt
       '@plura/db':
         specifier: workspace:*
         version: link:../../packages/db
@@ -640,9 +637,6 @@ importers:
 
   packages/mail:
     dependencies:
-      '@plura/crypt':
-        specifier: workspace:*
-        version: link:../crypt
       '@react-email/components':
         specifier: 0.0.27
         version: 0.0.27(react-dom@19.0.0-rc-02c0e824-20241028(react@18.3.1))(react@18.3.1)
