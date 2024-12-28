@@ -104,4 +104,4 @@ export function SearchSelectNode({ data, id, onDelete }: SearchSelectNodeProps) 
      
     </div>
   );
-} 
+}

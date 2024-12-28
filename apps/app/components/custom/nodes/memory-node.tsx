@@ -1,7 +1,7 @@
 'use client';
 
 import { Handle, Position, useReactFlow } from '@xyflow/react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Search, X } from 'lucide-react';
 
 const options = [
@@ -11,6 +11,25 @@ const options = [
   { id: '4', label: 'Memory 4' },
   { id: '5', label: 'Memory 5' },
 ];
+
+
+import { Check, ChevronsUpDown } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
 interface MemoryNodeProps {
   data: {
@@ -22,9 +41,6 @@ interface MemoryNodeProps {
 }
 
 export function MemoryNode({ data, id, onDelete }: MemoryNodeProps) {
-
-  const { setNodes } = useReactFlow();
-
   const [searchTerm, setSearchTerm] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(data.selected || '');
@@ -39,69 +55,75 @@ export function MemoryNode({ data, id, onDelete }: MemoryNodeProps) {
     setSearchTerm('');
   };
 
+  const { setNodes } = useReactFlow();
+  const [open, setOpen] = React.useState(false)
+  const [value, setValue] = React.useState("")
+
   return (
-    <div className="bg-white rounded-lg shadow-lg p-4 min-w-[200px]">
-      <Handle type="target" position={Position.Top} className="w-2 h-2" />
-      
-      {!selected ? (
-        <div>
-          <div className="relative">
-            <div className="relative">
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => {
-                  setSearchTerm(e.target.value);
-                  setIsOpen(true);
-                }}
-                className="w-full px-3 py-2 border rounded-md pr-10"
-                placeholder="Search Memory..."
-                onClick={() => setIsOpen(true)}
-              />
-              <Search className="absolute right-3 top-2.5 h-5 w-5 text-gray-400" />
-            </div>
-
-            {isOpen && (
-              <div className="absolute top-full left-0 right-0 mt-1 bg-white border rounded-md shadow-lg max-h-[200px] overflow-y-auto z-50">
-                {filteredOptions.map((option) => (
-                  <div
-                    key={option.id}
-                    className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
-                    onClick={() => handleSelect(option)}
-                  >
-                    {option.label}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      ) : (
-        <div className="flex items-center justify-between">
-          <span className="font-medium">{selected}</span>
-          <button
-            onClick={() => setSelected('')}
-            className="text-xs text-blue-500 hover:text-blue-700"
-          >
-            Change
-          </button>
-        </div>
-      )}
-      <button
-        aria-label="Delete Node Provider"
-        className="text-red-500 bg-transparent p-1 hover:bg-gray-100 rounded-full pointer-events-auto"
-        onClick={() => {
-          if (onDelete) {
-            onDelete(id);
-          } else {
-            setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
-          }
-        }}
-      >
-        <X size={16} />
-      </button>
-
-      <Handle type="source" position={Position.Bottom} className="w-2 h-2" />
+    <div className="rounded-lg flex items-center group">
+      <div className="p-1 bg-white shadow-md rounded-lg relative">
+        <Handle type="target" position={Position.Top} className="w-2 h-2 absolute bottom-0" />
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              role="combobox"
+              aria-expanded={open}
+              className="w-[200px] justify-between border dark:border-gray-200 dark:bg-white dark:text-black"
+            >
+              {value
+                ? options.find((options) => options.label === value)?.label
+                : "Select Memory..."}
+              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-[200px] p-0">
+            <Command>
+              <CommandInput placeholder="Search Memory..." />
+              <CommandList>
+                <CommandEmpty>No Memory found.</CommandEmpty>
+                <CommandGroup>
+                  {options.map((options) => (
+                    <CommandItem
+                      key={options.id}
+                      value={options.label}
+                      onSelect={(currentValue) => {
+                        setValue(currentValue === value ? "" : currentValue)
+                        setOpen(false)
+                      }}
+                      onClick={() => handleSelect(options)}
+                    >
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          value === options.label ? "opacity-100" : "opacity-0"
+                        )}
+                      />
+                      {options.label}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+          <Handle type="source" position={Position.Bottom} className="w-2 h-2" />
+        </Popover>
+      </div>
+      <div className='bg-transparent flex items-center scale-75 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300'>
+        <button
+          aria-label="Delete Node Provider"
+          className="text-red-500 bg-transparent p-1 hover:bg-gray-100 rounded-full pointer-events-auto"
+          onClick={() => {
+            if (onDelete) {
+              onDelete(id);
+            } else {
+              setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
+            }
+          }}
+        >
+          <X size={16} />
+        </button>
+      </div>
     </div>
   );
 } 

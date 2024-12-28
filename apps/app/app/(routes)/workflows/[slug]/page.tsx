@@ -16,8 +16,8 @@ import {
 import '@xyflow/react/dist/style.css';
 
 import { SidebarProvider } from '@/components/ui/sidebar';
-import { AppSidebar } from '@/components/custom/sidebar/integration-sidebar';
-import { SearchSelectNode } from '@/components/custom/nodes/search-select-node';
+import { AppSidebar, IntegrationToolbar } from '@/components/custom/sidebar/integration-sidebar';
+import { SearchSelectNode } from '@/components/custom/nodes/services-node';
 import CustomEdge from '@/components/custom/edges/custom-edge';
 import { AgentNode } from '@/components/custom/nodes/agent-node';
 import { MemoryNode } from '@/components/custom/nodes/memory-node';
@@ -165,24 +165,25 @@ export default function Integration() {
           onDragOver={onDragOver}
           onDrop={onDrop}
           nodeTypes={{
-            searchSelect: (props) => (
-              <SearchSelectNode {...props} onDelete={handleNodeDelete} />
-            ),
             agentNode: (props) => (
               <AgentNode {...props} onDelete={handleNodeDelete} />
             ),
             memoryNode: (props) => (
               <MemoryNode {...props} onDelete={handleNodeDelete} />
             ),
+            // searchSelect: (props) => (
+            //   <SearchSelectNode {...props} onDelete={handleNodeDelete} />
+            // )
           }}
 
           // nodeTypes={nodeTypes}
           edgeTypes={edgeTypes}
           className=" rounded-md relative"
         >
-          <WorkflowsDock />
+          {/* <WorkflowsDock /> */}
+          <IntegrationToolbar deletedNodeIds={deletedNodeIds} />
           <Controls  className='absolute'/>
-          <Background /> 
+          <Background className='bg-white dark:bg-white'/> 
         </ReactFlow>
       </div>
       <div>
