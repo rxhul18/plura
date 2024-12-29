@@ -19,9 +19,9 @@ import { SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar, IntegrationToolbar } from '@/components/custom/sidebar/integration-sidebar';
 import { SearchSelectNode } from '@/components/custom/nodes/services-node';
 import CustomEdge from '@/components/custom/edges/custom-edge';
-import { AgentNode } from '@/components/custom/nodes/agent-node';
 import { MemoryNode } from '@/components/custom/nodes/memory-node';
 import WorkflowsDock from '@/components/motion-ui/workflow-dock';
+import { AgentNode } from '@/components/custom/nodes/agent-node';
 
 // Define node types
 const nodeTypes = {
@@ -110,7 +110,10 @@ export default function Integration() {
                 x: event.clientX - reactflowBounds.left,
                 y: event.clientY - reactflowBounds.top,
               },
-              data: { label: `${type} node` },
+              data: { 
+                label: `${type} node`,
+                selected: "" 
+              },
             };
             break;
           case 'memoryNode':

@@ -43,7 +43,7 @@ export function SearchSelectNode({ data, id, onDelete }: SearchSelectNodeProps) 
     <div className="bg-white rounded-lg shadow-lg p-4 min-w-[200px]">
       <Handle type="target" position={Position.Top} className="w-2 h-2" />
       
-      {!selected ? (
+      {/* {!selected ? ( */}
         <div>
           <div className="relative">
             <div className="relative">
@@ -76,17 +76,17 @@ export function SearchSelectNode({ data, id, onDelete }: SearchSelectNodeProps) 
             )}
           </div>
         </div>
-      ) : (
-        <div className="flex items-center justify-between">
-          <span className="font-medium">{selected}</span>
-          <button
-            onClick={() => setSelected('')}
-            className="text-xs text-blue-500 hover:text-blue-700"
-          >
-            Change
-          </button>
-        </div>
-      )}
+      {/* // ) : (
+      //   <div className="flex items-center justify-between">
+      //     <span className="font-medium">{selected}</span> */}
+      {/* //     <button */}
+      {/* //       onClick={() => setSelected('')}
+      //       className="text-xs text-blue-500 hover:text-blue-700"
+      //     >
+      //       Change
+      //     </button>
+      //   </div> */}
+      {/* // )} */}
       <button
         aria-label="Delete Node Provider"
         className="text-red-500 bg-transparent p-1 hover:bg-gray-100 rounded-full pointer-events-auto"

@@ -2,11 +2,13 @@
 import { useState, useEffect, useRef } from "react";
 import { Bot, Brain, Workflow } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { DraggableNode } from "./draggable-node";
 import { AnimatePresence, motion, MotionConfig } from 'motion/react';
 import useMeasure from 'react-use-measure';
 import { cn } from '@/lib/utils';
 import useClickOutside from '@/hooks/useClickOutside';
+import { AgentDragableNode } from "./agent-dragable-node";
+import { MemoryDragableNode } from "./memory-dragable-node";
+import { SearchSelectNode } from "../nodes/services-node";
 
 const transition = {
   type: 'spring',
@@ -94,13 +96,14 @@ export function IntegrationToolbar({ deletedNodeIds = [] }: { deletedNodeIds?: s
                           exit={{ opacity: 0 }}
                         >
                           <div className={cn('px-2 pt-2', isSelected ? 'block' : 'hidden')}>
-                            {item.id === 'services' ? (
+                            {item.id === 'services' && (
                               <div className="flex flex-wrap gap-2">
                                 {item.subItems?.map((serviceId) => (
                                   !usedNodes.has(serviceId) && (
-                                    <DraggableNode
+                                    <SearchSelectNode
                                       key={serviceId}
-                                      type={item.type}
+                                      // type={item.type}
+                                      data={{ label: item.label }}
                                       label="Node"
                                       id={serviceId}
                                       onDrop={handleNodeDrop}
@@ -108,13 +111,26 @@ export function IntegrationToolbar({ deletedNodeIds = [] }: { deletedNodeIds?: s
                                   )
                                 ))}
                               </div>
-                            ) : (
+                            )}
+                            {item.id === 'agent' && (
                               !usedNodes.has(item.id) && (
-                                <DraggableNode
+                                <AgentDragableNode
                                   type={item.type}
                                   label="Node"
                                   id={item.id}
                                   onDrop={handleNodeDrop}
+                                  data={{ label: item.label }}
+                                />
+                              )
+                            )}
+                            {item.id === 'memory' && (
+                              !usedNodes.has(item.id) && (
+                                <MemoryDragableNode
+                                  type={item.type}
+                                  label="Node"
+                                  id={item.id}
+                                  onDrop={handleNodeDrop}
+                                  data={{ label: item.label }}
                                 />
                               )
                             )}
