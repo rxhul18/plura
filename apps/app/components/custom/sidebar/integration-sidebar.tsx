@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { Bot, Brain, Workflow } from "lucide-react";
+import { Bot, Brain, Workflow, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnimatePresence, motion, MotionConfig } from 'motion/react';
 import useMeasure from 'react-use-measure';
@@ -8,7 +8,8 @@ import { cn } from '@/lib/utils';
 import useClickOutside from '@/hooks/useClickOutside';
 import { AgentDragableNode } from "./agent-dragable-node";
 import { MemoryDragableNode } from "./memory-dragable-node";
-import { SearchSelectNode } from "../nodes/services-node";
+import { ServiceNode, services } from '../nodes/services-node';
+import { ServiceDragableNode } from "./service-dragable-node";
 
 const transition = {
   type: 'spring',
@@ -20,21 +21,21 @@ const TOOLBAR_ITEMS = [
   {
     id: 'agent',
     label: 'Agent',
-    title: <Bot className="h-5 w-5" />,
+    title: <Bot className="h-4 w-4 sm:h-5 sm:w-5" />,
     type: "agentNode",
   },
   {
     id: 'memory',
     label: 'Memory',
-    title: <Brain className="h-5 w-5" />,
+    title: <Brain className="h-4 w-4 sm:h-5 sm:w-5" />,
     type: "memoryNode",
   },
   {
     id: 'services',
     label: 'Services',
-    title: <Workflow className="h-5 w-5" />,
-    type: "searchSelect",
-    subItems: ['service1', 'service2', 'service3', 'service4']
+    title: <Workflow className="h-4 w-4 sm:h-5 sm:w-5" />,
+    type: "serviceNode",
+    subItems: services.map(service => service.id)
   }
 ];
 
@@ -46,6 +47,7 @@ export function IntegrationToolbar({ deletedNodeIds = [] }: { deletedNodeIds?: s
   const [isOpen, setIsOpen] = useState(false);
   const [maxWidth, setMaxWidth] = useState(0);
   const [usedNodes, setUsedNodes] = useState<Set<string>>(new Set());
+  const [searchTerm, setSearchTerm] = useState('');
 
   useClickOutside(ref, () => {
     setIsOpen(false);
@@ -83,9 +85,9 @@ export function IntegrationToolbar({ deletedNodeIds = [] }: { deletedNodeIds?: s
                   initial={{ height: 0 }}
                   animate={{ height: heightContent || 0 }}
                   exit={{ height: 0 }}
-                  style={{ width: maxWidth }}
+                  // style={{ width: maxWidth }}
                 >
-                  <div ref={contentRef} className="p-2">
+                  <div ref={contentRef}>
                     {TOOLBAR_ITEMS.map((item) => {
                       const isSelected = active === item.id;
                       return (
@@ -95,43 +97,65 @@ export function IntegrationToolbar({ deletedNodeIds = [] }: { deletedNodeIds?: s
                           animate={{ opacity: isSelected ? 1 : 0 }}
                           exit={{ opacity: 0 }}
                         >
-                          <div className={cn('px-2 pt-2', isSelected ? 'block' : 'hidden')}>
+                          <div className={cn('', isSelected ? 'block' : 'hidden')}>
                             {item.id === 'services' && (
-                              <div className="flex flex-wrap gap-2">
-                                {item.subItems?.map((serviceId) => (
-                                  !usedNodes.has(serviceId) && (
-                                    <SearchSelectNode
-                                      key={serviceId}
-                                      // type={item.type}
-                                      data={{ label: item.label }}
-                                      label="Node"
-                                      id={serviceId}
-                                      onDrop={handleNodeDrop}
-                                    />
-                                  )
-                                ))}
+                              <div className="flex flex-col gap-2 p-2">
+                                <div className="relative">
+                                  <input
+                                    type="text"
+                                    placeholder="Search services..."
+                                    className="w-full px-3 py-2 border rounded-md text-sm bg-white dark:bg-white dark:text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                  />
+                                  <Search className="absolute right-3 top-2.5 h-4 w-4 text-gray-400 pointer-events-none" />
+                                </div>
+                                <div className="flex flex-col gap-2 mt-2">
+                                  {services
+                                    .filter(service => 
+                                      service.label.toLowerCase().includes(searchTerm.toLowerCase())
+                                    )
+                                    .map((service) => (
+                                      !usedNodes.has(service.id) && (
+                                        <ServiceDragableNode
+                                          key={service.id}
+                                          type={item.type}
+                                          data={{ 
+                                            label: service.label,
+                                            serviceId: service.id 
+                                          }}
+                                          id={service.id}
+                                          onDrop={handleNodeDrop}
+                                        />
+                                      )
+                                    ))}
+                                </div>
                               </div>
                             )}
                             {item.id === 'agent' && (
                               !usedNodes.has(item.id) && (
-                                <AgentDragableNode
-                                  type={item.type}
-                                  label="Node"
-                                  id={item.id}
-                                  onDrop={handleNodeDrop}
-                                  data={{ label: item.label }}
-                                />
+                                <div className="p-2">
+                                  <AgentDragableNode
+                                    type={item.type}
+                                    label="Node"
+                                    id={item.id}
+                                    onDrop={handleNodeDrop}
+                                    data={{ label: item.label }}
+                                  />
+                                </div>
                               )
                             )}
                             {item.id === 'memory' && (
                               !usedNodes.has(item.id) && (
-                                <MemoryDragableNode
-                                  type={item.type}
-                                  label="Node"
-                                  id={item.id}
-                                  onDrop={handleNodeDrop}
-                                  data={{ label: item.label }}
-                                />
+                                <div className="p-2">
+                                  <MemoryDragableNode
+                                    type={item.type}
+                                    label="Node"
+                                    id={item.id}
+                                    onDrop={handleNodeDrop}
+                                    data={{ label: item.label }}
+                                  />
+                                </div>
                               )
                             )}
                           </div>

@@ -1,20 +1,8 @@
 'use client';
-
 import { Handle, Position, useReactFlow } from '@xyflow/react';
 import React, { useState } from 'react';
-import { Search, X } from 'lucide-react';
-
-const options = [
-  { id: '1', label: 'Memory 1' },
-  { id: '2', label: 'Memory 2' },
-  { id: '3', label: 'Memory 3' },
-  { id: '4', label: 'Memory 4' },
-  { id: '5', label: 'Memory 5' },
-];
-
-
+import { X } from 'lucide-react';
 import { Check, ChevronsUpDown } from "lucide-react"
-
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -31,6 +19,14 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
+const options = [
+  { id: '1', label: 'Memory 1' },
+  { id: '2', label: 'Memory 2' },
+  { id: '3', label: 'Memory 3' },
+  { id: '4', label: 'Memory 4' },
+  { id: '5', label: 'Memory 5' },
+];
+
 interface MemoryNodeProps {
   data: {
     label: string;
@@ -41,23 +37,25 @@ interface MemoryNodeProps {
 }
 
 export function MemoryNode({ data, id, onDelete }: MemoryNodeProps) {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState(data.selected || '');
-
-  const filteredOptions = options.filter((option) =>
-    option.label.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const handleSelect = (option: typeof options[0]) => {
-    setSelected(option.label);
-    setIsOpen(false);
-    setSearchTerm('');
-  };
-
   const { setNodes } = useReactFlow();
-  const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
+  const [open, setOpen] = React.useState(false);
+
+  const updateNodeData = (value: string) => {
+    setNodes((nodes) =>
+      nodes.map((node) => {
+        if (node.id === id) {
+          return {
+            ...node,
+            data: {
+              ...node.data,
+              selected: value
+            }
+          };
+        }
+        return node;
+      })
+    );
+  };
 
   return (
     <div className="rounded-lg flex items-center group">
@@ -71,8 +69,8 @@ export function MemoryNode({ data, id, onDelete }: MemoryNodeProps) {
               aria-expanded={open}
               className="w-[200px] justify-between border dark:border-gray-200 dark:bg-white dark:text-black"
             >
-              {value
-                ? options.find((options) => options.label === value)?.label
+              {data.selected
+                ? options.find((options) => options.label === data.selected)?.label
                 : "Select Memory..."}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
@@ -88,15 +86,15 @@ export function MemoryNode({ data, id, onDelete }: MemoryNodeProps) {
                       key={options.id}
                       value={options.label}
                       onSelect={(currentValue) => {
-                        setValue(currentValue === value ? "" : currentValue)
-                        setOpen(false)
+                        const newValue = currentValue === data.selected ? "" : currentValue;
+                        updateNodeData(newValue);
+                        setOpen(false);
                       }}
-                      onClick={() => handleSelect(options)}
                     >
                       <Check
                         className={cn(
                           "mr-2 h-4 w-4",
-                          value === options.label ? "opacity-100" : "opacity-0"
+                          data.selected === options.label ? "opacity-100" : "opacity-0"
                         )}
                       />
                       {options.label}

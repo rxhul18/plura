@@ -22,11 +22,13 @@ import CustomEdge from '@/components/custom/edges/custom-edge';
 import { MemoryNode } from '@/components/custom/nodes/memory-node';
 import WorkflowsDock from '@/components/motion-ui/workflow-dock';
 import { AgentNode } from '@/components/custom/nodes/agent-node';
+import { ServiceNode } from '@/components/custom/nodes/services-node';
 
 // Define node types
 const nodeTypes = {
   agentNode: AgentNode,
   memmoryNode: MemoryNode,
+  serviceNode: ServiceNode,
   
   // searchSelect: SearchSelectNode,
 };
@@ -83,6 +85,7 @@ export default function Integration() {
 
       const type = event.dataTransfer.getData('application/reactflow');
       const nodeId = event.dataTransfer.getData('node/id');
+      const nodeData = event.dataTransfer.getData('node/data');
 
       if (typeof type === 'undefined' || !type) {
         return;
@@ -92,24 +95,17 @@ export default function Integration() {
       
       if (reactflowBounds) {
         let newNode;
-        // const newNode = {
-        //   id: nodeId || getId(),
-        //   type: type === 'agentNode' ? 'agentNode' : 'default',
-        //   position: {
-        //     x: event.clientX - reactflowBounds.left,
-        //     y: event.clientY - reactflowBounds.top,
-        //   },
-        //   data: { label: `${type} node` },
-        // };
+        const position = {
+          x: event.clientX - reactflowBounds.left,
+          y: event.clientY - reactflowBounds.top,
+        };
+
         switch (type) {
           case 'agentNode':
             newNode = {
               id: nodeId || getId(),
               type: 'agentNode',
-              position: {
-                x: event.clientX - reactflowBounds.left,
-                y: event.clientY - reactflowBounds.top,
-              },
+              position,
               data: { 
                 label: `${type} node`,
                 selected: "" 
@@ -120,32 +116,24 @@ export default function Integration() {
             newNode = {
               id: nodeId || getId(),
               type: 'memoryNode',
-              position: {
-                x: event.clientX - reactflowBounds.left,
-                y: event.clientY - reactflowBounds.top,
-              },
+              position,
               data: { label: `${type} node` },
             };
             break;
-          case 'searchSelect':
+          case 'serviceNode':
+            const parsedData = nodeData ? JSON.parse(nodeData) : null;
             newNode = {
               id: nodeId || getId(),
-              type: 'searchSelect',
-              position: {
-                x: event.clientX - reactflowBounds.left,
-                y: event.clientY - reactflowBounds.top,
-              },
-              data: { label: `${type} node` },
+              type: 'serviceNode',
+              position,
+              data: parsedData || { label: `${type} node` },
             };
             break;
           default:
             newNode = {
               id: nodeId || getId(),
               type: 'default',
-              position: {
-                x: event.clientX - reactflowBounds.left,
-                y: event.clientY - reactflowBounds.top,
-              },
+              position,
               data: { label: `${type} node` },
             };
         }
@@ -174,9 +162,9 @@ export default function Integration() {
             memoryNode: (props) => (
               <MemoryNode {...props} onDelete={handleNodeDelete} />
             ),
-            // searchSelect: (props) => (
-            //   <SearchSelectNode {...props} onDelete={handleNodeDelete} />
-            // )
+            serviceNode: (props) => (
+              <ServiceNode {...props} onDelete={handleNodeDelete} />
+            )
           }}
 
           // nodeTypes={nodeTypes}
