@@ -30,7 +30,6 @@ export default function CustomEdge(props: EdgeProps) {
     targetPosition,
   });
 
-
   return (
     <>
       <BezierEdge {...props} />
@@ -53,7 +52,7 @@ export default function CustomEdge(props: EdgeProps) {
             setEdges((prevEdges) => prevEdges.filter((edge) => edge.id !== id))
           }
         >
-          <X className={` w-4 h-4 text-red-500 `}/>
+          <X className={` w-4 h-4 text-red-500 `} />
         </button>
       </EdgeLabelRenderer>
     </>

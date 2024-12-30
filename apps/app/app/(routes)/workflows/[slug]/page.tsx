@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from "react";
 import {
   ReactFlow,
   Background,
@@ -9,14 +9,14 @@ import {
   Node,
   useNodesState,
   useEdgesState,
-  Controls
-} from '@xyflow/react';
-import '@xyflow/react/dist/style.css';
-import { IntegrationToolbar } from '@/components/custom/workflow/workflow-dock';
-import CustomEdge from '@/components/custom/workflow/edges/custom-edge';
-import { MemoryNode } from '@/components/custom/workflow/nodes/memory-node';
-import { AgentNode } from '@/components/custom/workflow/nodes/agent-node';
-import { ServiceNode } from '@/components/custom/workflow/nodes/services-node';
+  Controls,
+} from "@xyflow/react";
+import "@xyflow/react/dist/style.css";
+import { IntegrationToolbar } from "@/components/custom/workflow/workflow-dock";
+import CustomEdge from "@/components/custom/workflow/edges/custom-edge";
+import { MemoryNode } from "@/components/custom/workflow/nodes/memory-node";
+import { AgentNode } from "@/components/custom/workflow/nodes/agent-node";
+import { ServiceNode } from "@/components/custom/workflow/nodes/services-node";
 
 // Define node types
 const nodeTypes = {
@@ -40,10 +40,13 @@ export default function Integration() {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [deletedNodeIds, setDeletedNodeIds] = useState<string[]>([]);
 
-  const handleNodeDelete = useCallback((nodeId: string) => {
-    setNodes((prevNodes) => prevNodes.filter((node) => node.id !== nodeId));
-    setDeletedNodeIds((prev) => [...prev, nodeId]);
-  }, [setNodes]);
+  const handleNodeDelete = useCallback(
+    (nodeId: string) => {
+      setNodes((prevNodes) => prevNodes.filter((node) => node.id !== nodeId));
+      setDeletedNodeIds((prev) => [...prev, nodeId]);
+    },
+    [setNodes],
+  );
 
   const onConnect = useCallback(
     (connection: Connection) => {
@@ -52,32 +55,34 @@ export default function Integration() {
         target: connection.target!,
         id: `edge-${crypto.randomUUID()}`, // Generate unique ID
         animated: true,
-        type: 'customEdge',
+        type: "customEdge",
       };
 
       setEdges((prevEdges) => [...prevEdges, edge]);
     },
-    [] // Remove edges dependency as we're using the setter function
+    [], // Remove edges dependency as we're using the setter function
   );
 
   const onDragOver = useCallback((event: React.DragEvent) => {
     event.preventDefault();
-    event.dataTransfer.dropEffect = 'move';
+    event.dataTransfer.dropEffect = "move";
   }, []);
 
   const onDrop = useCallback(
     (event: React.DragEvent) => {
       event.preventDefault();
 
-      const type = event.dataTransfer.getData('application/reactflow');
-      const nodeId = event.dataTransfer.getData('node/id');
-      const nodeData = event.dataTransfer.getData('node/data');
+      const type = event.dataTransfer.getData("application/reactflow");
+      const nodeId = event.dataTransfer.getData("node/id");
+      const nodeData = event.dataTransfer.getData("node/data");
 
-      if (typeof type === 'undefined' || !type) {
+      if (typeof type === "undefined" || !type) {
         return;
       }
 
-      const reactflowBounds = document.querySelector('.react-flow')?.getBoundingClientRect();
+      const reactflowBounds = document
+        .querySelector(".react-flow")
+        ?.getBoundingClientRect();
 
       if (reactflowBounds) {
         let newNode;
@@ -87,30 +92,30 @@ export default function Integration() {
         };
 
         switch (type) {
-          case 'agentNode':
+          case "agentNode":
             newNode = {
               id: nodeId || getId(),
-              type: 'agentNode',
+              type: "agentNode",
               position,
               data: {
                 label: `${type} node`,
-                selected: ""
+                selected: "",
               },
             };
             break;
-          case 'memoryNode':
+          case "memoryNode":
             newNode = {
               id: nodeId || getId(),
-              type: 'memoryNode',
+              type: "memoryNode",
               position,
               data: { label: `${type} node` },
             };
             break;
-          case 'serviceNode':
+          case "serviceNode":
             const parsedData = nodeData ? JSON.parse(nodeData) : null;
             newNode = {
               id: nodeId || getId(),
-              type: 'serviceNode',
+              type: "serviceNode",
               position,
               data: parsedData || { label: `${type} node` },
             };
@@ -118,7 +123,7 @@ export default function Integration() {
           default:
             newNode = {
               id: nodeId || getId(),
-              type: 'default',
+              type: "default",
               position,
               data: { label: `${type} node` },
             };
@@ -149,18 +154,17 @@ export default function Integration() {
             ),
             serviceNode: (props) => (
               <ServiceNode {...props} onDelete={handleNodeDelete} />
-            )
+            ),
           }}
           edgeTypes={edgeTypes}
           className=" rounded-md relative"
         >
           <IntegrationToolbar deletedNodeIds={deletedNodeIds} />
-          <Controls className='absolute dark:bg-white dark:text-black' />
-          <Background className='bg-white dark:bg-white' />
+          <Controls className="absolute dark:bg-white dark:text-black" />
+          <Background className="bg-white dark:bg-white" />
         </ReactFlow>
       </div>
-      <div>
-      </div>
+      <div></div>
     </div>
   );
 }

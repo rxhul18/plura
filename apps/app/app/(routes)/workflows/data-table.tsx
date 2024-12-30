@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-// import exportFromJSON from "export-from-json"; 
+// import exportFromJSON from "export-from-json";
 import { List } from "lucide-react";
 import {
   ColumnDef,
@@ -124,7 +124,9 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center py-4 w-full justify-between gap-2">
         <Input
           placeholder="Filter Workflows..."
-          value={(table.getColumn("Workflow")?.getFilterValue() as string) ?? ""}
+          value={
+            (table.getColumn("Workflow")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
             table.getColumn("Workflow")?.setFilterValue(event.target.value)
           }
@@ -173,9 +175,13 @@ export function DataTable<TData, TValue>({
                       key={header.id}
                       className={`${
                         header.column.id === "Services"
-                        ? "hidden md:table-cell"
-                        : ""} ${header.column.id === "WorkflowId"
-                        ? "hidden md:table-cell": ""}`}
+                          ? "hidden md:table-cell"
+                          : ""
+                      } ${
+                        header.column.id === "WorkflowId"
+                          ? "hidden md:table-cell"
+                          : ""
+                      }`}
                     >
                       {header.isPlaceholder
                         ? null
@@ -201,9 +207,13 @@ export function DataTable<TData, TValue>({
                       key={cell.id}
                       className={`${
                         cell.column.id === "Services"
-                        ? "hidden md:table-cell"
-                        : ""} ${cell.column.id === "WorkflowId"
-                        ? "hidden md:table-cell": ""}`}
+                          ? "hidden md:table-cell"
+                          : ""
+                      } ${
+                        cell.column.id === "WorkflowId"
+                          ? "hidden md:table-cell"
+                          : ""
+                      }`}
                     >
                       {flexRender(
                         cell.column.columnDef.cell,

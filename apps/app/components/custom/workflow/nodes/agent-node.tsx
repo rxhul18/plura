@@ -1,10 +1,10 @@
-'use client';
-import { Handle, Position, useReactFlow } from '@xyflow/react';
-import React from 'react';
-import { X } from 'lucide-react';
-import { Check, ChevronsUpDown } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+"use client";
+import { Handle, Position, useReactFlow } from "@xyflow/react";
+import React from "react";
+import { X } from "lucide-react";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -12,19 +12,19 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 
 const options = [
-  { id: '1', label: 'Agent 1' },
-  { id: '2', label: 'Agent 2' },
-  { id: '3', label: 'Agent 3' },
-  { id: '4', label: 'Agent 4' },
-  { id: '5', label: 'Agent 5' },
+  { id: "1", label: "Agent 1" },
+  { id: "2", label: "Agent 2" },
+  { id: "3", label: "Agent 3" },
+  { id: "4", label: "Agent 4" },
+  { id: "5", label: "Agent 5" },
 ];
 
 interface AgentNodeProps {
@@ -48,19 +48,23 @@ export function AgentNode({ id, data, onDelete }: AgentNodeProps) {
             ...node,
             data: {
               ...node.data,
-              selected: value
-            }
+              selected: value,
+            },
           };
         }
         return node;
-      })
+      }),
     );
   };
 
   return (
     <div className="rounded-lg flex items-center group">
       <div className="p-1 bg-white shadow-md rounded-lg relative">
-        <Handle type="source" position={Position.Bottom} className="w-2 h-2 absolute" />
+        <Handle
+          type="source"
+          position={Position.Bottom}
+          className="w-2 h-2 absolute"
+        />
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
             <Button
@@ -71,32 +75,39 @@ export function AgentNode({ id, data, onDelete }: AgentNodeProps) {
               onClick={() => setOpen(true)}
             >
               {data.selected
-                ? options.find((option) => option.label === data.selected)?.label
+                ? options.find((option) => option.label === data.selected)
+                    ?.label
                 : "Select Agent..."}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-[200px] p-0 dark:border-gray-200">
-            <Command className='dark:bg-white dark:text-black'>
-              <CommandInput placeholder="Search agents..." className="bg-primary dark:border-gray-200 dark:bg-transparent"/>
-              <CommandList className='dark:border-gray-200'>
+            <Command className="dark:bg-white dark:text-black">
+              <CommandInput
+                placeholder="Search agents..."
+                className="bg-primary dark:border-gray-200 dark:bg-transparent"
+              />
+              <CommandList className="dark:border-gray-200">
                 <CommandEmpty>No agents found.</CommandEmpty>
-                <CommandGroup className='!dark:border-gray-200'>
+                <CommandGroup className="!dark:border-gray-200">
                   {options.map((option) => (
                     <CommandItem
                       key={option.id}
                       value={option.label}
                       onSelect={(currentValue) => {
-                        const newValue = currentValue === data.selected ? "" : currentValue;
+                        const newValue =
+                          currentValue === data.selected ? "" : currentValue;
                         updateNodeData(newValue);
                         setOpen(false);
                       }}
-                      className={`dark:border-gray-200 dark:text-black dark:bg-white dark:hover:bg-primary ${data.selected === option.label ? 'dark:bg-primary' : ''}`}
+                      className={`dark:border-gray-200 dark:text-black dark:bg-white dark:hover:bg-primary ${data.selected === option.label ? "dark:bg-primary" : ""}`}
                     >
                       <Check
                         className={cn(
                           "mr-2 h-4 w-4",
-                          data.selected === option.label ? "opacity-100" : "opacity-0"
+                          data.selected === option.label
+                            ? "opacity-100"
+                            : "opacity-0",
                         )}
                       />
                       {option.label}
@@ -108,7 +119,7 @@ export function AgentNode({ id, data, onDelete }: AgentNodeProps) {
           </PopoverContent>
         </Popover>
       </div>
-      <div className='bg-transparent flex items-center scale-75 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300'>
+      <div className="bg-transparent flex items-center scale-75 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300">
         <button
           aria-label="Delete Node Provider"
           className="text-red-500 bg-transparent p-1 hover:bg-gray-100 rounded-full pointer-events-auto"
@@ -116,7 +127,9 @@ export function AgentNode({ id, data, onDelete }: AgentNodeProps) {
             if (onDelete) {
               onDelete(id);
             } else {
-              setNodes((prevNodes) => prevNodes.filter((node) => node.id !== id));
+              setNodes((prevNodes) =>
+                prevNodes.filter((node) => node.id !== id),
+              );
             }
           }}
         >

@@ -1,12 +1,9 @@
-'use client';
-import { useCallback } from 'react';
-import React, { useState } from 'react';
-import { ChevronsUpDown } from 'lucide-react';
+"use client";
+import { useCallback } from "react";
+import React, { useState } from "react";
+import { ChevronsUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverTrigger } from "@/components/ui/popover";
 
 interface DraggableNodeProps {
   type: string;
@@ -19,31 +16,39 @@ export function AgentDragableNode({ type, id, onDrop }: DraggableNodeProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [open, setOpen] = React.useState(false);
 
-  const onDragStart = useCallback((event: React.DragEvent) => {
-    setIsDragging(true);
-    event.dataTransfer.setData('application/reactflow', type);
-    event.dataTransfer.setData('node/id', id);
-    event.dataTransfer.effectAllowed = 'move';
-  }, [type, id]);
+  const onDragStart = useCallback(
+    (event: React.DragEvent) => {
+      setIsDragging(true);
+      event.dataTransfer.setData("application/reactflow", type);
+      event.dataTransfer.setData("node/id", id);
+      event.dataTransfer.effectAllowed = "move";
+    },
+    [type, id],
+  );
 
-  const handleDragEnd = useCallback((event: React.DragEvent) => {
-    setIsDragging(false);
-    if (event.dataTransfer.dropEffect === 'move') {
-      onDrop(id);
-    }
-  }, [id, onDrop]);
+  const handleDragEnd = useCallback(
+    (event: React.DragEvent) => {
+      setIsDragging(false);
+      if (event.dataTransfer.dropEffect === "move") {
+        onDrop(id);
+      }
+    },
+    [id, onDrop],
+  );
 
   return (
     <div
-      className={`rounded-xl flex justify-center items-center cursor-move transition-all duration-200 ${isDragging ? 'opacity-50' : 'hover:scale-105'}`}
+      className={`rounded-xl flex justify-center items-center cursor-move transition-all duration-200 ${isDragging ? "opacity-50" : "hover:scale-105"}`}
       draggable
       onDragStart={onDragStart}
       onDragEnd={handleDragEnd}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className={`p-1 rounded-lg relative min-w-[200px] transition-all duration-200 dark:border-gray-200 
-        ${isDragging ? 'bg-transparent shadow-none border-dashed' : isHovered ? 'bg-white border-gray-300 shadow-lg transform translate-y-[-2px]' : 'bg-white shadow-md border-gray-200'}`}>
+      <div
+        className={`p-1 rounded-lg relative min-w-[200px] transition-all duration-200 dark:border-gray-200 
+        ${isDragging ? "bg-transparent shadow-none border-dashed" : isHovered ? "bg-white border-gray-300 shadow-lg transform translate-y-[-2px]" : "bg-white shadow-md border-gray-200"}`}
+      >
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
             <Button
@@ -61,4 +66,4 @@ export function AgentDragableNode({ type, id, onDrop }: DraggableNodeProps) {
       </div>
     </div>
   );
-} 
+}
