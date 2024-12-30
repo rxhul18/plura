@@ -7,30 +7,22 @@ import {
   Connection,
   Edge,
   Node,
-  addEdge,
   useNodesState,
   useEdgesState,
-  XYPosition,
   Controls
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-
-import { SidebarProvider } from '@/components/ui/sidebar';
-import { AppSidebar, IntegrationToolbar } from '@/components/custom/sidebar/integration-sidebar';
-import { SearchSelectNode } from '@/components/custom/nodes/services-node';
-import CustomEdge from '@/components/custom/edges/custom-edge';
-import { MemoryNode } from '@/components/custom/nodes/memory-node';
-import WorkflowsDock from '@/components/motion-ui/workflow-dock';
-import { AgentNode } from '@/components/custom/nodes/agent-node';
-import { ServiceNode } from '@/components/custom/nodes/services-node';
+import { IntegrationToolbar } from '@/components/custom/workflow/workflow-dock';
+import CustomEdge from '@/components/custom/workflow/edges/custom-edge';
+import { MemoryNode } from '@/components/custom/workflow/nodes/memory-node';
+import { AgentNode } from '@/components/custom/workflow/nodes/agent-node';
+import { ServiceNode } from '@/components/custom/workflow/nodes/services-node';
 
 // Define node types
 const nodeTypes = {
   agentNode: AgentNode,
   memmoryNode: MemoryNode,
   serviceNode: ServiceNode,
-  
-  // searchSelect: SearchSelectNode,
 };
 
 const edgeTypes = {
@@ -53,11 +45,6 @@ export default function Integration() {
     setDeletedNodeIds((prev) => [...prev, nodeId]);
   }, [setNodes]);
 
-  // const onConnect = useCallback(
-  //   (params: Connection) => setEdges((eds) => addEdge(params, eds)),
-  //   [edges],
-  // );
-
   const onConnect = useCallback(
     (connection: Connection) => {
       const edge: Edge = {
@@ -66,9 +53,8 @@ export default function Integration() {
         id: `edge-${crypto.randomUUID()}`, // Generate unique ID
         animated: true,
         type: 'customEdge',
-        // Add any other edge properties you need
       };
-      
+
       setEdges((prevEdges) => [...prevEdges, edge]);
     },
     [] // Remove edges dependency as we're using the setter function
@@ -92,7 +78,7 @@ export default function Integration() {
       }
 
       const reactflowBounds = document.querySelector('.react-flow')?.getBoundingClientRect();
-      
+
       if (reactflowBounds) {
         let newNode;
         const position = {
@@ -106,9 +92,9 @@ export default function Integration() {
               id: nodeId || getId(),
               type: 'agentNode',
               position,
-              data: { 
+              data: {
                 label: `${type} node`,
-                selected: "" 
+                selected: ""
               },
             };
             break;
@@ -137,7 +123,6 @@ export default function Integration() {
               data: { label: `${type} node` },
             };
         }
-
         setNodes((nds) => nds.concat(newNode));
       }
     },
@@ -166,25 +151,15 @@ export default function Integration() {
               <ServiceNode {...props} onDelete={handleNodeDelete} />
             )
           }}
-
-          // nodeTypes={nodeTypes}
           edgeTypes={edgeTypes}
           className=" rounded-md relative"
         >
-          {/* <WorkflowsDock /> */}
           <IntegrationToolbar deletedNodeIds={deletedNodeIds} />
-          <Controls  className='absolute'/>
-          <Background className='bg-white dark:bg-white'/> 
+          <Controls className='absolute dark:bg-white dark:text-black' />
+          <Background className='bg-white dark:bg-white' />
         </ReactFlow>
       </div>
       <div>
-        {/* <SidebarProvider 
-          style={{
-            "--sidebar-width": "18rem",
-          } as React.CSSProperties}
-        >
-          <AppSidebar deletedNodeIds={deletedNodeIds} />
-        </SidebarProvider> */}
       </div>
     </div>
   );

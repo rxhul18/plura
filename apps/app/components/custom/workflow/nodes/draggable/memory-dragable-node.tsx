@@ -1,73 +1,65 @@
 'use client';
 import { useCallback } from 'react';
-
-import { Handle, Position } from '@xyflow/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { ChevronsUpDown } from 'lucide-react';
-
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
+
 interface DraggableNodeProps {
   type: string;
-  label: string;
   id: string;
-  data: {
-    label: string;
-    selected?: string;
-  };
   onDrop: (id: string) => void;
-  onDelete?: (nodeId: string) => void;
 }
-const options = [
-  { id: '1', label: 'Agent 1' },
-  { id: '2', label: 'Agent 2' },
-  { id: '3', label: 'Agent 3' },
-  { id: '4', label: 'Agent 4' },
-  { id: '5', label: 'Agent 5' },
-];
 
-export function AgentDragableNode({ type, id, onDrop, data }: DraggableNodeProps) {
+
+export function MemoryDragableNode({ type, id, onDrop }: DraggableNodeProps) {
+  const [isDragging, setIsDragging] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [open, setOpen] = React.useState(false);
+
   const onDragStart = useCallback((event: React.DragEvent) => {
+    setIsDragging(true);
     event.dataTransfer.setData('application/reactflow', type);
     event.dataTransfer.setData('node/id', id);
     event.dataTransfer.effectAllowed = 'move';
   }, [type, id]);
 
   const handleDragEnd = useCallback((event: React.DragEvent) => {
+    setIsDragging(false);
     if (event.dataTransfer.dropEffect === 'move') {
       onDrop(id);
     }
   }, [id, onDrop]);
 
-  const [open, setOpen] = React.useState(false);
-
   return (
     <div
-      className="rounded-lg flex items-center group"
+      className={`rounded-xl flex justify-center items-center cursor-move transition-all duration-200 ${isDragging ? 'opacity-50' : 'hover:scale-105'}`}
+      draggable
       onDragStart={onDragStart}
       onDragEnd={handleDragEnd}
-      draggable
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="bg-white shadow-md rounded-lg relative">
+      <div className={`p-1 rounded-lg relative min-w-[200px] transition-all duration-200 
+        ${isDragging ? 'bg-transparent shadow-none border-dashed' : 
+        isHovered ? 'bg-white border-gray-300 shadow-lg transform translate-y-[-2px]' : 
+        'bg-white shadow-md border-gray-200'}`}>
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
             <Button
               variant="outline"
               role="combobox"
               aria-expanded={open}
-              className="w-[200px] justify-between border dark:border-gray-200 dark:bg-white dark:text-black"
+              className="w-full justify-between border dark:bg-white dark:border-gray-200 dark:text-black"
               onClick={() => setOpen(true)}
             >
-              {data.selected
-                ? options.find((option) => option.label === data.selected)?.label
-                : "Select Agent..."}
+              Select Memory...
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
-        <Handle type="source" position={Position.Bottom} className="w-2 h-2 absolute" />
         </Popover>
       </div>
     </div>

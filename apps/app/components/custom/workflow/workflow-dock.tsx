@@ -1,15 +1,16 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { Bot, Brain, Workflow, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnimatePresence, motion, MotionConfig } from 'motion/react';
 import useMeasure from 'react-use-measure';
 import { cn } from '@/lib/utils';
 import useClickOutside from '@/hooks/useClickOutside';
-import { AgentDragableNode } from "./agent-dragable-node";
-import { MemoryDragableNode } from "./memory-dragable-node";
-import { ServiceNode, services } from '../nodes/services-node';
-import { ServiceDragableNode } from "./service-dragable-node";
+import { AgentDragableNode } from "./nodes/draggable/agent-dragable-node";
+import { MemoryDragableNode } from "./nodes/draggable/memory-dragable-node";
+import { services } from './nodes/services-node';
+import { ServiceDragableNode } from "./nodes/draggable/service-dragable-node";
+import { useReactFlow } from '@xyflow/react';
 
 const transition = {
   type: 'spring',
@@ -21,25 +22,26 @@ const TOOLBAR_ITEMS = [
   {
     id: 'agent',
     label: 'Agent',
-    title: <Bot className="h-4 w-4 sm:h-5 sm:w-5" />,
+    title: <Bot className="h-4 w-4 sm:h-5 sm:w-5 dark:text-black" />,
     type: "agentNode",
   },
   {
     id: 'memory',
     label: 'Memory',
-    title: <Brain className="h-4 w-4 sm:h-5 sm:w-5" />,
+    title: <Brain className="h-4 w-4 sm:h-5 sm:w-5 dark:text-black" />,
     type: "memoryNode",
   },
   {
     id: 'services',
     label: 'Services',
-    title: <Workflow className="h-4 w-4 sm:h-5 sm:w-5" />,
+    title: <Workflow className="h-4 w-4 sm:h-5 sm:w-5 dark:text-black" />,
     type: "serviceNode",
     subItems: services.map(service => service.id)
   }
 ];
 
 export function IntegrationToolbar({ deletedNodeIds = [] }: { deletedNodeIds?: string[] }) {
+  const { getNodes, getEdges } = useReactFlow();
   const [active, setActive] = useState<string | null>(null);
   const [contentRef, { height: heightContent }] = useMeasure();
   const [menuRef, { width: widthContainer }] = useMeasure();
@@ -54,10 +56,16 @@ export function IntegrationToolbar({ deletedNodeIds = [] }: { deletedNodeIds?: s
     setActive(null);
   });
 
-  useEffect(() => {
-    if (!widthContainer || maxWidth > 0) return;
-    setMaxWidth(widthContainer);
+  const memoizedMaxWidth = useMemo(() => {
+    if (!widthContainer || maxWidth > 0) return maxWidth;
+    return widthContainer;
   }, [widthContainer, maxWidth]);
+  
+  useEffect(() => {
+    if (memoizedMaxWidth !== maxWidth) {
+      setMaxWidth(memoizedMaxWidth);
+    }
+  }, [memoizedMaxWidth, maxWidth]);
 
   useEffect(() => {
     if (deletedNodeIds.length > 0) {
@@ -71,6 +79,42 @@ export function IntegrationToolbar({ deletedNodeIds = [] }: { deletedNodeIds?: s
 
   const handleNodeDrop = (nodeId: string) => {
     setUsedNodes(prev => new Set([...prev, nodeId]));
+  };
+
+  const handleSubmit = () => {
+    const nodes = getNodes();
+    const edges = getEdges();
+    
+    const nodePositions = nodes.map(node => ({
+      id: node.id,
+      type: node.type,
+      position: node.position,
+      data: node.data,
+      connections: {
+        // Find all edges where this node is the source
+        sourceOf: edges
+          .filter(edge => edge.source === node.id)
+          .map(edge => edge.target),
+        // Find all edges where this node is the target
+        targetOf: edges
+          .filter(edge => edge.target === node.id)
+          .map(edge => edge.source)
+      }
+    }));
+
+    console.log('Workflow Configuration:', {
+      nodes: nodePositions,
+      edges: edges.map(edge => ({
+        id: edge.id,
+        source: edge.source,
+        target: edge.target
+      }))
+    });
+
+    return {
+      nodes: nodePositions,
+      edges
+    };
   };
 
   return (
@@ -97,18 +141,40 @@ export function IntegrationToolbar({ deletedNodeIds = [] }: { deletedNodeIds?: s
                           animate={{ opacity: isSelected ? 1 : 0 }}
                           exit={{ opacity: 0 }}
                         >
-                          <div className={cn('', isSelected ? 'block' : 'hidden')}>
+                          <div className={cn('bg-transparent', isSelected ? 'block' : 'hidden')}>
+                            {item.id === 'agent' && (
+                              !usedNodes.has(item.id) && (
+                                <div className="p-2">
+                                  <AgentDragableNode
+                                    type={item.type}
+                                    id={item.id}
+                                    onDrop={handleNodeDrop}
+                                  />
+                                </div>
+                              )
+                            )}
+                            {item.id === 'memory' && (
+                              !usedNodes.has(item.id) && (
+                                <div className="p-2">
+                                  <MemoryDragableNode
+                                    type={item.type}
+                                    id={item.id}
+                                    onDrop={handleNodeDrop}
+                                  />
+                                </div>
+                              )
+                            )}
                             {item.id === 'services' && (
                               <div className="flex flex-col gap-2 p-2">
                                 <div className="relative">
                                   <input
                                     type="text"
                                     placeholder="Search services..."
-                                    className="w-full px-3 py-2 border rounded-md text-sm bg-white dark:bg-white dark:text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full px-3 py-2 border rounded-md text-sm bg-white placeholder-black dark:border-gray-200 dark:bg-white dark:text-black focus:outline-none focus:ring-2 focus:ring-gray-200"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                   />
-                                  <Search className="absolute right-3 top-2.5 h-4 w-4 text-gray-400 pointer-events-none" />
+                                  <Search className="absolute right-3 top-2.5 h-4 w-4 text-black pointer-events-none" />
                                 </div>
                                 <div className="flex flex-col gap-2 mt-2">
                                   {services
@@ -132,32 +198,6 @@ export function IntegrationToolbar({ deletedNodeIds = [] }: { deletedNodeIds?: s
                                 </div>
                               </div>
                             )}
-                            {item.id === 'agent' && (
-                              !usedNodes.has(item.id) && (
-                                <div className="p-2">
-                                  <AgentDragableNode
-                                    type={item.type}
-                                    label="Node"
-                                    id={item.id}
-                                    onDrop={handleNodeDrop}
-                                    data={{ label: item.label }}
-                                  />
-                                </div>
-                              )
-                            )}
-                            {item.id === 'memory' && (
-                              !usedNodes.has(item.id) && (
-                                <div className="p-2">
-                                  <MemoryDragableNode
-                                    type={item.type}
-                                    label="Node"
-                                    id={item.id}
-                                    onDrop={handleNodeDrop}
-                                    data={{ label: item.label }}
-                                  />
-                                </div>
-                              )
-                            )}
                           </div>
                         </motion.div>
                       );
@@ -172,13 +212,11 @@ export function IntegrationToolbar({ deletedNodeIds = [] }: { deletedNodeIds?: s
             {TOOLBAR_ITEMS.map((item) => (
               <Button
                 key={item.id}
-                variant={active === item.id ? 'default' : 'ghost'}
+                variant={active === item.id ? 'secondary' : 'ghost'}
                 aria-label={item.label}
                 className={cn(
-                  'relative flex h-9 w-9 shrink-0 scale-100 select-none appearance-none items-center justify-center rounded-lg text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 focus-visible:ring-2 active:scale-[0.98]',
-                  // active === item.id ? 'bg-primary' : ''
+                  `relative flex h-9 w-9 rounded-lg transition-colors hover:bg-secondary dark:hover:bg-primary`, active === item.id ? 'bg-secondary dark:bg-primary' : ''
                 )}
-                // type="button"
                 onClick={() => {
                   if (!isOpen) setIsOpen(true);
                   if (active === item.id) {
@@ -194,9 +232,9 @@ export function IntegrationToolbar({ deletedNodeIds = [] }: { deletedNodeIds?: s
             ))}
             
             <Button
-              className="ml-2 h-9 px-3"
+              className="ml-2 h-9 px-3 dark:bg-black dark:text-white"
               variant="default"
-              onClick={() => console.log("Submitted")}
+              onClick={handleSubmit}
             >
               Submit
             </Button>

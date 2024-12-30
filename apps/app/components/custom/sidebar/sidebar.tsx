@@ -136,7 +136,7 @@ export function AppSidebar() {
                   <SidebarMenuButton
                     asChild
                     tooltip={item.title}
-                    isActive={path === item.url}
+                    isActive={path.includes(item.url)}
                   >
                     <a href={item.url}>
                       <item.icon />

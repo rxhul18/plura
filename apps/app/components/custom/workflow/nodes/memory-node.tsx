@@ -75,12 +75,12 @@ export function MemoryNode({ data, id, onDelete }: MemoryNodeProps) {
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-[200px] p-0">
-            <Command>
-              <CommandInput placeholder="Search Memory..." />
-              <CommandList>
+          <PopoverContent className="w-[200px] p-0 dark:border-gray-200">
+            <Command className='dark:bg-white dark:text-black'>
+              <CommandInput placeholder="Search Memory..." className='bg-primary dark:border-gray-200 dark:bg-transparent'/>
+              <CommandList className='dark:border-gray-200'>
                 <CommandEmpty>No Memory found.</CommandEmpty>
-                <CommandGroup>
+                <CommandGroup className='!dark:border-gray-200'>
                   {options.map((options) => (
                     <CommandItem
                       key={options.id}
@@ -90,6 +90,7 @@ export function MemoryNode({ data, id, onDelete }: MemoryNodeProps) {
                         updateNodeData(newValue);
                         setOpen(false);
                       }}
+                      className={`dark:border-gray-200 dark:text-black dark:bg-white dark:hover:bg-primary ${data.selected === options.label ? 'dark:bg-primary' : ''}`}
                     >
                       <Check
                         className={cn(

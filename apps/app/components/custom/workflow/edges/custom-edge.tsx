@@ -30,7 +30,6 @@ export default function CustomEdge(props: EdgeProps) {
     targetPosition,
   });
 
-  const [isHovered, setIsHovered] = React.useState(false)
 
   return (
     <>
@@ -41,13 +40,11 @@ export default function CustomEdge(props: EdgeProps) {
         strokeWidth={20}
         stroke="transparent"
         className="react-flow__edge-interaction"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
       />
       <EdgeLabelRenderer>
         <button
           aria-label="Delete Edge"
-          className={`absolute p-2 rounded-full hover:bg-gray-100 transition-colors duration-200 cursor-pointer ${isHovered ? 'opacity-100' : 'opacity-0'}`}
+          className={`absolute p-1 rounded-full flex hover:bg-gray-100 transition-colors duration-200 cursor-pointer`}
           style={{
             transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
             pointerEvents: "all",
@@ -56,7 +53,7 @@ export default function CustomEdge(props: EdgeProps) {
             setEdges((prevEdges) => prevEdges.filter((edge) => edge.id !== id))
           }
         >
-          <X className={` ${isHovered ? 'opacity-100' : 'opacity-0'} w-4 h-4 text-red-500`} />
+          <X className={` w-4 h-4 text-red-500 `}/>
         </button>
       </EdgeLabelRenderer>
     </>

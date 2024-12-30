@@ -47,10 +47,10 @@ export function ServiceNode({ type, id, data, onDelete, onDrop }: ServiceNodePro
       onDragStart={onDragStart}
       onDragEnd={handleDragEnd}
     >
-      <div className="p-2 bg-white shadow-md rounded-lg relative min-w-[150px] border">
+      <div className="p-2 bg-white shadow-md rounded-lg relative min-w-[150px] border dark:text-black dark:border-gray-200">
         <Handle type="target" position={Position.Top} className="w-2 h-2" />
         <div className="flex items-center justify-between">
-          <span className="text-sm font-medium">{data.label}</span>
+          <span className="text-sm font-medium text-center w-full">{data.label}</span>
         </div>
       </div>
       <div className='bg-transparent flex items-center scale-75 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300'>

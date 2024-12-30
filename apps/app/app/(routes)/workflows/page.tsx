@@ -1,4 +1,3 @@
-import WorkflowsDock from "@/components/motion-ui/workflow-dock";
 import { Mail, columns } from "./columns";
 import { DataTable } from "./data-table";
 
@@ -30,7 +29,6 @@ export default async function Mails() {
   return (
     <div className="container px-5 pb-5 md:px-2">
       <DataTable columns={columns} data={data} />
-      {/* <WorkflowsDock /> */}
     </div>
   );
 }

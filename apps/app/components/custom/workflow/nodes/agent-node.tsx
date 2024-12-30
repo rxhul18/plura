@@ -76,12 +76,12 @@ export function AgentNode({ id, data, onDelete }: AgentNodeProps) {
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-[200px] p-0">
-            <Command>
-              <CommandInput placeholder="Search agents..." />
-              <CommandList>
+          <PopoverContent className="w-[200px] p-0 dark:border-gray-200">
+            <Command className='dark:bg-white dark:text-black'>
+              <CommandInput placeholder="Search agents..." className="bg-primary dark:border-gray-200 dark:bg-transparent"/>
+              <CommandList className='dark:border-gray-200'>
                 <CommandEmpty>No agents found.</CommandEmpty>
-                <CommandGroup>
+                <CommandGroup className='!dark:border-gray-200'>
                   {options.map((option) => (
                     <CommandItem
                       key={option.id}
@@ -91,6 +91,7 @@ export function AgentNode({ id, data, onDelete }: AgentNodeProps) {
                         updateNodeData(newValue);
                         setOpen(false);
                       }}
+                      className={`dark:border-gray-200 dark:text-black dark:bg-white dark:hover:bg-primary ${data.selected === option.label ? 'dark:bg-primary' : ''}`}
                     >
                       <Check
                         className={cn(
