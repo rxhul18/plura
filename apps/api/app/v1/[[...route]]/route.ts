@@ -10,8 +10,8 @@ import user from "./user";
 import contributors from "./contributors";
 import { cors } from "hono/cors";
 import workspace from "./workspace";
-import { Ratelimit } from '@upstash/ratelimit';
-import { auth as Auth } from '@plura/auth';
+import { Ratelimit } from "@upstash/ratelimit";
+import { auth as Auth } from "@plura/auth";
 import { cache } from "@plura/cache";
 
 export const runtime = "edge";
@@ -39,7 +39,6 @@ app.use(
   }),
 );
 
-
 const rateLimitHandler = async (c: Context, next: Next) => {
   const session = await Auth.api.getSession({ headers: c.req.raw.headers });
 
@@ -49,21 +48,23 @@ const rateLimitHandler = async (c: Context, next: Next) => {
   const rateLimit = new Ratelimit({
     redis: cache,
     limiter: Ratelimit.slidingWindow(limit, "1m"),
-    analytics: true,  // store analytics data in redis db
-  })
+    analytics: true, // store analytics data in redis db
+  });
 
-  const { success } = await rateLimit.limit(session?.session.ipAddress || session?.session.userId || "anonymous");
-  
+  const { success } = await rateLimit.limit(
+    session?.session.ipAddress || session?.session.userId || "anonymous",
+  );
+
   if (!success) {
     return c.json({ message: "You hit the rate limit" }, 429);
   }
   return await next();
-}
+};
 
 app.route("/health", health);
 app.route("/status", status);
 
-app.use(rateLimitHandler)
+app.use(rateLimitHandler);
 // apply rate limit to below routes
 app.route("/session", session);
 app.route("/test", test);
