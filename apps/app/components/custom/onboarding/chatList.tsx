@@ -1,8 +1,7 @@
 import type { UIState } from "@/lib/ai";
 
 export function ChatList({ messages }: { messages: UIState[number][] }) {
-
- console.log(messages)
+  console.log(messages);
 
   return (
     <div className="relative mx-auto w-full md:p-0 p-4 ">

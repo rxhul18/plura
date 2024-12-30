@@ -1,4 +1,4 @@
-import { cache } from '@repo/cache';
+import { cache } from '@plura/cache';
 import { logger, schedules } from '@trigger.dev/sdk/v3';
 
 type ContributorData = {

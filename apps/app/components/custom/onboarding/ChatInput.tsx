@@ -1,5 +1,5 @@
 import { Textarea } from "@/components/ui/textarea";
-import {ArrowUp} from "lucide-react";
+import { ArrowUp } from "lucide-react";
 
 export function ChatInput() {
   return (
@@ -29,6 +29,3 @@ export function ChatInput() {
     </div>
   );
 }
-
-
-

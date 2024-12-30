@@ -1,11 +1,9 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
-  CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -17,45 +15,46 @@ import { toast } from "sonner";
 import { sleep } from "@/lib/utils";
 import { useActions, useUIState } from "ai/rsc";
 import { AI } from "@/lib/ai";
-const createWorkspace =async(workspaceName:string)=>{
+const createWorkspace = async (workspaceName: string) => {
   await sleep(2000);
   return {
     id: Date.now(),
     name: workspaceName,
-  }
-}
+  };
+};
 export default function DialogDemo() {
   const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState("");
-  const {sendMessage} = useActions<typeof AI>();
+  const { sendMessage } = useActions<typeof AI>();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [messages, setMessages] = useUIState<typeof AI>();
   const [hasWorkspace, setHasWorkspace] = useState(false);
-  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
-   e.preventDefault()
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-   const data = new FormData(e.currentTarget);
+    const data = new FormData(e.currentTarget);
 
-   const workspaceName = data.get("workspace") as string
+    const workspaceName = data.get("workspace") as string;
 
-   try {
-    setIsLoading(true);
+    try {
+      setIsLoading(true);
+
 
     const res = await createWorkspace(workspaceName)
     const response = await sendMessage({prompt:`Workspace ${workspaceName} created`})
 
-    setMessages((currentMessages) => [...currentMessages, response]);
-    toast.success(`Workspace ${workspaceName} created`);
-    setHasWorkspace(true)
- 
 
-    return res
-   } catch (error) {
-     toast.error(`Error creating workspace!Please try again `)
-     console.log("error", error);
-   }finally{
-    setIsLoading(false);
-   }
-   
+      setMessages((currentMessages) => [...currentMessages, response]);
+      toast.success(`Workspace ${workspaceName} created`);
+      setHasWorkspace(true);
+
+      return res;
+    } catch (error) {
+      toast.error(`Error creating workspace!Please try again `);
+      console.log("error", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <Card className="bg-woodsmoke-950 rounded-lg shadow-md sm:w-[350px] shrink">

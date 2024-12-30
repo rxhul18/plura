@@ -1,7 +1,7 @@
 "use client";
 import AccountSwitcher from "@/components/custom/account-switcher";
 import { authClient } from "@/lib/auth-client";
-import { Session } from "@repo/auth";
+import { Session } from "@plura/auth";
 import { useEffect, useState } from "react";
 
 export default function Dashboard() {

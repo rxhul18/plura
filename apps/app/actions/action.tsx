@@ -10,11 +10,11 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import Proceed from "@/components/custom/onboarding/proceed";
 import WorkspaceForm from "@/components/custom/onboarding/workspace-form";
-import {sleep } from "@/lib/utils";
-import { CoreMessage, generateId,ToolInvocation } from "ai";
+import { sleep } from "@/lib/utils";
+import { CoreMessage, generateId, ToolInvocation } from "ai";
 export type ServerMessage = {
   id?: number;
-  name?: "proceed" | "workspace" ;
+  name?: "proceed" | "workspace";
   role: "user" | "assistant";
   content: string;
 };
@@ -23,8 +23,9 @@ export type ClientMessage = {
   id: number;
   role: "user" | "assistant";
   display: ReactNode;
-  toolInvocations?: ToolInvocation[]
+  toolInvocations?: ToolInvocation[];
 };
+
 
 export interface AiPrompt{ 
   prompt: string;
@@ -33,8 +34,8 @@ export const sendMessage = async (
  {prompt}: AiPrompt
 ): Promise<ClientMessage> => {
   const history = getMutableAIState<typeof AI>();
-  console.log(history.get().length)
-  console.log("ai",history.get())
+  console.log(history.get().length);
+  console.log("ai", history.get());
 
   history.update([...history.get(), { role: "user", content: prompt }]);
   const aiGreetingContext = await createAiGreeting()
@@ -129,9 +130,11 @@ export const sendMessage = async (
     display: response.value,
   };
 };
+
  export const createAiGreeting = async () => {
   const session= await getSession()
   const {name,email} = session!.user
   const contentString = `Hi ${name}, welcome to Plura AI!.Your email is ${email}.I am going to help you with oboarding your acccount`
   return contentString  
  }
+

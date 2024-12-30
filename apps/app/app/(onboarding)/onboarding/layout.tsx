@@ -1,5 +1,9 @@
 import { AI } from "@/lib/ai";
 
-export default function OnboardingLayout({children}: {children: React.ReactNode}) {
+export default function OnboardingLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return <AI>{children}</AI>;
 }

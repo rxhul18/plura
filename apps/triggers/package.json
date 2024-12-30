@@ -9,8 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@repo/cache": "workspace:*",
-    "@repo/db": "workspace:*",
+    "@plura/cache": "workspace:*",
+    "@plura/db": "workspace:*",
     "@supabase/supabase-js": "^2.46.1",
     "@trigger.dev/sdk": "3.3.5"
   },

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { AI } from "@/lib/ai";
 import { useActions, useUIState } from "ai/rsc";
 import { ChatList } from "./chatList";
@@ -10,25 +10,20 @@ import z from "zod";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-} from "@/components/ui/form"
-import { use, useEffect, useRef } from "react";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { useEffect } from "react";
 import { useScrollToBottom } from "@/hooks/use-scroll-to-bottom";
 import { sleep } from "@/lib/utils";
 
 const formSchema = z.object({
   message: z.string(),
 });
-type formType = z.infer<typeof formSchema>
+type formType = z.infer<typeof formSchema>;
 
 export default function Chatbox() {
   const [messagesContainerRef, messagesEndRef] =
     useScrollToBottom<HTMLDivElement>();
- const [messages, setMessages] = useUIState<typeof AI>();
+  const [messages, setMessages] = useUIState<typeof AI>();
   const form = useForm<formType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -77,9 +72,12 @@ export default function Chatbox() {
 
   return (
     <div className=" mx-auto max-w-2xl relative ">
-      <div ref={messagesContainerRef} className="pb-[200px] pt-4 md:pt-10 h-[calc(100vh-130px)] overflow-y-auto ">
+      <div
+        ref={messagesContainerRef}
+        className="pb-[200px] pt-4 md:pt-10 h-[calc(100vh-130px)] overflow-y-auto "
+      >
         <ChatList messages={messages} />
-        <div ref={messagesEndRef}  />
+        <div ref={messagesEndRef} />
       </div>
       <div className="fixed inset-x-0 w-full bottom-4 ">
         <div className="max-w-2xl mx-auto sm:p-0 px-4   ">

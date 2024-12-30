@@ -1,6 +1,6 @@
-import { auth } from "@repo/auth";
+import { auth } from "@plura/auth";
 import { Hono } from "hono";
-import { auth as Auth } from "@repo/auth";
+import { auth as Auth } from "@plura/auth";
 
 const app = new Hono<{
   Variables: {

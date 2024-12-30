@@ -1,5 +1,5 @@
 import { betterFetch } from "@better-fetch/fetch";
-import type { Session } from "@repo/auth";
+import type { Session } from "@plura/auth";
 import { NextResponse, type NextRequest } from "next/server";
 const baseDomain =
   process.env.NODE_ENV === "production"
@@ -9,7 +9,10 @@ const redirectUrl =
   process.env.NODE_ENV === "production"
     ? "https://www.plura.pro/auth"
     : "http://localhost:3003/auth";
-const appDomain = process.env.NODE_ENV === "production" ? "https://app.plura.pro" : "http://localhost:3002";
+const appDomain =
+  process.env.NODE_ENV === "production"
+    ? "https://app.plura.pro"
+    : "http://localhost:3002";
 
 export default async function authMiddleware(request: NextRequest) {
   const { data: session } = await betterFetch<Session>(
@@ -29,7 +32,6 @@ export default async function authMiddleware(request: NextRequest) {
   }
   const currentPath = request.nextUrl.pathname;
 
-
   if (!currentPath.startsWith("/onboarding") && !session.user.isOnboarding) {
     return NextResponse.redirect(`${appDomain}/onboarding`);
   }
@@ -41,5 +43,7 @@ export default async function authMiddleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)']
+  matcher: [
+    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+  ],
 };
