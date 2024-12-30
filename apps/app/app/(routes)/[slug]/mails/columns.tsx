@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { format, parse } from "date-fns";
 
 export type Mail = {
   id: string;
@@ -53,7 +54,6 @@ export const columns: ColumnDef<Mail>[] = [
   {
     accessorKey: "Source",
     header: "Source",
-    // className: "hidden md:table-cell",
   },
   {
     accessorKey: "date",
@@ -71,26 +71,8 @@ export const columns: ColumnDef<Mail>[] = [
     },
     cell: ({ row }) => {
       const date = row.getValue("date") as string;
-      const [day, month, year] = date.split("-");
-
-      // Convert month number to month name
-      const monthNames = [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ];
-      const monthName = monthNames[parseInt(month) - 1];
-
-      const formatted = `${day}-${monthName}-${year}`;
+      const parsedDate = parse(date, "dd-MM-yyyy", new Date());
+      const formatted = format(parsedDate, "dd-MMM-yyyy");
 
       return <div>{formatted}</div>;
     },
@@ -98,7 +80,6 @@ export const columns: ColumnDef<Mail>[] = [
       const dateA = rowA.getValue("date") as string;
       const dateB = rowB.getValue("date") as string;
 
-      // Convert DD-MM-YYYY to YYYY-MM-DD for proper date comparison
       const [dayA, monthA, yearA] = dateA.split("-");
       const [dayB, monthB, yearB] = dateB.split("-");
 

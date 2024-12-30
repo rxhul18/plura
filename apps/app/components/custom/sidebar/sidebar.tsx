@@ -11,6 +11,7 @@ import {
   FlaskConical,
   ArchiveRestore,
   Codepen,
+  Workflow
 } from "lucide-react";
 
 import {
@@ -44,6 +45,11 @@ const items = [
     title: "Integrations",
     url: "/integrations",
     icon: Waypoints,
+  },
+  {
+    title: "Workflows",
+    url: "/workflows",
+    icon: Workflow,
   },
   {
     title: "Events",
@@ -130,7 +136,7 @@ export function AppSidebar() {
                   <SidebarMenuButton
                     asChild
                     tooltip={item.title}
-                    isActive={path === item.url}
+                    isActive={path.includes(item.url)}
                   >
                     <a href={item.url}>
                       <item.icon />
