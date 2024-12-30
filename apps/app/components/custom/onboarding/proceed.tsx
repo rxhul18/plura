@@ -12,7 +12,7 @@ export default function Proceed() {
 const handleClick = async (reply: "yes"|"no") => {
   setActiveButton(reply);
   try {
-    const response = await sendMessage(reply);
+    const response = await sendMessage({prompt:reply});
     setMessages((currentMessages) => [...currentMessages, response]);;
   } catch (error) {
     setActiveButton(null);

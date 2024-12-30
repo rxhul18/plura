@@ -41,7 +41,7 @@ export default function DialogDemo() {
     setIsLoading(true);
 
     const res = await createWorkspace(workspaceName)
-    const response = await sendMessage(`Workspace ${workspaceName} created`)
+    const response = await sendMessage({prompt:`Workspace ${workspaceName} created`})
 
     setMessages((currentMessages) => [...currentMessages, response]);
     toast.success(`Workspace ${workspaceName} created`);

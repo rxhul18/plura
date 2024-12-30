@@ -11,6 +11,7 @@ export const auth = betterAuth({
     "http://localhost:3004",
     "https://app.plura.pro",
     "http://localhost:3003",
+    "http://localhost:4444"
   ],
   baseURL: BaseDomain,
   basePath: "/v1/auth",
