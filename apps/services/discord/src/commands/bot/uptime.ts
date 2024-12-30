@@ -1,17 +1,23 @@
-import { Client, Message, EmbedBuilder, TextChannel, ColorResolvable } from 'discord.js';
-import moment from 'moment';
+import {
+  Client,
+  Message,
+  EmbedBuilder,
+  TextChannel,
+  ColorResolvable,
+} from "discord.js";
+import moment from "moment";
 
 export default {
-  name: 'uptime',
-  aliases: ['upt'],
-  category: 'bot',
+  name: "uptime",
+  aliases: ["upt"],
+  category: "bot",
   adminPermit: false,
   ownerPermit: false,
   run: async (
-    client: Client & { config: {default_color : ColorResolvable} },
+    client: Client & { config: { default_color: ColorResolvable } },
     message: Message,
     args: string[],
-    prefix: string
+    prefix: string,
   ) => {
     const uptimeDuration = moment.duration(client.uptime);
     const formattedUptime = uptimeDuration.humanize();
