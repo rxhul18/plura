@@ -5,7 +5,7 @@ import { zValidator } from "@hono/zod-validator";
 const app = new Hono()
   .post("/send", zValidator("json", mailSchema), async (c) => {
     const { email, subject } = c.req.valid("json");
-    const { sendEmail } = await import("@repo/mail");
+    const { sendEmail } = await import("@plura/mail");
     const { data, error } = await sendEmail(email, subject);
     if (error) {
       return c.json(
@@ -31,7 +31,7 @@ const app = new Hono()
   })
   .post("/send-batch", zValidator("json", mailBatchSchema), async (c) => {
     const { emails, subject } = c.req.valid("json");
-    const { sendBatchEmail } = await import("@repo/mail");
+    const { sendBatchEmail } = await import("@plura/mail");
     const { data, error } = await sendBatchEmail(emails, subject);
     if (error) {
       return c.json(

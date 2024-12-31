@@ -1,4 +1,4 @@
-"use server"
+"use server";
 import { betterFetch } from "@better-fetch/fetch";
 import { Session } from "@repo/auth";
 import { headers } from "next/headers";
@@ -24,6 +24,4 @@ export const getSession = async () => {
  } catch (error) {
     return {error: "no session found"}
  }
- 
-  
 }

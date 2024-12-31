@@ -26,15 +26,14 @@ export type ClientMessage = {
   toolInvocations?: ToolInvocation[];
 };
 
-export interface AiPrompt {
+
+export interface AiPrompt{ 
   prompt: string;
 }
 export const sendMessage = async ({
   prompt,
 }: AiPrompt): Promise<ClientMessage> => {
   const history = getMutableAIState<typeof AI>();
-
-
   history.update([...history.get(), { role: "user", content: prompt }]);
   const aiGreetingContext = await createAiGreeting();
   const response = await streamUI({
@@ -124,6 +123,7 @@ export const sendMessage = async ({
     display: response.value,
   };
 };
+
 export const createAiGreeting = async () => {
   const session = await getSession();
   if (!session || !("user" in session)) {
@@ -133,3 +133,4 @@ export const createAiGreeting = async () => {
   const contentString = `Hi ${name}, welcome to Plura AI!.Your email is ${email}.I am going to help you with oboarding your acccount`;
   return contentString;
 };
+

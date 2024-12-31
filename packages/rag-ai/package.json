@@ -1,5 +1,5 @@
 {
-  "name": "@repo/rag-ai",
+  "name": "@plura/rag-ai",
   "version": "1.0.0",
   "description": "",
   "private": false,
@@ -16,7 +16,7 @@
     "langchain": "^0.3.6"
   },
   "devDependencies": {
-    "@repo/cache": "workspace:*",
+    "@plura/cache": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "typescript": "^5.7.2"
   }

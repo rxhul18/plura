@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { Button } from "@/components/ui/button";
 import { AI } from "@/lib/ai";
@@ -9,6 +10,7 @@ export default function Proceed() {
   const { sendMessage } = useActions<typeof AI>();
   const [messages, setMessages] = useUIState<typeof AI>();
   const [aiMessages, setAiMessages] = useAIState<typeof AI>();
+
 const handleClick = async (reply: "yes"|"no") => {
   setActiveButton(reply);
   try {
@@ -30,6 +32,7 @@ useEffect(() => {
   }
 
 }, [aiMessages]);
+
 
   return (
     <div className="p-1 bg-transparent rounded-lg shadow-md">
