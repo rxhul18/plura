@@ -21,7 +21,8 @@ const formSchema = z.object({
 type formType = z.infer<typeof formSchema>;
 
 export default function Chatbox() {
-  const [messagesContainerRef, messagesEndRef] = useScrollToBottom<HTMLDivElement>();
+  const [messagesContainerRef, messagesEndRef] =
+    useScrollToBottom<HTMLDivElement>();
   const [messages, setMessages] = useUIState<typeof AI>();
   const form = useForm<formType>({
     resolver: zodResolver(formSchema),
