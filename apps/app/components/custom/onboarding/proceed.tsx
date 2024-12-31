@@ -16,7 +16,6 @@ const handleClick = async (reply: "yes"|"no") => {
     setMessages((currentMessages) => [...currentMessages, response]);;
   } catch (error) {
     setActiveButton(null);
-    console.log("error", error);
   }
 };
 useEffect(() => {

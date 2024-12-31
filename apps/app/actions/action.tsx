@@ -10,11 +10,11 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import Proceed from "@/components/custom/onboarding/proceed";
 import WorkspaceForm from "@/components/custom/onboarding/workspace-form";
-import {sleep } from "@/lib/utils";
-import { CoreMessage, generateId,ToolInvocation } from "ai";
+import { sleep } from "@/lib/utils";
+import { CoreMessage, generateId, ToolInvocation } from "ai";
 export type ServerMessage = {
   id?: number;
-  name?: "proceed" | "workspace" ;
+  name?: "proceed" | "workspace";
   role: "user" | "assistant";
   content: string;
 };
@@ -23,22 +23,20 @@ export type ClientMessage = {
   id: number;
   role: "user" | "assistant";
   display: ReactNode;
-  toolInvocations?: ToolInvocation[]
+  toolInvocations?: ToolInvocation[];
 };
 
-export interface AiPrompt{ 
+export interface AiPrompt {
   prompt: string;
 }
-export const sendMessage = async (
- {prompt}: AiPrompt
-): Promise<ClientMessage> => {
+export const sendMessage = async ({
+  prompt,
+}: AiPrompt): Promise<ClientMessage> => {
   const history = getMutableAIState<typeof AI>();
-  console.log(history.get().length)
-  console.log("ai",history.get())
+
 
   history.update([...history.get(), { role: "user", content: prompt }]);
-  const aiGreetingContext = await createAiGreeting()
-  console.log("ai greeting context", aiGreetingContext)
+  const aiGreetingContext = await createAiGreeting();
   const response = await streamUI({
     model: togetherai("meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo"),
     system: `
@@ -83,14 +81,11 @@ export const sendMessage = async (
               <BeatLoader />
             </BotMessage>
           );
-          console.log("before");
+
           history.done([
             ...history.get(),
             { role: "assistant", content: "workspace form rendered" },
           ]);
-          console.log("history", history.get());
-          console.log("after");
-
           return (
             <BotMessage>
               <WorkspaceForm />
@@ -129,9 +124,12 @@ export const sendMessage = async (
     display: response.value,
   };
 };
- export const createAiGreeting = async () => {
-  const session= await getSession()
-  const {name,email} = session!.user
-  const contentString = `Hi ${name}, welcome to Plura AI!.Your email is ${email}.I am going to help you with oboarding your acccount`
-  return contentString  
- }
+export const createAiGreeting = async () => {
+  const session = await getSession();
+  if (!session || !("user" in session)) {
+    return;
+  }
+  const { name, email } = session.user;
+  const contentString = `Hi ${name}, welcome to Plura AI!.Your email is ${email}.I am going to help you with oboarding your acccount`;
+  return contentString;
+};

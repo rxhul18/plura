@@ -37,7 +37,7 @@ export default function Chatbox() {
   });
  const { sendMessage} = useActions<typeof AI>();
  const onSubmit = async (data: formType) => {         
-  console.log(data)
+
   const message = data.message.trim();
   if (!message) {
     return 
@@ -62,7 +62,6 @@ export default function Chatbox() {
  useEffect(() => {
   const fetchAiGreeting = async () => {
     const response = await sendMessage({prompt:"onboard me"})
-    console.log("greeting", response)
     setMessages((currentMessages) => [response,...currentMessages]);
     (async () => {
       await sleep(3000)

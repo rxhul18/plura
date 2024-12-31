@@ -10,14 +10,20 @@ const apiDomain =
 
 const baseURL = process.env.NODE_ENV === "production" ? "https://app.plura.pro" : "http://localhost:3002";
 export const getSession = async () => {
-
-  const response = await betterFetch<Session>(`${apiDomain}/v1/get-session`, 
-    {
-      baseURL: baseURL,
-      headers: {
-        cookie: (await headers()).get("cookie") || "",
-      },
-  });
-  return response.data
+ try {
+   const response = await betterFetch<Session>(
+     `${apiDomain}/v1/auth/get-session`,
+     {
+       baseURL: baseURL,
+       headers: {
+         cookie: (await headers()).get("cookie") || "",
+       },
+     }
+   );
+   return response.data;
+ } catch (error) {
+    return {error: "no session found"}
+ }
+ 
   
 }

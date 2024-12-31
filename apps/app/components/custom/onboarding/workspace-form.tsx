@@ -51,7 +51,6 @@ export default function DialogDemo() {
     return res
    } catch (error) {
      toast.error(`Error creating workspace!Please try again `)
-     console.log("error", error);
    }finally{
     setIsLoading(false);
    }
