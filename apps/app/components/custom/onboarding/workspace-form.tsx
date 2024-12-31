@@ -43,6 +43,9 @@ export default function DialogDemo() {
       const response = await sendMessage({
         prompt: `Workspace ${workspaceName} created`,
       });
+      setMessages((currentMessages) => [...currentMessages, response]);
+      toast.success(`Workspace ${workspaceName} created`);
+      setHasWorkspace(true);
       return res;
     } catch (error) {
       toast.error(`Error creating workspace!Please try again `);

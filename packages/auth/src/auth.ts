@@ -3,7 +3,7 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "@plura/db";
 import { multiSession } from "better-auth/plugins";
 
-const BaseDomain = process.env.NODE_ENV === "production" ? process.env.API_DOMAIN as string : "http://localhost:3001";
+const BaseDomain = process.env.NODE_ENV === "production" ? "https://api.plura.pro": "http://localhost:3001";
 
 export const auth = betterAuth({
   trustedOrigins: [
