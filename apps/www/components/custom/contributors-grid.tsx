@@ -47,7 +47,7 @@ export default function ContributorsGrid({ data }: ContributorsGridProps) {
                 </div>
               </TooltipTrigger>
             </BlurFade>
-            <TooltipContent className="w-full items-center justify-center px-6 py-3 border border-border/60 bg-secondary/20 backdrop-blur-lg supports-[backdrop-filter]:bg-secondary/30 dark:border-border rounded-2xl shadow-xl flex flex-col gap-2">
+            <TooltipContent className="w-full items-center justify-center px-3 py-2 border border-border/60 bg-secondary/20 backdrop-blur-lg supports-[backdrop-filter]:bg-secondary/30 dark:border-border rounded-2xl shadow-xl flex flex-col gap-2">
               <span className="flex flex-row items-center gap-2">
                 <Avatar className="w-8 h-8">
                   <AvatarImage
