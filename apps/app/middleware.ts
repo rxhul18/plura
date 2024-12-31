@@ -1,5 +1,5 @@
 import { betterFetch } from "@better-fetch/fetch";
-import type { Session } from "@repo/auth";
+import type { Session } from "@plura/auth";
 import { NextResponse, type NextRequest } from "next/server";
 const baseDomain =
   process.env.NODE_ENV === "production"
