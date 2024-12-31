@@ -1,5 +1,5 @@
 import { betterFetch } from "@better-fetch/fetch";
-import type { Session } from "@plura/auth";
+import type { Session } from "@repo/auth";
 import { NextResponse, type NextRequest } from "next/server";
 const baseDomain =
   process.env.NODE_ENV === "production"
@@ -24,7 +24,6 @@ export default async function authMiddleware(request: NextRequest) {
       },
     },
   );
-  // console.log("seesion mid", session);
 
   if (!session) {
     console.log("redirecting to sign in");

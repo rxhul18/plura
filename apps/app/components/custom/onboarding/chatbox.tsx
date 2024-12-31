@@ -30,48 +30,44 @@ export default function Chatbox() {
       message: "",
     },
   });
-  const { sendMessage, sendAiGreeting } = useActions<typeof AI>();
-  const onSubmit = async (data: formType) => {
-    console.log(data);
-    const message = data.message.trim();
-    if (!message) {
-      return;
-    }
-    form.reset();
-    setMessages((currentMessages) => [
-      ...currentMessages,
-      {
-        id: Date.now(),
-        role: "user",
-        display: <UserMessage>{message}</UserMessage>,
-      },
-    ]);
-    try {
-      const response = await sendMessage(message);
+ const { sendMessage} = useActions<typeof AI>();
+ const onSubmit = async (data: formType) => {         
+
+  const message = data.message.trim();
+  if (!message) {
+    return 
+  } 
+  form.reset()
+   setMessages((currentMessages) => [
+     ...currentMessages,
+     {
+       id: Date.now(),
+       role: "user",
+       display: <UserMessage>{message}</UserMessage>,
+     },
+   ]);
+   try {
+      const response = await sendMessage({prompt:message});
       setMessages((currentMessages) => [...currentMessages, response]);
-    } catch (error) {
-      toast.error("Something went wrong");
-    }
+   } catch (error) {
+    toast.error("Something went wrong");
+   }
+ };
+
+ useEffect(() => {
+  const fetchAiGreeting = async () => {
+    const response = await sendMessage({prompt:"onboard me"})
+    setMessages((currentMessages) => [response,...currentMessages]);
+    (async () => {
+      await sleep(3000)
+      const response = await sendMessage({ prompt: "should we continue?" });
+      setMessages((currentMessages) => [...currentMessages, response]);
+    })();
+    
   };
-  // let count = 0;
-  useEffect(() => {
-    const fetchAiGreeting = async () => {
-      const response = await sendAiGreeting();
-      console.log("greeting", response);
-      setMessages((currentMessages) => [...response, ...currentMessages]);
-    };
-    fetchAiGreeting();
-  }, []);
-  useEffect(() => {
-    const fetchProceed = async () => {
-      await sleep(3000);
-      const response = await sendMessage("should we continue?");
-      setMessages((currentMessages) => [...currentMessages, response]);
-    };
-    if (messages.length === 1) {
-      fetchProceed();
-    }
-  }, [messages.length]);
+  fetchAiGreeting();
+ }, [])
+
 
   return (
     <div className=" mx-auto max-w-2xl relative ">

@@ -39,20 +39,16 @@ export default function DialogDemo() {
     try {
       setIsLoading(true);
 
-      const res = await createWorkspace(workspaceName);
-      const response = await sendMessage(`Workspace ${workspaceName} created`);
 
-      setMessages((currentMessages) => [...currentMessages, response]);
-      toast.success(`Workspace ${workspaceName} created`);
-      setHasWorkspace(true);
-
-      return res;
-    } catch (error) {
-      toast.error(`Error creating workspace!Please try again `);
-      console.log("error", error);
-    } finally {
-      setIsLoading(false);
-    }
+    const res = await createWorkspace(workspaceName)
+    const response = await sendMessage({prompt:`Workspace ${workspaceName} created`})
+    return res
+   } catch (error) {
+     toast.error(`Error creating workspace!Please try again `)
+   }finally{
+    setIsLoading(false);
+   }
+   
   };
   return (
     <Card className="bg-woodsmoke-950 rounded-lg shadow-md sm:w-[350px] shrink">
