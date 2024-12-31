@@ -30,44 +30,41 @@ export default function Chatbox() {
       message: "",
     },
   });
- const { sendMessage} = useActions<typeof AI>();
- const onSubmit = async (data: formType) => {         
-
-  const message = data.message.trim();
-  if (!message) {
-    return 
-  } 
-  form.reset()
-   setMessages((currentMessages) => [
-     ...currentMessages,
-     {
-       id: Date.now(),
-       role: "user",
-       display: <UserMessage>{message}</UserMessage>,
-     },
-   ]);
-   try {
-      const response = await sendMessage({prompt:message});
+  const { sendMessage } = useActions<typeof AI>();
+  const onSubmit = async (data: formType) => {
+    const message = data.message.trim();
+    if (!message) {
+      return;
+    }
+    form.reset();
+    setMessages((currentMessages) => [
+      ...currentMessages,
+      {
+        id: Date.now(),
+        role: "user",
+        display: <UserMessage>{message}</UserMessage>,
+      },
+    ]);
+    try {
+      const response = await sendMessage({ prompt: message });
       setMessages((currentMessages) => [...currentMessages, response]);
-   } catch (error) {
-    toast.error("Something went wrong");
-   }
- };
-
- useEffect(() => {
-  const fetchAiGreeting = async () => {
-    const response = await sendMessage({prompt:"onboard me"})
-    setMessages((currentMessages) => [response,...currentMessages]);
-    (async () => {
-      await sleep(3000)
-      const response = await sendMessage({ prompt: "should we continue?" });
-      setMessages((currentMessages) => [...currentMessages, response]);
-    })();
-    
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
   };
-  fetchAiGreeting();
- }, [])
 
+  useEffect(() => {
+    const fetchAiGreeting = async () => {
+      const response = await sendMessage({ prompt: "onboard me" });
+      setMessages((currentMessages) => [response, ...currentMessages]);
+      (async () => {
+        await sleep(3000);
+        const response = await sendMessage({ prompt: "should we continue?" });
+        setMessages((currentMessages) => [...currentMessages, response]);
+      })();
+    };
+    fetchAiGreeting();
+  }, []);
 
   return (
     <div className=" mx-auto max-w-2xl relative ">

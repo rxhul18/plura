@@ -26,8 +26,7 @@ export type ClientMessage = {
   toolInvocations?: ToolInvocation[];
 };
 
-
-export interface AiPrompt{ 
+export interface AiPrompt {
   prompt: string;
 }
 export const sendMessage = async ({
@@ -133,4 +132,3 @@ export const createAiGreeting = async () => {
   const contentString = `Hi ${name}, welcome to Plura AI!.Your email is ${email}.I am going to help you with oboarding your acccount`;
   return contentString;
 };
-
