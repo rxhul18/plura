@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { prisma } from "@repo/db";
+import { prisma } from "@plura/db";
 
 const app = new Hono().get("/", async (c) => {
   const user = await prisma.user.findMany();

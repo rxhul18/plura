@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { auth } from "@repo/auth";
+import { auth } from "@plura/auth";
 
 const app = new Hono()
   .get("/", async (c) => {

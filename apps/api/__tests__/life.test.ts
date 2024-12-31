@@ -1,7 +1,7 @@
 import { GET } from "../app/v1/[[...route]]/route";
 import { describe, it, expect, vi } from "vitest";
 
-vi.mock("@repo/db", () => ({
+vi.mock("@plura/db", () => ({
   prisma: {
     user: {
       findMany: vi.fn(),

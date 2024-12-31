@@ -1,5 +1,5 @@
 {
-  "name": "@repo/cache",
+  "name": "@plura/cache",
   "version": "0.0.0",
   "private": false,
   "exports": {

@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { cache } from "@repo/cache";
+import { cache } from "@plura/cache";
 
 const app = new Hono().get("/", async (c) => {
   const contributorsData = await cache.lrange("contributors", 0, -1);

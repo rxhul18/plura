@@ -1,6 +1,6 @@
 "use server";
 import { betterFetch } from "@better-fetch/fetch";
-import { Session } from "@repo/auth";
+import { Session } from "@plura/auth";
 import { headers } from "next/headers";
 
 export const getSession = async () => {
