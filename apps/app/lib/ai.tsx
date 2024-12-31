@@ -1,9 +1,10 @@
 import { createAI } from "ai/rsc";
+
 import {
+  AiPrompt,
   ClientMessage,
   ServerMessage,
   sendMessage,
-  sendAiGreeting,
 } from "@/actions/action";
 
 export type AIState = ServerMessage[];
@@ -13,14 +14,12 @@ export const AI = createAI<
   AIState,
   UIState,
   {
-    sendMessage: (message: string) => Promise<ClientMessage>;
-    sendAiGreeting: () => Promise<ClientMessage[]>;
+    sendMessage: ({ prompt }: AiPrompt) => Promise<ClientMessage>;
   }
 >({
   initialAIState: [],
   initialUIState: [],
   actions: {
     sendMessage,
-    sendAiGreeting,
   },
 });
