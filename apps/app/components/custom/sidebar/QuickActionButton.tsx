@@ -37,15 +37,15 @@ const QuickActionButton = () => {
     <div>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
-          <Button className="w-full justify-between flex items-center font-semibold border text-center gap-x-1 text-sm leading-5 rounded-md py-1.5 h-8 px-4 shadow-10 hover:shadow-lg">
-            <span className="flex items-center gap-x-0.5">
+          <Button className="w-full justify-between flex items-center font-semibold border text-center gap-x-1 text-sm leading-5 rounded-md py-1.5 h-8 px-2 shadow-10 hover:shadow-lg">
+            <span className="flex items-center gap-x-1">
               <Zap />
               Quick Actions
             </span>
 
             <Badge
               variant="secondary"
-              className="block px-2 py-0.5 rounded-md text-xs font-semibold"
+              className="block px-2 py-0.5 rounded-md text-xs font-semibold hover:bg-secondary"
             >
               Ctrl + K{" "}
             </Badge>
