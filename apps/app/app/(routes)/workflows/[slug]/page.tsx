@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useState, useMemo } from "react";
 import {
   ReactFlow,
   Background,
@@ -18,12 +18,12 @@ import { MemoryNode } from "@/components/custom/workflow/nodes/memory-node";
 import { AgentNode } from "@/components/custom/workflow/nodes/agent-node";
 import { ServiceNode } from "@/components/custom/workflow/nodes/services-node";
 
-// Define node types
-const nodeTypes = {
-  agentNode: AgentNode,
-  memmoryNode: MemoryNode,
-  serviceNode: ServiceNode,
-};
+// Move nodeTypes definition outside the component
+const createNodeTypes = (handleNodeDelete: (nodeId: string) => void) => ({
+  agentNode: (props: any) => <AgentNode {...props} onDelete={handleNodeDelete} />,
+  memoryNode: (props: any) => <MemoryNode {...props} onDelete={handleNodeDelete} />,
+  serviceNode: (props: any) => <ServiceNode {...props} onDelete={handleNodeDelete} />,
+});
 
 const edgeTypes = {
   customEdge: CustomEdge,
@@ -46,6 +46,12 @@ export default function Integration() {
       setDeletedNodeIds((prev) => [...prev, nodeId]);
     },
     [setNodes],
+  );
+
+  // Create nodeTypes once using the callback
+  const nodeTypes = useMemo(
+    () => createNodeTypes(handleNodeDelete),
+    [handleNodeDelete]
   );
 
   const onConnect = useCallback(
@@ -145,19 +151,9 @@ export default function Integration() {
           onConnect={onConnect}
           onDragOver={onDragOver}
           onDrop={onDrop}
-          nodeTypes={{
-            agentNode: (props) => (
-              <AgentNode {...props} onDelete={handleNodeDelete} />
-            ),
-            memoryNode: (props) => (
-              <MemoryNode {...props} onDelete={handleNodeDelete} />
-            ),
-            serviceNode: (props) => (
-              <ServiceNode {...props} onDelete={handleNodeDelete} />
-            ),
-          }}
+          nodeTypes={nodeTypes}
           edgeTypes={edgeTypes}
-          className=" rounded-md relative"
+          className="rounded-md relative"
         >
           <IntegrationToolbar deletedNodeIds={deletedNodeIds} />
           <Controls className="absolute dark:bg-white dark:text-black" />
