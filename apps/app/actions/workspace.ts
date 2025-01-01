@@ -5,8 +5,8 @@ import { betterFetch } from "@better-fetch/fetch";
 
 export const createWorkspace = async (workspaceName: string) => {
   const user = await getSession();
-  if(!user){
-    return
+  if (!user) {
+    return;
   }
   try {
     console.log("workspaceName", workspaceName);
