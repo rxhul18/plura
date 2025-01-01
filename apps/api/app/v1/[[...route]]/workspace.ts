@@ -164,6 +164,7 @@ const app = new Hono()
     const session = await auth.api.getSession({
       headers: c.req.raw.headers,
     });
+    console.log("session", session);
     const userId = session?.user.id;
     const body = c.req.valid("json");
 
@@ -179,7 +180,7 @@ const app = new Hono()
 
     const workspace = await prisma.workspace.create({
       data: {
-        name: name.toString(),
+        name: body.name,
         userId: userId,
       },
     });
@@ -191,7 +192,6 @@ const app = new Hono()
       );
     }
 
-    // Invalidate cache for user workspaces
     const userWorkspacesCacheKey = `workspaces:user:${userId}`;
     try {
       await cache.del(userWorkspacesCacheKey);

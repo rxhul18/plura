@@ -1,6 +1,7 @@
 "use server";
 import { headers } from "next/headers";
 import { getSession } from "./session";
+import { betterFetch } from "@better-fetch/fetch";
 
 export const createWorkspace = async (workspaceName: string) => {
   const user = await getSession();
@@ -8,11 +9,15 @@ export const createWorkspace = async (workspaceName: string) => {
     return
   }
   try {
-    const workspace  = await fetch("http://localhost:3001/v1/workspace", {
+    console.log("workspaceName", workspaceName);
+    const workspace  = await betterFetch("http://localhost:3001/v1/workspace", {
         method: "POST",
-        body:JSON.stringify({
+        body:{
           name: workspaceName,
-        }),
+        },
+        headers: {
+          "cookie": (await (headers())).get("cookie") || "",
+        }
     })
     console.log("workspace", workspace)
   } catch (error) {

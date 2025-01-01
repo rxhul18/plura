@@ -9,7 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { LoaderCircle } from "lucide-react";
+import { Check, LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { sleep } from "@/lib/utils";
@@ -77,7 +77,7 @@ export default function DialogDemo() {
             })}
             disabled={isLoading || value.trim().length === 0 || hasWorkspace}
           >
-            {isLoading ? <LoaderCircle className="animate-spin" /> : "Create"}
+            {isLoading ? <LoaderCircle className="animate-spin" /> : hasWorkspace ? <Check className="text-green-500"/> : "Create"}
           </Button>
         </form>
       </CardContent>
