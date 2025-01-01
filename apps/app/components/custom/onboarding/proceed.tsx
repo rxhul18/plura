@@ -47,7 +47,7 @@ export default function Proceed() {
           aria-pressed={activeButton === "yes"}
           disabled={activeButton === "yes" || activeButton === "no"}
         >
-          <Check className="text-green-400"/>
+          <Check className="text-green-400" />
         </Button>
         <Button
           onClick={() => handleClick("no")}
@@ -56,7 +56,7 @@ export default function Proceed() {
           aria-pressed={activeButton === "no"}
           disabled={activeButton === "no" || activeButton === "yes"}
         >
-         <X  className="text-red-400"/>
+          <X className="text-red-400" />
         </Button>
       </div>
     </div>
