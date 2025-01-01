@@ -1,8 +1,11 @@
 import { Hono } from "hono";
 import { mailBatchSchema, mailSchema } from "@repo/types";
 import { zValidator } from "@hono/zod-validator";
+import { checkAdmin } from "@/app/actions/checkAdmin";
+import { checkLogin } from "@/app/actions/checkLogin";
 
 const app = new Hono()
+  .use(checkLogin, checkAdmin)
   .post("/send", zValidator("json", mailSchema), async (c) => {
     const { email, subject } = c.req.valid("json");
     const { sendEmail } = await import("@plura/mail");
