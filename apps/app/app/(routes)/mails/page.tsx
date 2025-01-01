@@ -1,5 +1,8 @@
+"use client";
+import InfoBreadCrumb from "@/components/custom/infobar/bread-crumb";
 import { Mail, columns } from "./columns";
 import { DataTable } from "./data-table";
+import { useEffect, useState } from "react";
 
 async function getData(): Promise<Mail[]> {
   // Fetch data from your API here.
@@ -133,12 +136,24 @@ async function getData(): Promise<Mail[]> {
   ];
 }
 
-export default async function Mails() {
-  const data = await getData();
+export default function Mails() {
+  const [mails, setMails] = useState<Mail[]>([]);
+
+  const fetchData = async () => {
+    try {
+      const data = await getData();
+      setMails(data);
+    } catch (e) {}
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div className="container px-5 pb-5 md:px-2">
-      <DataTable columns={columns} data={data} />
+      <InfoBreadCrumb />
+
+      <DataTable columns={columns} data={mails} />
     </div>
   );
 }
