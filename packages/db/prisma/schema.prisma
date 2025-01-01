@@ -4,23 +4,24 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_DATABASE_URL")
 }
 
 model User {
-  id            String   @id
+  id            String      @id
   name          String
   email         String
   emailVerified Boolean
   image         String?
   createdAt     DateTime
   updatedAt     DateTime
-  isOnboarding  Boolean   @default(false)
+  isOnboarding  Boolean     @default(false)
   sessions      Session[]
   accounts      Account[]
   workspaces    Workspace[]
+  role          String      @default("user")
 
   @@unique([email])
   @@map("user")
@@ -61,7 +62,7 @@ model Account {
 }
 
 model Verification {
-  id         String    @id
+  id         String   @id
   identifier String
   value      String
   expiresAt  DateTime
@@ -72,19 +73,18 @@ model Verification {
 }
 
 model Trigger {
-  id         String   @id
+  id            String  @id
   name          String
   email         String
   emailVerified Boolean
 }
 
-
 model Workspace {
-  id         String       @id @default(uuid())
+  id         String   @id @default(uuid())
   name       String
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
   invite_url String?
   userId     String
-  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
