@@ -160,17 +160,19 @@ const app = new Hono()
 
     return c.json({ workspaces }, 200);
   })
-  .post("/", zValidator("form", workspaceSchema), async (c) => {
+  .post("/", zValidator("json", workspaceSchema), async (c) => {
     const session = await auth.api.getSession({
       headers: c.req.raw.headers,
     });
     const userId = session?.user.id;
-    const body = c.req.valid("form");
+    const body = c.req.valid("json");
 
     if (!body) {
+      console.log("body");
       return c.json({ message: "Missing body", status: 400 }, 400);
     }
     if (!userId) {
+      console.log("userId");
       return c.json({ message: "Missing user id", status: 400 }, 400);
     }
     const name = await encrypt(body.name, ENCRYPTION_KEY);

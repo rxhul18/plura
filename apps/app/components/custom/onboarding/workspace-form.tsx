@@ -15,13 +15,8 @@ import { toast } from "sonner";
 import { sleep } from "@/lib/utils";
 import { useActions, useUIState } from "ai/rsc";
 import { AI } from "@/lib/ai";
-const createWorkspace = async (workspaceName: string) => {
-  await sleep(2000);
-  return {
-    id: Date.now(),
-    name: workspaceName,
-  };
-};
+import { createWorkspace } from "@/actions/workspace";
+
 export default function DialogDemo() {
   const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState("");
@@ -38,7 +33,6 @@ export default function DialogDemo() {
 
     try {
       setIsLoading(true);
-
       const res = await createWorkspace(workspaceName);
       const response = await sendMessage({
         prompt: `Workspace ${workspaceName} created`,
@@ -54,7 +48,7 @@ export default function DialogDemo() {
     }
   };
   return (
-    <Card className="bg-woodsmoke-950 rounded-lg shadow-md sm:w-[350px] shrink">
+    <Card className="bg-neutral-900/30 rounded-lg shadow-md sm:w-[350px] shrink">
       <CardContent>
         <div className=" flex flex-col py-4 ">
           <CardTitle className="sm:text-start text-bold text-2xl text-center text-neutral-200">

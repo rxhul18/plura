@@ -129,6 +129,15 @@ export const createAiGreeting = async () => {
     return;
   }
   const { name, email } = session.user;
-  const contentString = `Hi ${name}, welcome to Plura AI!.Your email is ${email}.I am going to help you with oboarding your acccount`;
+  const contentString = `
+  Hi ${name}, welcome to Plura AI! 🎉👋
+
+I'm your onboarding assistant, here to guide you through every step.
+I see your email is ${email}.📧
+
+Let’s make this journey smooth and fun! If you have any questions, I’m just a message away🚀.
+Ready to dive in? Let’s go!🏄‍♂️
+`.trim();
+
   return contentString;
 };

@@ -14,6 +14,7 @@ import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { useEffect } from "react";
 import { useScrollToBottom } from "@/hooks/use-scroll-to-bottom";
 import { sleep } from "@/lib/utils";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const formSchema = z.object({
   message: z.string(),
@@ -63,21 +64,30 @@ export default function Chatbox() {
       })();
     };
     fetchAiGreeting();
+    
   }, []);
 
   return (
     <div className=" mx-auto max-w-2xl relative ">
-      <div
+      <ScrollArea
         ref={messagesContainerRef}
-        className="pb-[200px] pt-4 md:pt-10 h-[calc(100vh-130px)] overflow-y-auto "
+        className=" pt-4 md:pt-10 px-2 h-[calc(100vh-130px)] overflow-y-auto custom-scrollbar-content "
       >
         <ChatList messages={messages} />
         <div ref={messagesEndRef} />
-      </div>
+      </ScrollArea>
       <div className="fixed inset-x-0 w-full bottom-4 ">
         <div className="max-w-2xl mx-auto sm:p-0 px-4   ">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  form.handleSubmit(onSubmit)();
+                }
+              }}
+            >
               <div className="grow border border-woodsmoke-900/[0.5] flex flex-row justify-center items-center rounded-full bg-woodsmoke-950 p-1 shadow-md ">
                 <FormField
                   control={form.control}
