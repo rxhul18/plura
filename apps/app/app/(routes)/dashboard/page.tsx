@@ -2,10 +2,13 @@
 import { IconCoins, IconInfoSquareRounded } from "@tabler/icons-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import InfoBreadCrumb from "@/components/custom/infobar/bread-crumb";
 
 export default function Home() {
   return (
     <div className="flex flex-col h-full w-full items-start overflow-hidden px-5 md:px-2">
+      <InfoBreadCrumb />
+
       <Tabs defaultValue="overview" className="space-y-5">
         <TabsList>
           <TabsTrigger value="overview">Overview</TabsTrigger>
