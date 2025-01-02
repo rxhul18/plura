@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState, useMemo } from "react";
+import { useCallback, useState, useMemo, useRef } from "react";
 import {
   ReactFlow,
   Background,
@@ -10,6 +10,8 @@ import {
   useNodesState,
   useEdgesState,
   Controls,
+  useReactFlow,
+  ReactFlowProvider,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { IntegrationToolbar } from "@/components/custom/workflow/workflow-dock";
@@ -35,10 +37,14 @@ const initialEdges: Edge[] = [];
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 
-export default function Integration() {
+const Workflow = function() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [deletedNodeIds, setDeletedNodeIds] = useState<string[]>([]);
+
+  
+  const reactFlowWrapper = useRef<HTMLDivElement>(null);
+  const { screenToFlowPosition } = useReactFlow();
 
   const handleNodeDelete = useCallback(
     (nodeId: string) => {
@@ -82,20 +88,20 @@ export default function Integration() {
       const nodeId = event.dataTransfer.getData("node/id");
       const nodeData = event.dataTransfer.getData("node/data");
 
+
+
       if (typeof type === "undefined" || !type) {
         return;
       }
 
-      const reactflowBounds = document
-        .querySelector(".react-flow")
-        ?.getBoundingClientRect();
+        
 
-      if (reactflowBounds) {
+      
         let newNode;
-        const position = {
-          x: event.clientX - reactflowBounds.left,
-          y: event.clientY - reactflowBounds.top,
-        };
+        const position = screenToFlowPosition({
+          x: event.clientX,
+          y: event.clientY,
+        });
 
         switch (type) {
           case "agentNode":
@@ -135,14 +141,13 @@ export default function Integration() {
             };
         }
         setNodes((nds) => nds.concat(newNode));
-      }
-    },
-    [setNodes],
+      },
+    [screenToFlowPosition , setNodes],
   );
 
   return (
-    <div className="flex" style={{ height: "calc(100% - 52px)" }}>
-      <div className="flex w-full">
+    <div className="flex" style={{ height: "calc(100% - 52px)" }} >
+      <div className="flex w-full" ref={reactFlowWrapper} >
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -160,7 +165,14 @@ export default function Integration() {
           <Background className="bg-white dark:bg-white" />
         </ReactFlow>
       </div>
-      <div></div>
     </div>
   );
 }
+
+export default function Workflows() {
+  return (
+    <ReactFlowProvider>
+      <Workflow />
+    </ReactFlowProvider>
+  );
+};
