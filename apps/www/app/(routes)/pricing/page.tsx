@@ -9,6 +9,7 @@ import { siteConfig } from "@/config/site.config";
 import BlurFade from "@/components/ui/blur-fade";
 import PricingSwitch from "@/components/custom/pricing/pricing.switch";
 import { useState } from "react";
+import { pricingCardConfig } from "@/config/pricing.config";
 
 export default function Pricing() {
   const [isYearly, setIsYearly] = useState<boolean>(true);
@@ -33,14 +34,14 @@ export default function Pricing() {
 
         <section
           id="pricingCards"
-          className="flex items-center justify-center px-8 mb-20"
+          className="flex flex-col items-center justify-center px-8 mb-20"
         >
           <BlurFade delay={0.2 * 3} inView>
             <div className="flex items-center justify-center mb-10">
               <PricingSwitch onYearlyBillingChange={setIsYearly} />
             </div>
-            <PricingCards isYearly={isYearly} />
           </BlurFade>
+          <PricingCards isYearly={isYearly} items={pricingCardConfig} />
         </section>
       </div>
     </div>
