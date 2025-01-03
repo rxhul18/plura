@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useState, useMemo, useRef } from "react";
 import {
   ReactFlow,
   Background,
@@ -10,6 +11,8 @@ import {
   useNodesState,
   useEdgesState,
   Controls,
+  useReactFlow,
+  ReactFlowProvider,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { IntegrationToolbar } from "@/components/custom/workflow/workflow-dock";
@@ -18,12 +21,12 @@ import { MemoryNode } from "@/components/custom/workflow/nodes/memory-node";
 import { AgentNode } from "@/components/custom/workflow/nodes/agent-node";
 import { ServiceNode } from "@/components/custom/workflow/nodes/services-node";
 
-// Define node types
-const nodeTypes = {
-  agentNode: AgentNode,
-  memmoryNode: MemoryNode,
-  serviceNode: ServiceNode,
-};
+// Move nodeTypes definition outside the component
+const createNodeTypes = (handleNodeDelete: (nodeId: string) => void) => ({
+  agentNode: (props: any) => <AgentNode {...props} onDelete={handleNodeDelete} />,
+  memoryNode: (props: any) => <MemoryNode {...props} onDelete={handleNodeDelete} />,
+  serviceNode: (props: any) => <ServiceNode {...props} onDelete={handleNodeDelete} />,
+});
 
 const edgeTypes = {
   customEdge: CustomEdge,
@@ -35,10 +38,14 @@ const initialEdges: Edge[] = [];
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 
-export default function Integration() {
+const Workflow = function() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [deletedNodeIds, setDeletedNodeIds] = useState<string[]>([]);
+
+  
+  const reactFlowWrapper = useRef<HTMLDivElement>(null);
+  const { screenToFlowPosition } = useReactFlow();
 
   const handleNodeDelete = useCallback(
     (nodeId: string) => {
@@ -46,6 +53,12 @@ export default function Integration() {
       setDeletedNodeIds((prev) => [...prev, nodeId]);
     },
     [setNodes],
+  );
+
+  // Create nodeTypes once using the callback
+  const nodeTypes = useMemo(
+    () => createNodeTypes(handleNodeDelete),
+    [handleNodeDelete]
   );
 
   const onConnect = useCallback(
@@ -76,20 +89,20 @@ export default function Integration() {
       const nodeId = event.dataTransfer.getData("node/id");
       const nodeData = event.dataTransfer.getData("node/data");
 
+
+
       if (typeof type === "undefined" || !type) {
         return;
       }
 
-      const reactflowBounds = document
-        .querySelector(".react-flow")
-        ?.getBoundingClientRect();
+        
 
-      if (reactflowBounds) {
+      
         let newNode;
-        const position = {
-          x: event.clientX - reactflowBounds.left,
-          y: event.clientY - reactflowBounds.top,
-        };
+        const position = screenToFlowPosition({
+          x: event.clientX,
+          y: event.clientY,
+        });
 
         switch (type) {
           case "agentNode":
@@ -129,14 +142,13 @@ export default function Integration() {
             };
         }
         setNodes((nds) => nds.concat(newNode));
-      }
-    },
-    [setNodes],
+      },
+    [screenToFlowPosition , setNodes],
   );
 
   return (
-    <div className="flex" style={{ height: "calc(100% - 52px)" }}>
-      <div className="flex w-full">
+    <div className="flex" style={{ height: "calc(100% - 52px)" }} >
+      <div className="flex w-full" ref={reactFlowWrapper} >
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -145,26 +157,23 @@ export default function Integration() {
           onConnect={onConnect}
           onDragOver={onDragOver}
           onDrop={onDrop}
-          nodeTypes={{
-            agentNode: (props) => (
-              <AgentNode {...props} onDelete={handleNodeDelete} />
-            ),
-            memoryNode: (props) => (
-              <MemoryNode {...props} onDelete={handleNodeDelete} />
-            ),
-            serviceNode: (props) => (
-              <ServiceNode {...props} onDelete={handleNodeDelete} />
-            ),
-          }}
+          nodeTypes={nodeTypes}
           edgeTypes={edgeTypes}
-          className=" rounded-md relative"
+          className="rounded-md relative"
         >
           <IntegrationToolbar deletedNodeIds={deletedNodeIds} />
           <Controls className="absolute dark:bg-white dark:text-black" />
           <Background className="bg-white dark:bg-white" />
         </ReactFlow>
       </div>
-      <div></div>
     </div>
   );
 }
+
+export default function Workflows() {
+  return (
+    <ReactFlowProvider>
+      <Workflow />
+    </ReactFlowProvider>
+  );
+};

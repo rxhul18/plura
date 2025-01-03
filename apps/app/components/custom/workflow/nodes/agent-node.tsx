@@ -85,7 +85,7 @@ export function AgentNode({ id, data, onDelete }: AgentNodeProps) {
             <Command className="dark:bg-white dark:text-black">
               <CommandInput
                 placeholder="Search agents..."
-                className="bg-primary dark:border-gray-200 dark:bg-transparent"
+                className="bg-primary bg-white dark:border-gray-200 dark:bg-transparent"
               />
               <CommandList className="dark:border-gray-200">
                 <CommandEmpty>No agents found.</CommandEmpty>
