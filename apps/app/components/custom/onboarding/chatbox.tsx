@@ -30,9 +30,8 @@ export default function Chatbox() {
       message: "",
     },
   });
-  const { sendMessage, sendAiGreeting } = useActions<typeof AI>();
+  const { sendMessage } = useActions<typeof AI>();
   const onSubmit = async (data: formType) => {
-    console.log(data);
     const message = data.message.trim();
     if (!message) {
       return;
@@ -47,31 +46,25 @@ export default function Chatbox() {
       },
     ]);
     try {
-      const response = await sendMessage(message);
+      const response = await sendMessage({ prompt: message });
       setMessages((currentMessages) => [...currentMessages, response]);
     } catch (error) {
       toast.error("Something went wrong");
     }
   };
-  // let count = 0;
+
   useEffect(() => {
     const fetchAiGreeting = async () => {
-      const response = await sendAiGreeting();
-      console.log("greeting", response);
-      setMessages((currentMessages) => [...response, ...currentMessages]);
+      const response = await sendMessage({ prompt: "onboard me" });
+      setMessages((currentMessages) => [response, ...currentMessages]);
+      (async () => {
+        await sleep(3000);
+        const response = await sendMessage({ prompt: "should we continue?" });
+        setMessages((currentMessages) => [...currentMessages, response]);
+      })();
     };
     fetchAiGreeting();
   }, []);
-  useEffect(() => {
-    const fetchProceed = async () => {
-      await sleep(3000);
-      const response = await sendMessage("should we continue?");
-      setMessages((currentMessages) => [...currentMessages, response]);
-    };
-    if (messages.length === 1) {
-      fetchProceed();
-    }
-  }, [messages.length]);
 
   return (
     <div className=" mx-auto max-w-2xl relative ">

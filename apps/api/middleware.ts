@@ -10,7 +10,6 @@ export function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.includes("/dashboard")) {
     return NextResponse.redirect(redirectUrl);
   }
-  console.log(request.nextUrl.pathname);
   return response;
 }
 
