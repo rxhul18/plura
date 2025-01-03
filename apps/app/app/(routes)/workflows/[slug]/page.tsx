@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useCallback, useState, useMemo, useRef } from "react";
@@ -14,7 +15,6 @@ import {
   ReactFlowProvider,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import "./index.css"
 import { IntegrationToolbar } from "@/components/custom/workflow/workflow-dock";
 import CustomEdge from "@/components/custom/workflow/edges/custom-edge";
 import { MemoryNode } from "@/components/custom/workflow/nodes/memory-node";
