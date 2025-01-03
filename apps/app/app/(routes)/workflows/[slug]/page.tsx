@@ -23,9 +23,15 @@ import { ServiceNode } from "@/components/custom/workflow/nodes/services-node";
 
 // Move nodeTypes definition outside the component
 const createNodeTypes = (handleNodeDelete: (nodeId: string) => void) => ({
-  agentNode: (props: any) => <AgentNode {...props} onDelete={handleNodeDelete} />,
-  memoryNode: (props: any) => <MemoryNode {...props} onDelete={handleNodeDelete} />,
-  serviceNode: (props: any) => <ServiceNode {...props} onDelete={handleNodeDelete} />,
+  agentNode: (props: any) => (
+    <AgentNode {...props} onDelete={handleNodeDelete} />
+  ),
+  memoryNode: (props: any) => (
+    <MemoryNode {...props} onDelete={handleNodeDelete} />
+  ),
+  serviceNode: (props: any) => (
+    <ServiceNode {...props} onDelete={handleNodeDelete} />
+  ),
 });
 
 const edgeTypes = {
@@ -38,12 +44,11 @@ const initialEdges: Edge[] = [];
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 
-const Workflow = function() {
+const Workflow = function () {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [deletedNodeIds, setDeletedNodeIds] = useState<string[]>([]);
 
-  
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
   const { screenToFlowPosition } = useReactFlow();
 
@@ -58,7 +63,7 @@ const Workflow = function() {
   // Create nodeTypes once using the callback
   const nodeTypes = useMemo(
     () => createNodeTypes(handleNodeDelete),
-    [handleNodeDelete]
+    [handleNodeDelete],
   );
 
   const onConnect = useCallback(
@@ -89,66 +94,61 @@ const Workflow = function() {
       const nodeId = event.dataTransfer.getData("node/id");
       const nodeData = event.dataTransfer.getData("node/data");
 
-
-
       if (typeof type === "undefined" || !type) {
         return;
       }
 
-        
+      let newNode;
+      const position = screenToFlowPosition({
+        x: event.clientX,
+        y: event.clientY,
+      });
 
-      
-        let newNode;
-        const position = screenToFlowPosition({
-          x: event.clientX,
-          y: event.clientY,
-        });
-
-        switch (type) {
-          case "agentNode":
-            newNode = {
-              id: nodeId || getId(),
-              type: "agentNode",
-              position,
-              data: {
-                label: `${type} node`,
-                selected: "",
-              },
-            };
-            break;
-          case "memoryNode":
-            newNode = {
-              id: nodeId || getId(),
-              type: "memoryNode",
-              position,
-              data: { label: `${type} node` },
-            };
-            break;
-          case "serviceNode":
-            const parsedData = nodeData ? JSON.parse(nodeData) : null;
-            newNode = {
-              id: nodeId || getId(),
-              type: "serviceNode",
-              position,
-              data: parsedData || { label: `${type} node` },
-            };
-            break;
-          default:
-            newNode = {
-              id: nodeId || getId(),
-              type: "default",
-              position,
-              data: { label: `${type} node` },
-            };
-        }
-        setNodes((nds) => nds.concat(newNode));
-      },
-    [screenToFlowPosition , setNodes],
+      switch (type) {
+        case "agentNode":
+          newNode = {
+            id: nodeId || getId(),
+            type: "agentNode",
+            position,
+            data: {
+              label: `${type} node`,
+              selected: "",
+            },
+          };
+          break;
+        case "memoryNode":
+          newNode = {
+            id: nodeId || getId(),
+            type: "memoryNode",
+            position,
+            data: { label: `${type} node` },
+          };
+          break;
+        case "serviceNode":
+          const parsedData = nodeData ? JSON.parse(nodeData) : null;
+          newNode = {
+            id: nodeId || getId(),
+            type: "serviceNode",
+            position,
+            data: parsedData || { label: `${type} node` },
+          };
+          break;
+        default:
+          newNode = {
+            id: nodeId || getId(),
+            type: "default",
+            position,
+            data: { label: `${type} node` },
+          };
+      }
+      setNodes((nds) => nds.concat(newNode));
+    },
+    [screenToFlowPosition, setNodes],
   );
 
   return (
-    <div className="flex" style={{ height: "calc(100% - 52px)" }} >
-      <div className="flex w-full" ref={reactFlowWrapper} >
+    <div className="flex" style={{ height: "calc(100% - 52px)" }}>
+      <div className="flex w-full" ref={reactFlowWrapper}>
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -168,7 +168,7 @@ const Workflow = function() {
       </div>
     </div>
   );
-}
+};
 
 export default function Workflows() {
   return (
@@ -176,4 +176,4 @@ export default function Workflows() {
       <Workflow />
     </ReactFlowProvider>
   );
-};
+}
