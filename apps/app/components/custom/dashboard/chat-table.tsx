@@ -66,7 +66,7 @@ export const Chats: React.FC<ChatsProps> = ({ chats }) => {
                     </div>
                   </TableCell>
                 </TableRow>
-              )
+              ),
             )}
           </TableBody>
         </Table>
