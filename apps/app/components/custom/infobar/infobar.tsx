@@ -26,6 +26,8 @@ import { Check, ChevronsUpDown, Slash } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { FeebackModal } from "../feedback-modal";
+import { usePathname } from 'next/navigation'
 
 const frameworks = [
   {
@@ -55,21 +57,20 @@ export default function Infobar() {
   const [openPopover1, setOpenPopover1] = useState(false);
   const [openPopover2, setOpenPopover2] = useState(false);
   const [value, setValue] = useState("");
+  const pathname = usePathname().split("/");
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <nav
-      className={`flex flex-col w-full items-start sticky top-0 right-0 bg-background transition-all duration-200 ${
-        isScrolled ? "shadow-sm z-10" : ""
-      }`}
+      className={`flex w-full items-center sticky top-0 right-0 bg-background transition-all duration-200 ${isScrolled ? "shadow-sm z-10" : ""
+        }`}
     >
       <div className="flex flex-row items-center gap-2 py-3 w-full">
         <SidebarTrigger />
@@ -87,8 +88,8 @@ export default function Infobar() {
                   >
                     {value
                       ? frameworks.find(
-                          (framework) => framework.value === value,
-                        )?.label
+                        (framework) => framework.value === value,
+                      )?.label
                       : "BlueFinZ"}
                     <ChevronsUpDown className="opacity-50" />
                   </Button>
@@ -144,8 +145,8 @@ export default function Infobar() {
                   >
                     {value
                       ? frameworks.find(
-                          (framework) => framework.value === value,
-                        )?.label
+                        (framework) => framework.value === value,
+                      )?.label
                       : "Plura"}
                     <ChevronsUpDown className="opacity-50" />
                   </Button>
@@ -191,10 +192,23 @@ export default function Infobar() {
               <Slash className="h-4 w-4" />
             </BreadcrumbSeparator>
             <BreadcrumbItem>
-              <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+              <BreadcrumbPage>{pathname[1]}</BreadcrumbPage>
             </BreadcrumbItem>
+            {pathname[2] && (
+              <BreadcrumbSeparator>
+                <Slash className="h-4 w-4" />
+              </BreadcrumbSeparator>
+            )}
+            {pathname[2] && (
+              <BreadcrumbItem>
+                <BreadcrumbPage>{pathname[2]}</BreadcrumbPage>
+              </BreadcrumbItem>
+            )}
           </BreadcrumbList>
         </Breadcrumb>
+      </div>
+      <div>
+        <FeebackModal />
       </div>
     </nav>
   );
