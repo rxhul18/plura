@@ -7,7 +7,7 @@ export function SiteFooter() {
   return (
     <footer className="sticky z-[300] border-t-2 w-full bg-secondary/30 backdrop-blur-lg px-8 md:px-12">
       <div className="absolute bottom-0 left-[-30%] right-0 top-[-30%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(211,211,211,0.15),rgba(255,255,255,0))] opacity-40" />
-      <div className="flex flex-col items-start gap-2 px-20 py-8">
+      <div className="flex flex-col items-start gap-2 sm:px-8 lg:px-20 py-8">
         <Link href="/" className="flex flex-row items-center gap-2">
           <Image
             src="/images/plura-logo.png"
@@ -50,8 +50,8 @@ export function SiteFooter() {
           </p>
         </div>
 
-        <div className="flex flex-row items-start border-t w-full mt-10">
-          <div className="my-10 flex flex-row gap-20">
+        <div className="border-t w-full mt-10">
+          <div className="grid grid-cols-3 md:grid-cols-4 my-5 gap-20">
             <div className="flex flex-col gap-3">
               <span className="font-semibold">Product</span>
               <Link

@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning suppressContentEditableWarning>
       <PosthogProvider>
         <body
-          className={` bg-background font-sans min-h-screen  ${GeistSans.variable} antialiased`}
+          className={` bg-background font-sans min-h-screen min-w-80 ${GeistSans.variable} antialiased`}
         >
           <ThemeProvider
             attribute="class"
