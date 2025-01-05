@@ -37,7 +37,10 @@
     ".next/types/**/*.ts",
     "src/**/*.ts",
     "src/**/*.d.ts"
-, "../../packages/types/auth.ts"  ],
+,
+"../../packages/types/auth.ts",
+"trigger.config.ts"
+],
   "exclude": [
     "node_modules"
   ]

@@ -12,9 +12,9 @@
     "@plura/cache": "workspace:*",
     "@plura/db": "workspace:*",
     "@supabase/supabase-js": "^2.46.1",
-    "@trigger.dev/sdk": "3.3.5"
+    "@trigger.dev/sdk": "3.3.7"
   },
   "devDependencies": {
-    "@trigger.dev/build": "3.3.5"
+    "@trigger.dev/build": "3.3.7"
   }
 }
