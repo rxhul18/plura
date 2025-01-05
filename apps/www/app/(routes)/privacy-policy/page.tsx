@@ -42,10 +42,11 @@ const privacyPolicySections = [
     content: (
       <div>
         <p>
-          This Privacy Notice (&quot;Notice&quot;) explains Vercel&apos;s practices regarding
-          the collection, use, disclosure, and processing of your information;
-          the rights and choices you may have with respect to such information;
-          how you may contact us; and how we protect your information when you:
+          This Privacy Notice (&quot;Notice&quot;) explains Vercel&apos;s
+          practices regarding the collection, use, disclosure, and processing of
+          your information; the rights and choices you may have with respect to
+          such information; how you may contact us; and how we protect your
+          information when you:
         </p>
         <ul>
           <li className="list-disc">
@@ -59,8 +60,8 @@ const privacyPolicySections = [
             offered by Vercel, engage directly with us, or use third-party
             partners, products, professional services, or interfaces that employ
             Vercel technology, including our web-based platform, (collectively,
-            the &quot;Services&quot;) as a Customer or authorized user, including but not
-            limited to:
+            the &quot;Services&quot;) as a Customer or authorized user,
+            including but not limited to:
           </li>
           <ul>
             <li>Host and deploy websites;</li>
@@ -74,7 +75,8 @@ const privacyPolicySections = [
             <li>
               Interact with us in any way, including registering for, attending,
               or otherwise partaking in our events, accelerators, learning
-              portals, or webinars (collectively, &quot;Marketing Activities&quot;).
+              portals, or webinars (collectively, &quot;Marketing
+              Activities&quot;).
             </li>
           </ul>
         </ul>
