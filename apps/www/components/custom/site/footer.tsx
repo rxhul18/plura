@@ -79,7 +79,7 @@ export function SiteFooter() {
                 Pricing
               </Link>
               <Link
-                href={"/status"}
+                href={"https://status.plura.pro/"}
                 className="text-muted-foreground hover:text-primary"
               >
                 Status
@@ -105,6 +105,16 @@ export function SiteFooter() {
                 className="text-muted-foreground hover:text-primary"
               >
                 Contact
+              </Link>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <span className="font-semibold">Legal</span>
+              <Link
+                href={"/privacy-policy"}
+                className="text-muted-foreground hover:text-primary"
+              >
+                Privacy Policy
               </Link>
             </div>
           </div>
