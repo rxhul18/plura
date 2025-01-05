@@ -120,40 +120,40 @@ const privacyPolicySections = [
 
 export default function PrivacyPolicy() {
   return (
-    <div className="min-h-screen relative">
+    <div className="flex flex-col items-center justify-center pb-8">
       <div className="absolute inset-0 mx-auto h-full w-full bg-[radial-gradient(circle,rgba(211,211,211,0.1),rgba(18,20,22,0.05),rgba(18,20,22,0))] opacity-60" />
 
       <div className="relative">
-        <div className="px-4 py-8 md:px-8">
-          <SectionHeader className="flex flex-col justify-center items-center md:items-center">
-            <SectionHeaderHeading>Privacy Policy</SectionHeaderHeading>
-            <SectionHeaderDescription>
+        <div className="px-4 md:px-8">
+          <SectionHeader className="p-8 sm:p-12 flex flex-col justify-center items-center md:items-center">
+            <SectionHeaderHeading className="text-3xl sm:text-4xl">
+              Privacy Policy
+            </SectionHeaderHeading>
+            <SectionHeaderDescription className="text-sm sm:text-base">
               Last updated: 5th January, 2025
             </SectionHeaderDescription>
           </SectionHeader>
         </div>
 
-        <div className="container mx-auto px-4 md:px-20">
-          <div className="flex flex-col lg:flex-row gap-8">
-            <main className="flex-1 pb-16">
+        <div className="container mx-auto w-11/12 md:w-5/6 ">
+          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-8 justify-between">
+            <main className="col-span-1 md:col-span-2 pb-16 md:pb-32">
               {privacyPolicySections.map((section) => (
                 <section
                   key={section.id}
                   id={section.id}
                   className="scroll-mt-20 mb-8"
                 >
-                  <h2 className="text-2xl font-semibold mb-4">
+                  <h2 className="text-2xl sm:text-3xl font-semibold mb-4">
                     {section.title}
                   </h2>
-                  <div className="text-muted-foreground">
-                    {section.content}
-                  </div>
+                  <div className="text-muted-foreground">{section.content}</div>
                 </section>
               ))}
             </main>
 
-            <div className="w-full lg:w-64 order-first lg:order-last border-l border-dashed pl-5">
-              <div className="lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] overflow-y-auto">
+            <div className="hidden md:block w-full md:col-span-1 order-first md:order-last md:border-l md:border-dashed pl-5">
+              <div className="md:sticky md:top-16 md:h-[calc(100vh-4rem)] overflow-y-auto">
                 <TableOfContents sections={privacyPolicySections} />
               </div>
             </div>
