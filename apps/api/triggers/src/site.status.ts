@@ -14,7 +14,7 @@ export const siteStatusTask = schedules.task({
       API: "https://api.plura.pro/v1/health",
       APP: "https://app.plura.pro/events",
     };
-    
+
     const latencies: Record<string, number | null> = {};
     const statuses: Record<string, string | null> = {};
     let totalLatency = 0;
@@ -26,7 +26,9 @@ export const siteStatusTask = schedules.task({
         const response = await fetch(url, { method: "GET" });
         const latency = Date.now() - startTime;
         latencies[name] = latency;
-        statuses[name] = response.ok ? "UP" : `DOWN (Status ${response.status})`;
+        statuses[name] = response.ok
+          ? "UP"
+          : `DOWN (Status ${response.status})`;
         totalLatency += latency;
         operationCount++;
 
@@ -44,7 +46,8 @@ export const siteStatusTask = schedules.task({
       }
     }
 
-    const averageLatency = operationCount > 0 ? totalLatency / operationCount : null;
+    const averageLatency =
+      operationCount > 0 ? totalLatency / operationCount : null;
     const statusRecord = {
       timestamp: new Date().toISOString(),
       latencies,
@@ -65,13 +68,13 @@ async function sendDiscordNotification(
   serviceName: string,
   status: string | null,
   latency: number | null = null,
-  error: string | null = null
+  error: string | null = null,
 ) {
   const ROLE_ID = "1308042212319428668";
   const downMsg = `🚨 Service **${serviceName}** is experiencing issues! 🚨`;
   const upMsg = `⚠️ Service **${serviceName}** is having high latency! ⚠️`;
   const NotifyMsg = status === "UP" ? upMsg : downMsg;
-  const mention = status === "UP" ? '' : `<@&${ROLE_ID}>`;
+  const mention = status === "UP" ? "" : `<@&${ROLE_ID}>`;
   const message = {
     content: `
 ${mention}
@@ -112,9 +115,13 @@ ${NotifyMsg}
       },
       body: JSON.stringify(message),
     });
-    logger.log(`Notification sent to Discord for ${serviceName}`, { status, latency });
+    logger.log(`Notification sent to Discord for ${serviceName}`, {
+      status,
+      latency,
+    });
   } catch (notificationError) {
-    logger.error("Failed to send notification to Discord", { notificationError });
+    logger.error("Failed to send notification to Discord", {
+      notificationError,
+    });
   }
 }
-

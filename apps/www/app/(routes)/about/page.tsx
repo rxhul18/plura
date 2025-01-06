@@ -76,13 +76,14 @@ export default function About() {
           className="flex flex-col items-center justify-center w-full border-t-2 border-dashed"
         >
           <SectionHeader>
-              <SectionHeaderHeading className="text-3xl md:text-4xl">
-                Made with ❤️ by our contributors
-              </SectionHeaderHeading>
-              <SectionHeaderDescription>
-              Thanks to all of our great contributors!Thanks to all of our great contributors!Thanks to all of our great contributors!
-              </SectionHeaderDescription>
-            </SectionHeader>
+            <SectionHeaderHeading className="text-3xl md:text-4xl">
+              Made with ❤️ by our contributors
+            </SectionHeaderHeading>
+            <SectionHeaderDescription>
+              Thanks to all of our great contributors!Thanks to all of our great
+              contributors!Thanks to all of our great contributors!
+            </SectionHeaderDescription>
+          </SectionHeader>
           <div className="px-8 md:px-12">
             <ContributorsGrid data={contributors} />
           </div>
