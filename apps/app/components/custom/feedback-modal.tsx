@@ -19,21 +19,21 @@ export function FeebackModal() {
       <DialogTrigger asChild>
         <Button variant="default"> <MessageSquare /> Feedback </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-black">
+      <DialogContent className="sm:max-w-[425px] bg-black border">
         <DialogHeader className="!text-center w-full pt-5 pb-2">
-          <DialogTitle className="text-3xl">Leave feedback</DialogTitle>
+          <DialogTitle className="text-3xl text-white">Leave feedback</DialogTitle>
           <DialogDescription>
             We'd love to hear what went well or how we can improve the product experience.
           </DialogDescription>
         </DialogHeader>
         <Textarea placeholder="Type your message here." className="border min-h-[120px]" />
         <div className="flex gap-2">
-          <Button size="icon" className="bg-primary"><Smile /></Button>
-          <Button size="icon" className="bg-primary"><Meh /></Button>
-          <Button size="icon" className="bg-primary"><Frown /></Button>
+          <Button size="icon" variant="secondary" className="hover:bg-secondary"><Smile /></Button>
+          <Button size="icon" variant="secondary" className="hover:bg-secondary"><Meh /></Button>
+          <Button size="icon" variant="secondary" className="hover:bg-secondary"><Frown /></Button>
         </div>
         <DialogFooter>
-          <Button type="submit" className="w-full">Save changes</Button>
+          <Button type="submit" className="w-full bg-white text-black">Save changes</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
