@@ -9,7 +9,6 @@ import { Badge } from "@/components/ui/badge";
 import { TextMorph } from "../text-morph";
 import { AnimatedNumber } from "../anim-numb";
 import { IconCheck } from "@tabler/icons-react";
-import BlurFade from "@/components/ui/blur-fade";
 
 export interface PCards {
   isYearly: boolean;
@@ -33,8 +32,6 @@ export default function PricingCards({ isYearly, items }: PCards) {
   return (
     <div className="grid md:grid-cols-3 gap-5">
       {items.map((item, index) => (
-        <div key={index}>
-          <BlurFade delay={0.5 * index} >
           <Card key={index} className="bg-secondary/30 backdrop-blur-lg rounded-2xl p-2 max-w-sm">
           <CardHeader className="rounded-2xl border-t-2 border-r border-[#333] border-opacity-80 m-3 bg-gradient-to-br from-secondary/30 to-[#262829]">
           <div className="flex flex-row items-center justify-between">
@@ -122,8 +119,6 @@ export default function PricingCards({ isYearly, items }: PCards) {
             </Button>
           </CardFooter> */}
         </Card>
-        </BlurFade>
-        </div>
       ))}
     </div>
   );

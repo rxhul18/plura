@@ -40,8 +40,8 @@ export default function Pricing() {
             <div className="flex items-center justify-center mb-10">
               <PricingSwitch onYearlyBillingChange={setIsYearly} />
             </div>
+            <PricingCards isYearly={isYearly} items={pricingCardConfig} />
           </BlurFade>
-          <PricingCards isYearly={isYearly} items={pricingCardConfig} />
         </section>
       </div>
     </div>

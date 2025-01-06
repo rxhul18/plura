@@ -71,7 +71,7 @@ async function sendDiscordNotification(
   const downMsg = `🚨 Service **${serviceName}** is experiencing issues! 🚨`;
   const upMsg = `⚠️ Service **${serviceName}** is having high latency! ⚠️`;
   const NotifyMsg = status === "UP" ? upMsg : downMsg;
-  const mention = status === "UP" ? null : `<@&${ROLE_ID}>`;
+  const mention = status === "UP" ? '' : `<@&${ROLE_ID}>`;
   const message = {
     content: `
 ${mention}
@@ -95,7 +95,7 @@ ${NotifyMsg}
           },
           {
             name: "Source",
-            value: "https://status.plura.pro/",
+            value: "[Status Page](https://status.plura.pro/)",
             inline: true,
           },
         ],
