@@ -11,6 +11,7 @@ import {
   FlaskConical,
   ArchiveRestore,
   Codepen,
+  Workflow,
 } from "lucide-react";
 
 import {
@@ -32,6 +33,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { usePathname } from "next/navigation";
+import QuickActionButton from "./QuickActionButton";
 
 // Menu items.
 const items = [
@@ -44,6 +46,11 @@ const items = [
     title: "Integrations",
     url: "/integrations",
     icon: Waypoints,
+  },
+  {
+    title: "Workflows",
+    url: "/workflows",
+    icon: Workflow,
   },
   {
     title: "Events",
@@ -130,7 +137,7 @@ export function AppSidebar() {
                   <SidebarMenuButton
                     asChild
                     tooltip={item.title}
-                    isActive={path === item.url}
+                    isActive={path.includes(item.url)}
                   >
                     <a href={item.url}>
                       <item.icon />
@@ -162,7 +169,9 @@ export function AppSidebar() {
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>
-          <SidebarMenuItem></SidebarMenuItem>
+          <SidebarMenuItem>
+            <QuickActionButton />
+          </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
     </Sidebar>
