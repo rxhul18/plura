@@ -10,7 +10,7 @@ export const dbStatusTask = schedules.task({
   id: "db-status",
   cron: "*/12 * * * *",
   maxDuration: 600,
-  run: async (payload, { ctx }) => {
+  run: async () => {
     const latencies: Record<string, number | null> = {};
     let totalLatency = 0;
     let operationCount = 0;

@@ -2,7 +2,7 @@ import { cache } from "@plura/cache";
 import { logger, schedules } from "@trigger.dev/sdk/v3";
 
 const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK!;
-const LATENCY_THRESHOLD = 1000;
+const LATENCY_THRESHOLD = 1500;
 
 export const siteStatusTask = schedules.task({
   id: "site-status",
@@ -71,15 +71,16 @@ async function sendDiscordNotification(
   const downMsg = `🚨 Service **${serviceName}** is experiencing issues! 🚨`;
   const upMsg = `⚠️ Service **${serviceName}** is having high latency! ⚠️`;
   const NotifyMsg = status === "UP" ? upMsg : downMsg;
+  const mention = status === "UP" ? '' : `<@&${ROLE_ID}>`;
   const message = {
     content: `
-<@&${ROLE_ID}>
+${mention}
 ${NotifyMsg}
 `,
     embeds: [
       {
         title: `Status Alert for ${serviceName}`,
-        description: `Service **${serviceName}** is currently **${status}**.`,
+        description: `Service **[${serviceName}](https://status.plura.pro/)** is currently **${status}**.`,
         color: status === "UP" ? 3066993 : 15158332, // Green for UP, Red for DOWN
         fields: [
           {
@@ -90,6 +91,11 @@ ${NotifyMsg}
           {
             name: "Error",
             value: error || "None",
+            inline: true,
+          },
+          {
+            name: "Source",
+            value: "[Status Page](https://status.plura.pro/)",
             inline: true,
           },
         ],

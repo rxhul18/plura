@@ -5,6 +5,7 @@ import {
   SectionHeaderHeading,
 } from "../text-wrappers";
 import { siteConfig } from "@/config/site.config";
+// import AgentsBento from "../bentos/agents-bento";
 
 export default function AgentsSec() {
   return (
@@ -19,6 +20,7 @@ export default function AgentsSec() {
             {siteConfig.homePage.sections.agents.description}
           </SectionHeaderDescription>
         </SectionHeader>
+        {/* <AgentsBento/> */}
       </div>
     </div>
   );
