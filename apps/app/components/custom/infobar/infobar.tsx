@@ -25,7 +25,7 @@ import { Check, ChevronsUpDown, Slash } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { FeebackModal } from "../feedback-modal";
+import { FeedbackModal } from "../feedback-modal";
 import { usePathname } from "next/navigation";
 
 const frameworks = [
@@ -204,7 +204,7 @@ export default function Infobar() {
         </Breadcrumb>
       </div>
       <div>
-        <FeebackModal />
+        <FeedbackModal />
       </div>
     </nav>
   );

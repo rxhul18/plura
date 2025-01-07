@@ -23,10 +23,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 
 const profanity = new Profanity({
-  customWords: ["saidev", "premium",'money'],
-  heat: 0.8,
+  customWords:["saidev", "premium",'money'],
+  heat: 0.9,
 });
 
 const profanityCheck = async (value: string) => {
@@ -45,7 +46,8 @@ const postSchema = z.object({
 
 type PostSchema = z.infer<typeof postSchema>;
 
-export function FeebackModal() {
+export function FeedbackModal() {
+  const [selectedEmo, setSelectedEmo] = useState<'happy' | 'idle' | 'sad' | null>(null);
 
   const form = useForm<PostSchema>({
     resolver: zodResolver(postSchema),
@@ -54,8 +56,12 @@ export function FeebackModal() {
   const onSubmit = async (data: PostSchema) => {
     try {
       const validatedData = await postSchema.parseAsync({ ...data });
-      console.log("Validated data:", validatedData);
-      toast.success("Form submitted successfully!");
+      const finalFeedback = {
+        desc:validatedData.description,
+        emotion: selectedEmo
+      }
+      console.log(finalFeedback);
+      toast.success("Feedback submitted successfully!");
     } catch (error) {
       console.error("Validation error:", error);
       toast.error("Validation failed. Check form errors.");
@@ -85,17 +91,33 @@ export function FeebackModal() {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Textarea {...field} placeholder="Can you ..." className="border min-h-[100px]"/>
+                    <Textarea {...field} placeholder="Can you ..." className="border min-h-[100px]" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-        <div className="flex gap-2">
-          <Button size="icon" variant="secondary" className="hover:bg-secondary"><Smile /></Button>
-          <Button size="icon" variant="secondary" className="hover:bg-secondary"><Meh /></Button>
-          <Button size="icon" variant="secondary" className="hover:bg-secondary"><Frown /></Button>
-        </div>
+            <div className="grid gap-4 py-4">
+              <div className="flex gap-2">
+                <Button
+                  size="icon" variant="secondary" className={`hover:bg-secondary transition-all duration-200 ${selectedEmo === 'happy' ? 'border-primary border-[1px]' : ''}`}
+                  onClick={() => setSelectedEmo('happy')} type="button"
+                >
+                  <Smile />
+                </Button>
+                <Button size="icon" variant="secondary" className={`hover:bg-secondary transition-all duration-200 ${selectedEmo === 'idle' ? 'border-primary border-[1px]' : ''}`}
+                  onClick={() => setSelectedEmo('idle')} type="button"
+                >
+                  <Meh />
+                </Button>
+                <Button
+                  size="icon" variant="secondary" className={`hover:bg-secondary transition-all duration-200 ${selectedEmo === 'sad' ? 'border-primary border-[1px]' : ''}`}
+                  onClick={() => setSelectedEmo('sad')} type="button"
+                >
+                  <Frown />
+                </Button>
+              </div>
+            </div>
             <Button type="submit" className="w-full">
               {form.formState.isSubmitting ? "Checking..." : "Submit"}
             </Button>
