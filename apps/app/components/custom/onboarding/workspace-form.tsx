@@ -86,7 +86,13 @@ export default function DialogDemo() {
             })}
             disabled={isLoading || value.trim().length === 0 || hasWorkspace}
           >
-            {isLoading ? <LoaderCircle className="animate-spin" /> : hasWorkspace ? <Check className="text-green-500"/> : "Create"}
+            {isLoading ? (
+              <LoaderCircle className="animate-spin" />
+            ) : hasWorkspace ? (
+              <Check className="text-green-500" />
+            ) : (
+              "Create"
+            )}
           </Button>
         </form>
       </CardContent>
