@@ -1,6 +1,6 @@
 "use server";
 import { ReactNode } from "react";
-import { getMutableAIState, streamUI } from "ai/rsc";
+import { createStreamableValue, getMutableAIState, streamUI } from "ai/rsc";
 import { togetherai } from "@ai-sdk/togetherai";
 import { AI } from "@/lib/ai";
 import { BotMessage } from "@/components/custom/onboarding/message";
@@ -12,6 +12,7 @@ import Proceed from "@/components/custom/onboarding/proceed";
 import WorkspaceForm from "@/components/custom/onboarding/workspace-form";
 import { sleep } from "@/lib/utils";
 import { CoreMessage, generateId, ToolInvocation } from "ai";
+import ProjectForm from "@/components/custom/onboarding/project-form";
 
 export type ServerMessage = {
   id?: number;
@@ -24,6 +25,7 @@ export type ClientMessage = {
   id: number;
   role: "user" | "assistant";
   display: ReactNode;
+  content?:string;
   toolInvocations?: ToolInvocation[];
 };
 
@@ -36,6 +38,7 @@ export const sendMessage = async ({
   const history = getMutableAIState<typeof AI>();
   history.update([...history.get(), { role: "user", content: prompt }]);
   const aiGreetingContext = await createAiGreeting();
+  
   const response = await streamUI({
     model: togetherai("meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo"),
     system: `
@@ -55,8 +58,7 @@ export const sendMessage = async ({
     -If the user sends any message after workspace tool is called then you should respond with the same text:"Please create a workspace to continue"
     -dont call any tools if the user doesnt creates a workspace
     -If the message comes as workspace {workspaceName} created then respond with the exact same text
-    "Your first workspace with name - ✅{workspaceName}  has been created" 
-    and dont call any tools
+    "Your first workspace with name - ✅{workspaceName}  has been created"
     `,
     messages: [{ role: "user", content: prompt }, ...history.get()],
     temperature: 0,
@@ -68,8 +70,10 @@ export const sendMessage = async ({
     text: async function ({ content, done }) {
       await sleep(1000);
       if (done) {
+        
         history.done([...history.get(), { role: "assistant", content }]);
       }
+   
       return <BotMessage>{content}</BotMessage>;
     },
     tools: {
@@ -91,6 +95,30 @@ export const sendMessage = async ({
           return (
             <BotMessage>
               <WorkspaceForm />
+            </BotMessage>
+          );
+        },
+      },
+      project: {
+        description:
+          "A tool that sends the project form to the user after workspace creation.",
+        parameters: z.object({}),
+        generate: async function* ({}) {
+          yield (
+            <BotMessage>
+              <BeatLoader />
+            </BotMessage>
+          );
+          console.log("project");
+          history.done([
+            ...history.get(),
+            { role: "assistant", content: "Project form rendered" },
+          ]);
+
+          return (
+            <BotMessage>
+              <p>Step 2: Create a project</p>
+              <ProjectForm />
             </BotMessage>
           );
         },

@@ -10,15 +10,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Check, LoaderCircle } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { sleep } from "@/lib/utils";
 import { useActions, useUIState } from "ai/rsc";
 import { AI } from "@/lib/ai";
 import { createWorkspace } from "@/actions/workspace";
-import { set } from "date-fns";
 
-export default function DialogDemo() {
+export default function ProjectForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState("");
   const { sendMessage } = useActions<typeof AI>();
@@ -48,23 +47,15 @@ export default function DialogDemo() {
       setIsLoading(false);
     }
   };
-  useEffect(()=> {
-    (async () => {
-    if(hasWorkspace){
-      const project = await sendMessage({ prompt: "call project form" });
-      setMessages((currentMessages) => [...currentMessages, project]);
-    }})()
-
-  },[hasWorkspace])
   return (
     <Card className="bg-neutral-900/30 rounded-lg shadow-md sm:w-[350px] shrink">
       <CardContent>
         <div className=" flex flex-col py-4 ">
           <CardTitle className="sm:text-start text-bold text-2xl text-center text-neutral-200">
-            Create Workspace
+            Create Project
           </CardTitle>
           <CardDescription className="text-start text-neutral-400">
-            Create a new workspace for your account
+            Create a new project for your account
           </CardDescription>
         </div>
 
@@ -86,7 +77,13 @@ export default function DialogDemo() {
             })}
             disabled={isLoading || value.trim().length === 0 || hasWorkspace}
           >
-            {isLoading ? <LoaderCircle className="animate-spin" /> : hasWorkspace ? <Check className="text-green-500"/> : "Create"}
+            {isLoading ? (
+              <LoaderCircle className="animate-spin" />
+            ) : hasWorkspace ? (
+              <Check className="text-green-500" />
+            ) : (
+              "Create"
+            )}
           </Button>
         </form>
       </CardContent>
