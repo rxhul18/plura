@@ -13,6 +13,7 @@ import workspace from "./workspace";
 import { Ratelimit } from "@upstash/ratelimit";
 import { auth as Auth } from "@plura/auth";
 import { cache } from "@plura/cache";
+import feedback from "./feedback";
 
 export const runtime = "edge";
 
@@ -73,6 +74,7 @@ app.route("/auth", auth);
 app.route("/user", user);
 app.route("/contributors", contributors);
 app.route("/workspace", workspace);
+app.route("/feedback", feedback);
 
 const GET = handle(app);
 const POST = handle(app);
