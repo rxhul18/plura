@@ -25,7 +25,7 @@ export type ClientMessage = {
   id: number;
   role: "user" | "assistant";
   display: ReactNode;
-  content?:string;
+  content?: string;
   toolInvocations?: ToolInvocation[];
 };
 
@@ -38,7 +38,7 @@ export const sendMessage = async ({
   const history = getMutableAIState<typeof AI>();
   history.update([...history.get(), { role: "user", content: prompt }]);
   const aiGreetingContext = await createAiGreeting();
-  
+
   const response = await streamUI({
     model: togetherai("meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo"),
     system: `
@@ -70,10 +70,9 @@ export const sendMessage = async ({
     text: async function ({ content, done }) {
       await sleep(1000);
       if (done) {
-        
         history.done([...history.get(), { role: "assistant", content }]);
       }
-   
+
       return <BotMessage>{content}</BotMessage>;
     },
     tools: {

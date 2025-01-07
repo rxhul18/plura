@@ -48,14 +48,14 @@ export default function DialogDemo() {
       setIsLoading(false);
     }
   };
-  useEffect(()=> {
+  useEffect(() => {
     (async () => {
-    if(hasWorkspace){
-      const project = await sendMessage({ prompt: "call project form" });
-      setMessages((currentMessages) => [...currentMessages, project]);
-    }})()
-
-  },[hasWorkspace])
+      if (hasWorkspace) {
+        const project = await sendMessage({ prompt: "call project form" });
+        setMessages((currentMessages) => [...currentMessages, project]);
+      }
+    })();
+  }, [hasWorkspace]);
   return (
     <Card className="bg-neutral-900/30 rounded-lg shadow-md sm:w-[350px] shrink">
       <CardContent>
