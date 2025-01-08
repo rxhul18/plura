@@ -3,6 +3,11 @@ import { headers } from "next/headers";
 import { getSession } from "./session";
 import { betterFetch } from "@better-fetch/fetch";
 
+const API_ENDPOINT =
+process.env.NODE_ENV === "production"
+  ? "https://api.plura.pro/"
+  : "http://localhost:3001";
+
 export const createWorkspace = async (workspaceName: string) => {
   const user = await getSession();
   if (!user) {
@@ -10,7 +15,7 @@ export const createWorkspace = async (workspaceName: string) => {
   }
   try {
     console.log("workspaceName", workspaceName);
-    const workspace = await betterFetch("http://localhost:3001/v1/workspace", {
+    const workspace = await betterFetch(`${API_ENDPOINT}/v1/workspace`, {
       method: "POST",
       body: {
         name: workspaceName,
@@ -34,7 +39,7 @@ export const getFirstWorkspaceOfUser = async () => {
 
   try {
     const workspace: any = await betterFetch(
-      "http://localhost:3001/v1/workspace/user/" + user.session.userId,
+      `${API_ENDPOINT}/v1/workspace/user/` + user.session.userId,
       {
         method: "GET",
         headers: {
