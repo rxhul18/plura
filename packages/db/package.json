@@ -8,7 +8,7 @@
   "scripts": {
     "db:studio": "prisma studio",
     "db:validate": "prisma validate",
-    "db:generate": "pnpm db:validate && prisma generate --no-engine",
+    "db:generate": "prisma generate --no-engine",
     "db:push": "prisma db push --skip-generate",
     "db:migrate": "pnpm db:validate && prisma migrate dev"
   },
