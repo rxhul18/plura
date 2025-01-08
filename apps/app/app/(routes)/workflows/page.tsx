@@ -1,3 +1,6 @@
+"use client";
+
+import InfoBreadCrumb from "@/components/custom/infobar/bread-crumb";
 import { Mail, columns } from "./columns";
 import { DataTable } from "./data-table";
 
@@ -97,11 +100,12 @@ async function getData(): Promise<Mail[]> {
   ];
 }
 
-export default async function Mails() {
+export default async function Workflows() {
   const data = await getData();
 
   return (
     <div className="container px-5 pb-5 md:px-2">
+      <InfoBreadCrumb />
       <DataTable columns={columns} data={data} />
     </div>
   );

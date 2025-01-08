@@ -2,6 +2,8 @@ import { Hono } from "hono";
 import { prisma } from "@plura/db";
 import { auth } from "@plura/auth";
 import { cache } from "@plura/cache";
+import { checkAdmin } from "@/app/actions/checkAdmin";
+import { checkLogin } from "@/app/actions/checkLogin";
 
 const CACHE_EXPIRY = 300; // Cache expiry time in seconds
 
@@ -62,6 +64,50 @@ const app = new Hono()
       }
     }
 
+    return c.json({ user }, 200);
+  })
+  .use(checkLogin, checkAdmin)
+  .get("/:id", async (c) => {
+    const userId = c.req.param("id");
+    if (!userId) {
+      return c.json({
+        message: "User ID is required",
+        status: 400,
+      });
+    }
+
+    const cacheKey = `user:${userId}`;
+    let user: User | null = null;
+
+    try {
+      const cachedData: User | null = await cache.get(cacheKey);
+      if (cachedData) {
+        user = cachedData;
+        console.log("Returned user data from cache (by ID)");
+      }
+    } catch (error) {
+      console.error("Cache parsing error (by ID):", error);
+    }
+
+    if (!user) {
+      user = await prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+      });
+
+      if (user) {
+        console.log("Fetched user data from database (by ID):");
+        try {
+          await cache.set(cacheKey, user, { ex: CACHE_EXPIRY });
+        } catch (cacheError) {
+          console.error(
+            "Error storing user data in cache (by ID):",
+            cacheError,
+          );
+        }
+      }
+    }
     return c.json({ user }, 200);
   })
   .get("/all", async (c) => {

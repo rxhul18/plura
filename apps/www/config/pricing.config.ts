@@ -1,13 +1,17 @@
-export const pricingCardConfig = {
-  basic: {
+export const pricingCardConfig = [
+  {
     name: "Basic",
-    tier: "Free Forever",
-    discount: "100",
-    beforePrice: "19",
+    isFeatured: false,
+    isFree: true,
     currency: "$",
+    btn: "Get Plura Basic",
     priceMonthly: 0,
     priceYearly: 0,
-    features: [
+    beforePriceMonthly: 19,
+    beforePriceYearly: 19,
+    discountYearly: 100,
+    discountMonthly: 100,
+    benifits: [
       "1 year access to all the premium component packs and templates",
       "1 year of updates and new features",
       "1 year access to new templates and components",
@@ -19,21 +23,21 @@ export const pricingCardConfig = {
       "Available in TypeScript and JavaScript",
       "Cancel anytime",
     ],
-    pros: [],
-    cons: [],
   },
 
-  plus: {
+  {
     name: "Plus",
-    tier: "Paid Monthly",
-    discountMonthly: 42.3,
-    discountYearly: 60.6,
-    beforePriceMonthly: 69,
-    beforePriceYearly: 69,
+    isFeatured: true,
+    isFree: false,
     currency: "$",
+    btn: "Get Plura Plus",
     priceMonthly: 29,
     priceYearly: 279,
-    features: [
+    beforePriceMonthly: 69,
+    beforePriceYearly: 69,
+    discountYearly: 60.6,
+    discountMonthly: 42.3,
+    benifits: [
       "1 year access to all the premium component packs and templates",
       "1 year of updates and new features",
       "1 year access to new templates and components",
@@ -45,21 +49,21 @@ export const pricingCardConfig = {
       "Available in TypeScript and JavaScript",
       "Cancel anytime",
     ],
-    pros: [],
-    cons: [],
   },
 
-  pro: {
+  {
     name: "Pro",
-    tier: "Paid Quarterly",
-    discountMonthly: 423.03,
-    discountYearly: 334.03,
-    beforePriceMonthly: 629,
-    beforePriceYearly: 659,
+    isFeatured: false,
+    isFree: false,
     currency: "$",
+    btn: "Get Plura Pro",
     priceMonthly: 249,
     priceYearly: 679,
-    features: [
+    beforePriceMonthly: 629,
+    beforePriceYearly: 659,
+    discountYearly: 334.03,
+    discountMonthly: 423.03,
+    benifits: [
       "1 year access to all the premium component packs and templates",
       "1 year of updates and new features",
       "1 year access to new templates and components",
@@ -71,7 +75,5 @@ export const pricingCardConfig = {
       "Available in TypeScript and JavaScript",
       "Cancel anytime",
     ],
-    pros: [],
-    cons: [],
   },
-};
+];
