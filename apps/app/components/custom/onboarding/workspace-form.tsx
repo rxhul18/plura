@@ -69,7 +69,6 @@ export default function WorkspaceForm({
       }
     })();
   }, [hasWorkspace]);
-
   return (
     <Card className="bg-neutral-900/30 rounded-lg shadow-md sm:w-[350px] shrink">
       <CardContent>

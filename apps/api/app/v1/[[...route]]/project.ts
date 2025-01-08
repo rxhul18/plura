@@ -61,31 +61,31 @@ const app = new Hono()
     return c.json({ message: "Missing project id", status: 400 }, 400);
   }
 
-  const session = await auth.api.getSession({
-    headers: c.req.raw.headers,
-  });
-  if (!session?.user.id) {
-    return c.json({ message: "unauthorized", status: 401 }, 401);
-  }
+    const session = await auth.api.getSession({
+      headers: c.req.raw.headers,
+    });
+    if (!session?.user.id) {
+      return c.json({ message: "unauthorized", status: 401 }, 401);
+    }
 
-  const existingProject = await prisma.project.findUnique({
-    where: {
-      id: projectId,
-      ownerId: session.user.id,
-    },
-  });
-  if (!existingProject) {
-    return c.json({ message: "Project not found", status: 404 }, 404);
-  }
+    const existingProject = await prisma.project.findUnique({
+      where: {
+        id: projectId,
+        ownerId: session.user.id,
+      },
+    });
+    if (!existingProject) {
+      return c.json({ message: "Project not found", status: 404 }, 404);
+    }
 
-  const project = await prisma.project.delete({
-    where: {
-      id: projectId,
-      ownerId: session.user.id,
-    },
-  });
+    const project = await prisma.project.delete({
+      where: {
+        id: projectId,
+        ownerId: session.user.id,
+      },
+    });
 
-  return c.json({ deletedProject: project }, 200);
-});
+    return c.json({ deletedProject: project }, 200);
+  });
 
 export default app;
