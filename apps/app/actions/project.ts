@@ -5,9 +5,9 @@ import { getSession } from "./session";
 import { headers } from "next/headers";
 
 const API_ENDPOINT =
-process.env.NODE_ENV === "production"
-  ? "https://api.plura.pro/"
-  : "http://localhost:3001";
+  process.env.NODE_ENV === "production"
+    ? "https://api.plura.pro/"
+    : "http://localhost:3001";
 
 export const createProject = async ({
   workspaceId,

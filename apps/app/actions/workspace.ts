@@ -4,9 +4,9 @@ import { getSession } from "./session";
 import { betterFetch } from "@better-fetch/fetch";
 
 const API_ENDPOINT =
-process.env.NODE_ENV === "production"
-  ? "https://api.plura.pro/"
-  : "http://localhost:3001";
+  process.env.NODE_ENV === "production"
+    ? "https://api.plura.pro/"
+    : "http://localhost:3001";
 
 export const createWorkspace = async (workspaceName: string) => {
   const user = await getSession();
