@@ -18,13 +18,22 @@ import { AI } from "@/lib/ai";
 import { createWorkspace } from "@/actions/workspace";
 import { set } from "date-fns";
 
-export default function DialogDemo() {
+export default function WorkspaceForm({
+  workspaceExists,
+  id,
+  existingWorkspaceName,
+}: {
+  workspaceExists: boolean;
+  id?: string;
+  existingWorkspaceName?: string;
+}) {
   const [isLoading, setIsLoading] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(existingWorkspaceName ?? "");
   const { sendMessage } = useActions<typeof AI>();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [messages, setMessages] = useUIState<typeof AI>();
-  const [hasWorkspace, setHasWorkspace] = useState(false);
+  const [hasWorkspace, setHasWorkspace] = useState(workspaceExists);
+  const [workspaceId, setWorkspaceId] = useState(id ?? "");
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -34,7 +43,9 @@ export default function DialogDemo() {
 
     try {
       setIsLoading(true);
-      const res = await createWorkspace(workspaceName);
+      const res: any = await createWorkspace(workspaceName);
+      console.log("workspace", res);
+      setWorkspaceId(res?.data.id);
       const response = await sendMessage({
         prompt: `Workspace ${workspaceName} created`,
       });
@@ -48,14 +59,17 @@ export default function DialogDemo() {
       setIsLoading(false);
     }
   };
-  useEffect(()=> {
+  useEffect(() => {
     (async () => {
-    if(hasWorkspace){
-      const project = await sendMessage({ prompt: "call project form" });
-      setMessages((currentMessages) => [...currentMessages, project]);
-    }})()
+      if (hasWorkspace) {
+        const project = await sendMessage({
+          prompt: `call project form with workspaceId:${workspaceId}`,
+        });
+        setMessages((currentMessages) => [...currentMessages, project]);
+      }
+    })();
+  }, [hasWorkspace]);
 
-  },[hasWorkspace])
   return (
     <Card className="bg-neutral-900/30 rounded-lg shadow-md sm:w-[350px] shrink">
       <CardContent>
@@ -76,6 +90,7 @@ export default function DialogDemo() {
               placeholder="eg:new-workspace"
               type="text"
               value={value}
+              disabled={isLoading || hasWorkspace}
               onChange={(e) => setValue(e.target.value)}
             />
           </div>

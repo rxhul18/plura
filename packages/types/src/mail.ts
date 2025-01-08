@@ -17,6 +17,5 @@ export const workspaceSchema = z.object({
 
 export const projectSchema = z.object({
   name: z.string(),
-  slug: z.string(),
   workspaceId: z.string(),
 });

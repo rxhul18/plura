@@ -2,6 +2,7 @@
 import { betterFetch } from "@better-fetch/fetch";
 import { Session } from "@plura/auth";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 const apiDomain =
   process.env.NODE_ENV === "production"
@@ -25,6 +26,27 @@ export const getSession = async () => {
     );
     return response.data;
   } catch (error) {
-    return { error: "no session found" };
+    console.log("error", error);
+  }
+};
+export const onboardingComplete = async () => {
+  try {
+     const response = await betterFetch(
+       "http://localhost:3001/v1/user/onboarding-complete",
+       {
+         method: "POST",
+         headers: {
+           cookie: (await headers()).get("cookie") || "",
+         },
+       }
+     );
+
+     if(!response.data){
+       return {success:false}
+     }
+
+     redirect("/settings")
+  } catch (error) {
+    return {success:false}
   }
 };

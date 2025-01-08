@@ -4,40 +4,34 @@ import { Hono } from "hono";
 import { projectSchema } from "@repo/types";
 import { auth } from "@plura/auth";
 import { cache } from "@plura/cache";
-import { encrypt } from "@plura/crypt";
-
+import { nanoid } from "nanoid";
 
 const CACHE_EXPIRY = 300; 
-const ENCRYPTION_KEY = new Uint8Array(
-  JSON.parse(process.env.ENCRYPTION_KEY || "[]"),
-);
-
-
 const app = new Hono()
- .get("/all", async (c)=> {
-   const cursor = c.req.query("cursor");
-   const take = parseInt(c.req.query("take") || "10");
+ .get("/workspace/:workspaceId", async (c)=> {
    const session = await auth.api.getSession({
      headers: c.req.raw.headers,
    });
-
-   try{
+   if(!session){
+     return c.json({message: "Unauthorized", status: 401}, 401);
+   }
+   const workspaceId = c.req.param("workspaceId");
+   if(!workspaceId){
+     return c.json({message: "Missing workspace id", status: 400}, 400);
+   }
+  try {
     const projects = await prisma.project.findMany({
-      take,
-      skip: 1,
-      cursor: cursor
-        ? {
-            id: cursor,
-          }
-        : undefined,
+      where: {
+        workspaceId: workspaceId,
+      },
       orderBy: {
         createdAt: "asc",
       },
     });
-    return c.json(projects,200);
-   }catch(error){
-   return c.json({message: "Error fetching projects", status: 400}, 400);
-   }
+    return c.json(projects[0], 200);
+  } catch (error) {
+    return c.json({ message: "Error fetching projects", status: 400 }, 400);
+  }
  }).post("/", zValidator("json", projectSchema), async (c) => {
   const session = await auth.api.getSession({
     headers: c.req.raw.headers,
@@ -46,15 +40,20 @@ const app = new Hono()
     return c.json({ message: "unauthorized", status: 401 }, 401);
   }
   const body = c.req.valid("json");
-  const project = await prisma.project.create({
-    data: {
-      name: body.name,
-      ownerId: session.user.id,
-      slug: body.slug,
-      workspaceId: body.workspaceId,
-    },
-  });
-  return c.json({ project }, 200);
+  try {
+     const project = await prisma.project.create({
+       data: {
+         name: body.name,
+         ownerId: session.user.id,
+         slug: nanoid(),
+         workspaceId: body.workspaceId,
+       },
+     });
+     return c.json({ project }, 200);
+  } catch (error) {
+    console.log(error)
+  }
+ 
 })
 .delete("/:id", async (c) => {
   const projectId = c.req.param("id");

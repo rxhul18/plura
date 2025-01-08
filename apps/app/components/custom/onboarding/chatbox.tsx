@@ -66,14 +66,6 @@ export default function Chatbox() {
     };
     fetchAiGreeting();
   }, []);
-  useEffect(()=> {
-    if(messages.length>0 && messages[messages.length-1].content && JSON.stringify(messages[messages.length-1]?.content).includes("workspace") ){
-     console.log("i am here")
-    }
-    if(messages.length>0){
-    console.log("ehhe",messages)
-    }
-  },[messages.length])
 
   return (
     <div className=" mx-auto max-w-2xl relative ">

@@ -7,9 +7,7 @@ import { cache } from "@plura/cache";
 import { encrypt } from "@plura/crypt";
 
 const CACHE_EXPIRY = 300; // Cache expiry time in seconds
-const ENCRYPTION_KEY = new Uint8Array(
-  JSON.parse(process.env.ENCRYPTION_KEY || "[]"),
-);
+;
 type Workspace = {
   id: string;
   name: string;
@@ -144,6 +142,9 @@ const app = new Hono()
         where: {
           userId: userId,
         },
+        orderBy:{
+          createdAt: "asc"
+        }
       });
 
       if (workspaces.length === 0) {
@@ -158,7 +159,7 @@ const app = new Hono()
       }
     }
 
-    return c.json({ workspaces }, 200);
+    return c.json({ workspace:workspaces, firstWorkspace: workspaces[0]}, 200);
   })
   .post("/", zValidator("json", workspaceSchema), async (c) => {
     const session = await auth.api.getSession({
@@ -176,7 +177,6 @@ const app = new Hono()
       console.log("userId");
       return c.json({ message: "Missing user id", status: 400 }, 400);
     }
-    const name = await encrypt(body.name, ENCRYPTION_KEY);
 
     const workspace = await prisma.workspace.create({
       data: {

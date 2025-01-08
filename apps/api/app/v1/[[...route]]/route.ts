@@ -7,6 +7,7 @@ import auth from "./auth";
 import status from "./status";
 import health from "./health";
 import user from "./user";
+import project from "./project"
 import contributors from "./contributors";
 import { cors } from "hono/cors";
 import workspace from "./workspace";
@@ -73,6 +74,7 @@ app.route("/auth", auth);
 app.route("/user", user);
 app.route("/contributors", contributors);
 app.route("/workspace", workspace);
+app.route("project", project)
 
 const GET = handle(app);
 const POST = handle(app);
