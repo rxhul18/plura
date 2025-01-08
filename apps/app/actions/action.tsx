@@ -93,16 +93,25 @@ export const sendMessage = async ({
 
           history.done([
             ...history.get(),
-            { role: "assistant", name: "workspace_form", content: "workspace form for the user has been sent" },
+            {
+              role: "assistant",
+              name: "workspace_form",
+              content: "workspace form for the user has been sent",
+            },
           ]);
 
-          const workspace:any = await getFirstWorkspaceOfUser()
-          
-           const workspaceId = workspace?.data?.firstWorkspace?.id ?? " "
-           const exisitingWorkspaceName = workspace?.data?.firstWorkspace?.name ?? " "
+          const workspace: any = await getFirstWorkspaceOfUser();
+
+          const workspaceId = workspace?.data?.firstWorkspace?.id ?? " ";
+          const exisitingWorkspaceName =
+            workspace?.data?.firstWorkspace?.name ?? " ";
           return (
             <BotMessage>
-              <WorkspaceForm workspaceExists={!!workspace} id={workspaceId} existingWorkspaceName={exisitingWorkspaceName}/>
+              <WorkspaceForm
+                workspaceExists={!!workspace}
+                id={workspaceId}
+                existingWorkspaceName={exisitingWorkspaceName}
+              />
             </BotMessage>
           );
         },
@@ -111,16 +120,16 @@ export const sendMessage = async ({
         description:
           "A tool that sends the project form to the user after workspace creation.",
         parameters: z.object({
-         workspaceId: z.string(),
+          workspaceId: z.string(),
         }),
-        generate: async function* ({workspaceId}) {
+        generate: async function* ({ workspaceId }) {
           yield (
             <BotMessage>
               <BeatLoader />
             </BotMessage>
           );
-          console.log(workspaceId)
-          await sleep(1000);  
+          console.log(workspaceId);
+          await sleep(1000);
           history.done([
             ...history.get(),
             {
@@ -129,17 +138,21 @@ export const sendMessage = async ({
               content: "workspace form for the user has been sent",
             },
           ]);
-          const existingProject:any = await getProjectOfUser(workspaceId)
-          const exisitingProjectName = existingProject?.data?.name ??  " "
-          console.log(existingProject)
+          const existingProject: any = await getProjectOfUser(workspaceId);
+          const exisitingProjectName = existingProject?.data?.name ?? " ";
+          console.log(existingProject);
           return (
             <BotMessage>
-              <ProjectForm workspaceId={workspaceId} projectExists={!!existingProject} existingProjectName={exisitingProjectName}/>
+              <ProjectForm
+                workspaceId={workspaceId}
+                projectExists={!!existingProject}
+                existingProjectName={exisitingProjectName}
+              />
             </BotMessage>
           );
         },
       },
-       onboardComplete: {
+      onboardComplete: {
         description: "a tool that is called after the onbaording is complete",
         parameters: z.object({}),
         generate: async function* ({}) {
@@ -149,11 +162,13 @@ export const sendMessage = async ({
             </BotMessage>
           );
 
-          await onboardingComplete()
-      
+          await onboardingComplete();
+
           return (
-            <BotMessage>Your onboarding has  been completed! redirecting to the main page</BotMessage>
-          )
+            <BotMessage>
+              Your onboarding has been completed! redirecting to the main page
+            </BotMessage>
+          );
         },
       },
       proceed: {
@@ -182,7 +197,6 @@ export const sendMessage = async ({
           );
         },
       },
-     
     },
   });
 

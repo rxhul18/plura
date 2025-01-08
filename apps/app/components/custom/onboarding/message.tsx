@@ -17,7 +17,6 @@ export function UserMessage({ children }: { children: React.ReactNode }) {
 }
 
 export function BotMessage({ children }: { children: React.ReactNode }) {
-
   return (
     <motion.div
       className={`flex flex-row w-full  md:px-0 `}

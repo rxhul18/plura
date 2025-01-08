@@ -169,6 +169,6 @@ const app = new Hono()
       },
     });
     return c.json({ user }, 200);
-  })
+  });
 
 export default app;

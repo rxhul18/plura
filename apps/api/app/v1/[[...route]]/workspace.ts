@@ -7,7 +7,6 @@ import { cache } from "@plura/cache";
 import { encrypt } from "@plura/crypt";
 
 const CACHE_EXPIRY = 300; // Cache expiry time in seconds
-;
 type Workspace = {
   id: string;
   name: string;
@@ -142,9 +141,9 @@ const app = new Hono()
         where: {
           userId: userId,
         },
-        orderBy:{
-          createdAt: "asc"
-        }
+        orderBy: {
+          createdAt: "asc",
+        },
       });
 
       if (workspaces.length === 0) {
@@ -159,7 +158,10 @@ const app = new Hono()
       }
     }
 
-    return c.json({ workspace:workspaces, firstWorkspace: workspaces[0]}, 200);
+    return c.json(
+      { workspace: workspaces, firstWorkspace: workspaces[0] },
+      200,
+    );
   })
   .post("/", zValidator("json", workspaceSchema), async (c) => {
     const session = await auth.api.getSession({

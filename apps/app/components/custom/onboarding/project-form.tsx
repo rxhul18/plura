@@ -90,7 +90,7 @@ export default function ProjectForm({
               placeholder="eg:new-workspace"
               type="text"
               value={value}
-              disabled={isLoading || hasProject }
+              disabled={isLoading || hasProject}
               onChange={(e) => setValue(e.target.value)}
             />
           </div>
