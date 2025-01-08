@@ -14,3 +14,8 @@ export const mailBatchSchema = z.object({
 export const workspaceSchema = z.object({
   name: z.string(),
 });
+
+export const projectSchema = z.object({
+  name: z.string(),
+  workspaceId: z.string(),
+});

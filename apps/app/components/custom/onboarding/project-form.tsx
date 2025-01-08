@@ -15,43 +15,43 @@ import { toast } from "sonner";
 import { sleep } from "@/lib/utils";
 import { useActions, useUIState } from "ai/rsc";
 import { AI } from "@/lib/ai";
-import { createWorkspace } from "@/actions/workspace";
-import { set } from "date-fns";
 
-export default function WorkspaceForm({
-  workspaceExists,
-  id,
-  existingWorkspaceName,
+import { createProject } from "@/actions/project";
+
+export default function ProjectForm({
+  workspaceId,
+  projectExists,
+  existingProjectName,
 }: {
-  workspaceExists: boolean;
-  id?: string;
-  existingWorkspaceName?: string;
+  workspaceId: string;
+  projectExists?: boolean;
+  existingProjectName?: string;
 }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [value, setValue] = useState(existingWorkspaceName ?? "");
+  const [value, setValue] = useState(existingProjectName ?? "");
   const { sendMessage } = useActions<typeof AI>();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [messages, setMessages] = useUIState<typeof AI>();
-  const [hasWorkspace, setHasWorkspace] = useState(workspaceExists);
-  const [workspaceId, setWorkspaceId] = useState(id ?? "");
+  const [hasProject, setHasProject] = useState(projectExists);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const data = new FormData(e.currentTarget);
-
-    const workspaceName = data.get("workspace") as string;
+    console.log(data.get("project"), workspaceId);
+    const projectName = data.get("project") as string;
 
     try {
       setIsLoading(true);
-      const res: any = await createWorkspace(workspaceName);
-      console.log("workspace", res);
-      setWorkspaceId(res?.data.id);
+      const res = await createProject({
+        workspaceId: workspaceId,
+        name: projectName,
+      });
+
       const response = await sendMessage({
-        prompt: `Workspace ${workspaceName} created`,
+        prompt: `call onboard Complete`,
       });
       setMessages((currentMessages) => [...currentMessages, response]);
-      toast.success(`Workspace ${workspaceName} created`);
-      setHasWorkspace(true);
+      setHasProject(true);
       return res;
     } catch (error) {
       toast.error(`Error creating workspace!Please try again `);
@@ -59,37 +59,38 @@ export default function WorkspaceForm({
       setIsLoading(false);
     }
   };
+
   useEffect(() => {
     (async () => {
-      if (hasWorkspace) {
+      if (hasProject) {
         const project = await sendMessage({
-          prompt: `call project form with workspaceId:${workspaceId}`,
+          prompt: `call onboard Complete`,
         });
         setMessages((currentMessages) => [...currentMessages, project]);
       }
     })();
-  }, [hasWorkspace]);
+  }, [hasProject]);
   return (
     <Card className="bg-neutral-900/30 rounded-lg shadow-md sm:w-[350px] shrink">
       <CardContent>
         <div className=" flex flex-col py-4 ">
           <CardTitle className="sm:text-start text-bold text-2xl text-center text-neutral-200">
-            Create Workspace
+            Create Project
           </CardTitle>
           <CardDescription className="text-start text-neutral-400">
-            Create a new workspace for your account
+            Create a new project for your account
           </CardDescription>
         </div>
 
         <form className="space-y-5" onSubmit={handleSubmit}>
           <div className="relative">
-            <Label className="text-sm text-neutral-400">Workspace Name</Label>
+            <Label className="text-sm text-neutral-400">Project Name</Label>
             <Input
-              name="workspace"
+              name="project"
               placeholder="eg:new-workspace"
               type="text"
               value={value}
-              disabled={isLoading || hasWorkspace}
+              disabled={isLoading || hasProject}
               onChange={(e) => setValue(e.target.value)}
             />
           </div>
@@ -98,11 +99,11 @@ export default function WorkspaceForm({
             className={cn("w-full bg-gray-200 rounded-md", {
               "bg-neutral-600": isLoading,
             })}
-            disabled={isLoading || value.trim().length === 0 || hasWorkspace}
+            disabled={isLoading || value.trim().length === 0 || hasProject}
           >
             {isLoading ? (
               <LoaderCircle className="animate-spin" />
-            ) : hasWorkspace ? (
+            ) : hasProject ? (
               <Check className="text-green-500" />
             ) : (
               "Create"

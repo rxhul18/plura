@@ -9,9 +9,6 @@ import { checkLogin } from "@/app/actions/checkLogin";
 import { checkAdmin } from "@/app/actions/checkAdmin";
 
 const CACHE_EXPIRY = 300; // Cache expiry time in seconds
-const ENCRYPTION_KEY = new Uint8Array(
-  JSON.parse(process.env.ENCRYPTION_KEY || "[]"),
-);
 type Workspace = {
   id: string;
   name: string;
@@ -90,6 +87,9 @@ const app = new Hono()
         where: {
           userId: userId,
         },
+        orderBy: {
+          createdAt: "asc",
+        },
       });
 
       if (workspaces.length === 0) {
@@ -104,26 +104,31 @@ const app = new Hono()
       }
     }
 
-    return c.json({ workspaces }, 200);
+    return c.json(
+      { workspace: workspaces, firstWorkspace: workspaces[0] },
+      200,
+    );
   })
-  .post("/", zValidator("form", workspaceSchema), async (c) => {
+  .post("/", zValidator("json", workspaceSchema), async (c) => {
     const session = await auth.api.getSession({
       headers: c.req.raw.headers,
     });
+    console.log("session", session);
     const userId = session?.user.id;
-    const body = c.req.valid("form");
+    const body = c.req.valid("json");
 
     if (!body) {
+      console.log("body");
       return c.json({ message: "Missing body", status: 400 }, 400);
     }
     if (!userId) {
+      console.log("userId");
       return c.json({ message: "Missing user id", status: 400 }, 400);
     }
-    const name = await encrypt(body.name, ENCRYPTION_KEY);
 
     const workspace = await prisma.workspace.create({
       data: {
-        name: name.toString(),
+        name: body.name,
         userId: userId,
       },
     });
@@ -135,7 +140,6 @@ const app = new Hono()
       );
     }
 
-    // Invalidate cache for user workspaces
     const userWorkspacesCacheKey = `workspaces:user:${userId}`;
     try {
       await cache.del(userWorkspacesCacheKey);

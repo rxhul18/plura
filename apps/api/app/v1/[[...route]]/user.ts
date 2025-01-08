@@ -154,6 +154,67 @@ const app = new Hono()
     }
 
     return c.json(response, 200);
+  })
+  .get("/:id", async (c) => {
+    const userId = c.req.param("id");
+    if (!userId) {
+      return c.json({
+        message: "User ID is required",
+        status: 400,
+      });
+    }
+
+    const cacheKey = `user:${userId}`;
+    let user: User | null = null;
+
+    try {
+      const cachedData: User | null = await cache.get(cacheKey);
+      if (cachedData) {
+        user = cachedData;
+        console.log("Returned user data from cache (by ID)");
+      }
+    } catch (error) {
+      console.error("Cache parsing error (by ID):", error);
+    }
+
+    if (!user) {
+      user = await prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+      });
+
+      if (user) {
+        console.log("Fetched user data from database (by ID):");
+        try {
+          await cache.set(cacheKey, user, { ex: CACHE_EXPIRY });
+        } catch (cacheError) {
+          console.error(
+            "Error storing user data in cache (by ID):",
+            cacheError,
+          );
+        }
+      }
+    }
+
+    return c.json({ user }, 200);
+  })
+  .post("/onboarding-complete", async (c) => {
+    const session = await auth.api.getSession({
+      headers: c.req.raw.headers,
+    });
+    if (!session?.user.id) {
+      return c.json({ message: "unauthorized", status: 401 }, 401);
+    }
+    const user = await prisma.user.update({
+      where: {
+        id: session.user.id,
+      },
+      data: {
+        isOnboarding: true,
+      },
+    });
+    return c.json({ user }, 200);
   });
 
 export default app;

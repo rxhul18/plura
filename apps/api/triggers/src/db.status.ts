@@ -40,16 +40,14 @@ export const dbStatusTask = schedules.task({
       const createPromises = Array.from(
         { length: massOperationsCount },
         (_, i) =>
-          db
-            .from("triggers")
-            .insert([
-              {
-                id: `mass-${i}`,
-                name: `Mass Test ${i}`,
-                email: `mass${i}@test.com`,
-                email_verified: true,
-              },
-            ]),
+          db.from("triggers").insert([
+            {
+              id: `mass-${i}`,
+              name: `Mass Test ${i}`,
+              email: `mass${i}@test.com`,
+              email_verified: true,
+            },
+          ]),
       );
       await Promise.all(createPromises);
     });

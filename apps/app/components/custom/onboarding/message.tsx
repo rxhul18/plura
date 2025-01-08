@@ -1,4 +1,5 @@
 "use client";
+import { createStreamableValue, useStreamableValue } from "ai/rsc";
 import { Sparkle, UserIcon } from "lucide-react";
 import { motion } from "motion/react";
 
@@ -27,7 +28,7 @@ export function BotMessage({ children }: { children: React.ReactNode }) {
           <div className="flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-md border shadow-sm bg-primary text-primary-foreground">
             <Sparkle />
           </div>
-          <div className="ml-4 flex items-start overflow-hidden grow">
+          <div className="ml-4 flex items-start overflow-hidden grow ">
             {children}
           </div>
         </div>
