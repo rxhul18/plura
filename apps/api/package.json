@@ -6,7 +6,7 @@
     "build": "next build",
     "start": "next start -p 3001",
     "preview": "next build && next start -p 3001",
-    "lint": "next lint",
+    "lint": "next lint --ignore-path .eslintignore",
     "lint:fix": "next lint --fix",
     "test": "vitest --run",
     "typecheck": "tsc --noEmit",
