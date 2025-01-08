@@ -23,8 +23,6 @@
     "@plura/mail": "workspace:*",
     "@prisma/client": "^5.22.0",
     "@repo/types": "workspace:*",
-    "@plura/cache": "workspace:*",
-    "@plura/crypt":"workspace:*",
     "@plura/mor":"workspace:*",
     "@upstash/ratelimit": "^2.0.5",
     "@upstash/redis": "^1.34.3",
