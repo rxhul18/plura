@@ -58,7 +58,7 @@ export default function WorkspaceForm({
   useEffect(() => {
     (async () => {
       if (hasWorkspace) {
-        console.log("hehe")
+        console.log("hehe");
         const project = await sendMessage({
           prompt: `call project form with workspaceId:${workspaceId}`,
         });

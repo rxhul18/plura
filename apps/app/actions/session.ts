@@ -45,7 +45,7 @@ export const onboardingComplete = async () => {
       return { success: false };
     }
 
-    return {success:true}
+    return { success: true };
   } catch (error) {
     return { success: false };
   }

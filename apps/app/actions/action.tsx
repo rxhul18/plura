@@ -24,7 +24,11 @@ const aiPrompt = `
 `;
 export type ServerMessage = {
   id?: number;
-  name?: "should_continue" | "workspace_form" | "project_form"| "onboard_complete";
+  name?:
+    | "should_continue"
+    | "workspace_form"
+    | "project_form"
+    | "onboard_complete";
   role: "user" | "assistant";
   content: string;
 };
