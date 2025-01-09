@@ -46,11 +46,6 @@ export default function ProjectForm({
         workspaceId: workspaceId,
         name: projectName,
       });
-
-      const response = await sendMessage({
-        prompt: `call onboard Complete`,
-      });
-      setMessages((currentMessages) => [...currentMessages, response]);
       setHasProject(true);
       return res;
     } catch (error) {
@@ -64,7 +59,7 @@ export default function ProjectForm({
     (async () => {
       if (hasProject) {
         const project = await sendMessage({
-          prompt: `call onboard Complete`,
+          prompt: "call onboardComplete tool",
         });
         setMessages((currentMessages) => [...currentMessages, project]);
       }

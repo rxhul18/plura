@@ -45,11 +45,7 @@ export default function WorkspaceForm({
       setIsLoading(true);
       const res: any = await createWorkspace(workspaceName);
       console.log("workspace", res);
-      setWorkspaceId(res?.data.id);
-      const response = await sendMessage({
-        prompt: `Workspace ${workspaceName} created`,
-      });
-      setMessages((currentMessages) => [...currentMessages, response]);
+      setWorkspaceId(res?.data.workspace.id);
       toast.success(`Workspace ${workspaceName} created`);
       setHasWorkspace(true);
       return res;
@@ -62,6 +58,7 @@ export default function WorkspaceForm({
   useEffect(() => {
     (async () => {
       if (hasWorkspace) {
+        console.log("hehe")
         const project = await sendMessage({
           prompt: `call project form with workspaceId:${workspaceId}`,
         });

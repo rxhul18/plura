@@ -45,7 +45,7 @@ export const onboardingComplete = async () => {
        return {success:false}
      }
 
-     redirect("/settings")
+    return {success:true}
   } catch (error) {
     return {success:false}
   }

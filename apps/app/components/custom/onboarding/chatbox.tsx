@@ -56,10 +56,10 @@ export default function Chatbox() {
 
   useEffect(() => {
     const fetchAiGreeting = async () => {
-      const response = await sendMessage({ prompt: "onboard me" });
+      const response = await sendMessage({ prompt:"onboard me"});
       setMessages((currentMessages) => [response, ...currentMessages]);
       (async () => {
-        await sleep(3000);
+       
         const response = await sendMessage({ prompt: "should we continue?" });
         setMessages((currentMessages) => [...currentMessages, response]);
       })();

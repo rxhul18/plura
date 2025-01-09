@@ -6,7 +6,7 @@ import { auth } from "@plura/auth";
 import { cache } from "@plura/cache";
 import { encrypt } from "@plura/crypt";
 
-const CACHE_EXPIRY = 300; // Cache expiry time in seconds
+const CACHE_EXPIRY = 0; // Cache expiry time in seconds
 ;
 type Workspace = {
   id: string;
