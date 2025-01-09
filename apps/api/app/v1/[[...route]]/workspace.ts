@@ -5,9 +5,10 @@ import { workspaceSchema } from "@repo/types";
 import { auth } from "@plura/auth";
 import { cache } from "@plura/cache";
 import { encrypt } from "@plura/crypt";
+import { checkLogin } from "@/app/actions/checkLogin";
+import { checkAdmin } from "@/app/actions/checkAdmin";
 
-const CACHE_EXPIRY = 0; // Cache expiry time in seconds
-;
+const CACHE_EXPIRY = 300; // Cache expiry time in seconds
 type Workspace = {
   id: string;
   name: string;
@@ -18,63 +19,7 @@ type Workspace = {
 };
 
 const app = new Hono()
-  .get("/all", async (c) => {
-    const cursor = c.req.query("cursor");
-    const take = parseInt(c.req.query("take") || "10");
-    const cacheKey = `workspaces:all:${cursor || "start"}:${take}`;
-    let response: {
-      nextCursor: string | null;
-      workspaces: Workspace[];
-    } | null = null;
-
-    try {
-      const cachedData: {
-        nextCursor: string | null;
-        workspaces: Workspace[];
-      } | null = await cache.get(cacheKey);
-      if (cachedData) {
-        response = cachedData;
-        console.log("Returned workspace list from cache");
-      }
-    } catch (error) {
-      console.error("Cache parsing error (all):", error);
-    }
-
-    if (!response) {
-      if (!c.req.url.includes("?cursor=")) {
-        return c.redirect("?cursor=");
-      }
-
-      const workspaces: Workspace[] = await prisma.workspace.findMany({
-        take,
-        skip: 1,
-        cursor: cursor
-          ? {
-              id: cursor,
-            }
-          : undefined,
-        orderBy: {
-          createdAt: "asc",
-        },
-      });
-
-      const nextCursor =
-        workspaces.length > 0 ? workspaces[workspaces.length - 1].id : null;
-      response = { nextCursor, workspaces };
-
-      console.log("Fetched workspace list from database (all)");
-      try {
-        await cache.set(cacheKey, response, { ex: CACHE_EXPIRY });
-      } catch (cacheError) {
-        console.error(
-          "Error storing workspace list in cache (all):",
-          cacheError,
-        );
-      }
-    }
-
-    return c.json(response, 200);
-  })
+  .use(checkLogin)
   .get("/:id", async (c) => {
     const workspaceId = c.req.param("id");
     if (!workspaceId) {
@@ -142,9 +87,9 @@ const app = new Hono()
         where: {
           userId: userId,
         },
-        orderBy:{
-          createdAt: "asc"
-        }
+        orderBy: {
+          createdAt: "asc",
+        },
       });
 
       if (workspaces.length === 0) {
@@ -159,7 +104,10 @@ const app = new Hono()
       }
     }
 
-    return c.json({ workspace:workspaces, firstWorkspace: workspaces[0]}, 200);
+    return c.json(
+      { workspace: workspaces, firstWorkspace: workspaces[0] },
+      200,
+    );
   })
   .post("/", zValidator("json", workspaceSchema), async (c) => {
     const session = await auth.api.getSession({
@@ -257,6 +205,64 @@ const app = new Hono()
     }
 
     return c.json({ deletedWorkspace: workspace }, 200);
+  })
+  .use(checkAdmin)
+  .get("/all", async (c) => {
+    const cursor = c.req.query("cursor");
+    const take = parseInt(c.req.query("take") || "10");
+    const cacheKey = `workspaces:all:${cursor || "start"}:${take}`;
+    let response: {
+      nextCursor: string | null;
+      workspaces: Workspace[];
+    } | null = null;
+
+    try {
+      const cachedData: {
+        nextCursor: string | null;
+        workspaces: Workspace[];
+      } | null = await cache.get(cacheKey);
+      if (cachedData) {
+        response = cachedData;
+        console.log("Returned workspace list from cache");
+      }
+    } catch (error) {
+      console.error("Cache parsing error (all):", error);
+    }
+
+    if (!response) {
+      if (!c.req.url.includes("?cursor=")) {
+        return c.redirect("?cursor=");
+      }
+
+      const workspaces: Workspace[] = await prisma.workspace.findMany({
+        take,
+        skip: 1,
+        cursor: cursor
+          ? {
+              id: cursor,
+            }
+          : undefined,
+        orderBy: {
+          createdAt: "asc",
+        },
+      });
+
+      const nextCursor =
+        workspaces.length > 0 ? workspaces[workspaces.length - 1].id : null;
+      response = { nextCursor, workspaces };
+
+      console.log("Fetched workspace list from database (all)");
+      try {
+        await cache.set(cacheKey, response, { ex: CACHE_EXPIRY });
+      } catch (cacheError) {
+        console.error(
+          "Error storing workspace list in cache (all):",
+          cacheError,
+        );
+      }
+    }
+
+    return c.json(response, 200);
   });
 
 export default app;

@@ -19,34 +19,33 @@ export const createWorkspace = async (workspaceName: string) => {
         cookie: (await headers()).get("cookie") || "",
       },
     });
-    console.log(workspace)
-    return workspace
+    console.log(workspace);
+    return workspace;
   } catch (error) {
     console.log("error", error);
   }
 };
 
+export const getFirstWorkspaceOfUser = async () => {
+  const user = await getSession();
+  if (!user) {
+    return;
+  }
 
-export const getFirstWorkspaceOfUser = async() => {
-   const user = await getSession();
-    if (!user) {
-      return;
-    }
-    
-    try {
-      const workspace:any = await betterFetch("http://localhost:3001/v1/workspace/user/"+user.session.userId, {
-      method: "GET",
-      headers: {
-        cookie: (await headers()).get("cookie") || "",
+  try {
+    const workspace: any = await betterFetch(
+      "http://localhost:3001/v1/workspace/user/" + user.session.userId,
+      {
+        method: "GET",
+        headers: {
+          cookie: (await headers()).get("cookie") || "",
+        },
       },
-      
-    });
-    if(!workspace || !workspace?.data?.firstWorkspace){
-      return null
+    );
+    if (!workspace || !workspace?.data?.firstWorkspace) {
+      return null;
     }
     console.log("workspace", workspace);
-    return workspace
-    } catch (error) {
-      
-    }
-}
+    return workspace;
+  } catch (error) {}
+};

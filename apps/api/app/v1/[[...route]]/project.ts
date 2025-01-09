@@ -6,60 +6,60 @@ import { auth } from "@plura/auth";
 import { cache } from "@plura/cache";
 import { nanoid } from "nanoid";
 
-const CACHE_EXPIRY = 300; 
+const CACHE_EXPIRY = 300;
 const app = new Hono()
- .get("/workspace/:workspaceId", async (c)=> {
-   const session = await auth.api.getSession({
-     headers: c.req.raw.headers,
-   });
-   if(!session){
-     return c.json({message: "Unauthorized", status: 401}, 401);
-   }
-   const workspaceId = c.req.param("workspaceId");
-   if(!workspaceId){
-     return c.json({message: "Missing workspace id", status: 400}, 400);
-   }
-  try {
-    const projects = await prisma.project.findMany({
-      where: {
-        workspaceId: workspaceId,
-      },
-      orderBy: {
-        createdAt: "asc",
-      },
+  .get("/workspace/:workspaceId", async (c) => {
+    const session = await auth.api.getSession({
+      headers: c.req.raw.headers,
     });
-    return c.json(projects[0], 200);
-  } catch (error) {
-    return c.json({ message: "Error fetching projects", status: 400 }, 400);
-  }
- }).post("/", zValidator("json", projectSchema), async (c) => {
-  const session = await auth.api.getSession({
-    headers: c.req.raw.headers,
-  });
-  if (!session?.user.id) {
-    return c.json({ message: "unauthorized", status: 401 }, 401);
-  }
-  const body = c.req.valid("json");
-  try {
-     const project = await prisma.project.create({
-       data: {
-         name: body.name,
-         ownerId: session.user.id,
-         slug: nanoid(),
-         workspaceId: body.workspaceId,
-       },
-     });
-     return c.json({ project }, 200);
-  } catch (error) {
-    console.log(error)
-  }
- 
-})
-.delete("/:id", async (c) => {
-  const projectId = c.req.param("id");
-  if (!projectId) {
-    return c.json({ message: "Missing project id", status: 400 }, 400);
-  }
+    if (!session) {
+      return c.json({ message: "Unauthorized", status: 401 }, 401);
+    }
+    const workspaceId = c.req.param("workspaceId");
+    if (!workspaceId) {
+      return c.json({ message: "Missing workspace id", status: 400 }, 400);
+    }
+    try {
+      const projects = await prisma.project.findMany({
+        where: {
+          workspaceId: workspaceId,
+        },
+        orderBy: {
+          createdAt: "asc",
+        },
+      });
+      return c.json(projects[0], 200);
+    } catch (error) {
+      return c.json({ message: "Error fetching projects", status: 400 }, 400);
+    }
+  })
+  .post("/", zValidator("json", projectSchema), async (c) => {
+    const session = await auth.api.getSession({
+      headers: c.req.raw.headers,
+    });
+    if (!session?.user.id) {
+      return c.json({ message: "unauthorized", status: 401 }, 401);
+    }
+    const body = c.req.valid("json");
+    try {
+      const project = await prisma.project.create({
+        data: {
+          name: body.name,
+          ownerId: session.user.id,
+          slug: nanoid(),
+          workspaceId: body.workspaceId,
+        },
+      });
+      return c.json({ project }, 200);
+    } catch (error) {
+      console.log(error);
+    }
+  })
+  .delete("/:id", async (c) => {
+    const projectId = c.req.param("id");
+    if (!projectId) {
+      return c.json({ message: "Missing project id", status: 400 }, 400);
+    }
 
     const session = await auth.api.getSession({
       headers: c.req.raw.headers,

@@ -16,7 +16,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center md:items-start justify-center overflow-hidden">
+    <div className="flex flex-col items-center md:items-start justify-center overflow-x-hidden w-full">
       <div className="absolute bottom-0 left-[-20%] right-0 top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(211,211,211,0.15),rgba(255,255,255,0))] opacity-40" />
 
       <div className="px-8 md:px-12">

@@ -31,22 +31,22 @@ export const getSession = async () => {
 };
 export const onboardingComplete = async () => {
   try {
-     const response = await betterFetch(
-       "http://localhost:3001/v1/user/onboarding-complete",
-       {
-         method: "POST",
-         headers: {
-           cookie: (await headers()).get("cookie") || "",
-         },
-       }
-     );
+    const response = await betterFetch(
+      "http://localhost:3001/v1/user/onboarding-complete",
+      {
+        method: "POST",
+        headers: {
+          cookie: (await headers()).get("cookie") || "",
+        },
+      },
+    );
 
-     if(!response.data){
-       return {success:false}
-     }
+    if (!response.data) {
+      return { success: false };
+    }
 
     return {success:true}
   } catch (error) {
-    return {success:false}
+    return { success: false };
   }
 };

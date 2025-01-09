@@ -122,3 +122,8 @@
   }
 }
 
+
+.react-flow__attribution {
+  display: none;
+}
+
