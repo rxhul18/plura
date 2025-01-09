@@ -21,8 +21,8 @@ model User {
   sessions      Session[]
   accounts      Account[]
   workspaces    Workspace[]
+  feedback      Feedback[]
   role          String      @default("user")
-
   @@unique([email])
   @@map("user")
 }
@@ -92,7 +92,7 @@ model Workspace {
 model Feedback {
   id         String   @id @default(uuid())
   userId     String
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)  
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade) 
   desc       String
   emotion    String
 }
