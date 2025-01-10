@@ -57,77 +57,78 @@ const app = new Hono()
                 return c.json({ message: "Invalid nodes or edges", status: 400 }, 400);
             }
 
-            // Create workflow
-            const workflow = await prisma.workflow.create({
-                data: {
-                    name: workflowName,
-                    status: "Running",
-                    services: nodes.filter((node) => node.type === "serviceNode").length,
-                    projectId,
-                },
+            // Begin a transaction
+            const transactionResult = await prisma.$transaction(async (prisma) => {
+                // Create workflow
+                const workflow = await prisma.workflow.create({
+                    data: {
+                        name: workflowName,
+                        status: "Running",
+                        services: nodes.filter((node) => node.type === "serviceNode").length,
+                        projectId,
+                    },
+                });
+
+                if (!workflow) {
+                    throw new Error("Failed to create workflow");
+                }
+
+                // Create nodes
+                const nodePromises = nodes.map(async (node) => {
+                    const createdNode = await prisma.node.create({
+                        data: {
+                            type: node.type,
+                            workflowId: workflow.id,
+                            position: {
+                                create: {
+                                    x: node.position.x,
+                                    y: node.position.y,
+                                },
+                            },
+                            data: {
+                                create: {
+                                    label: node.data.label,
+                                    selected: node.data.selected,
+                                    serviceId: node.data.serviceId,
+                                },
+                            },
+                            connections: {
+                                create: {
+                                    sourceOf: node.connections.sourceOf,
+                                    targetOf: node.connections.targetOf,
+                                },
+                            },
+                        },
+                    });
+                    return createdNode;
+                });
+
+                await Promise.all(nodePromises);
+
+                // Create edges
+                const edgePromises = edges.map(async (edge) => {
+                    await prisma.edge.create({
+                        data: {
+                            source: edge.source,
+                            target: edge.target,
+                            workflowId: workflow.id,
+                        },
+                    });
+                });
+
+                await Promise.all(edgePromises);
+
+                return workflow;
             });
 
-            if (!workflow) {
-                return c.json(
-                    { message: "Failed to create workflow", status: 404 },
-                    404
-                );
+            if (!transactionResult) {
+                throw new Error("Failed to create workflow");
             }
 
-            // Create nodes
-            const nodePromises = nodes.map(async (node) => {
-                const createdNode = await prisma.node.create({
-                    data: {
-                        id: node?.id,
-                        type: node.type,
-                        workflowId: workflow.id,
-                        position: {
-                            create: {
-                                x: node.position.x,
-                                y: node.position.y,
-                            },
-                        },
-                        data: {
-                            create: {
-                                label: node.data.label,
-                                selected: node.data.selected,
-                                serviceId: node.data.serviceId,
-                            },
-                        },
-                        connections: {
-                            create: {
-                                sourceOf: node.connections.sourceOf,
-                                targetOf: node.connections.targetOf,
-                            },
-                        },
-                    },
-                });
-                return createdNode;
-            });
-
-            await Promise.all(nodePromises);
-
-            // Create edges
-            const edgePromises = edges.map(async (edge) => {
-                await prisma.edge.create({
-                    data: {
-                        id: edge?.id,
-                        source: edge.source,
-                        target: edge.target,
-                        workflowId: workflow.id,
-                    },
-                });
-            });
-
-            await Promise.all(edgePromises);
-
-            return c.json({ message: "Workflow created successfully", status: 201 }, 201);
+            return c.json({ workflow: transactionResult, status: 201 }, 201);
         } catch (error) {
             console.error("Unexpected error while creating workflow:", error);
-            return c.json(
-                { message: "Internal server error", status: 500 },
-                500
-            );
+            return c.json({ message: "Internal server error", status: 500 }, 500);
         }
     })
     // Fetch workflow statistics

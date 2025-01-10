@@ -137,8 +137,8 @@ model Connection {
 
 model Position {
   id                 String          @id @default(uuid())
-  x                  Int
-  y                  Int
+  x                  Float
+  y                  Float
   nodeId             String          @unique
   node               Node            @relation(fields: [nodeId], references: [id], onDelete: Cascade)
 }
