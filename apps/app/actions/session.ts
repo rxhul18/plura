@@ -32,7 +32,7 @@ export const getSession = async () => {
 export const onboardingComplete = async () => {
   try {
     const response = await betterFetch(
-      "http://localhost:3001/v1/user/onboarding-complete",
+      `${apiDomain}/v1/user/onboarding-complete`,
       {
         method: "POST",
         headers: {
