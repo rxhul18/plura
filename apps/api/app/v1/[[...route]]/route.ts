@@ -9,7 +9,7 @@ import health from "./health";
 import user from "./user";
 import project from "./project";
 import contributors from "./contributors";
-import { cors } from "hono/cors";
+import { cors} from "hono/cors"
 import workspace from "./workspace";
 import { Ratelimit } from "@upstash/ratelimit";
 import { auth as Auth } from "@plura/auth";
