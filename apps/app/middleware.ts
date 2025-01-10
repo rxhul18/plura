@@ -22,7 +22,7 @@ export default async function authMiddleware(request: NextRequest) {
       headers: {
         cookie: request.headers.get("cookie") || "",
       },
-    }
+    },
   );
 
   if (!session) {
