@@ -14,6 +14,7 @@ import workspace from "./workspace";
 import { Ratelimit } from "@upstash/ratelimit";
 import { auth as Auth } from "@plura/auth";
 import { cache } from "@plura/cache";
+import workflow from "./workflow";
 
 export const runtime = "edge";
 
@@ -75,6 +76,7 @@ app.route("/user", user);
 app.route("/contributors", contributors);
 app.route("/workspace", workspace);
 app.route("project", project);
+app.route("/workflow", workflow);
 
 const GET = handle(app);
 const POST = handle(app);
