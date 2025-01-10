@@ -3,7 +3,10 @@ import { ReactNode } from "react";
 import { createStreamableValue, getMutableAIState, streamUI } from "ai/rsc";
 import { togetherai } from "@ai-sdk/togetherai";
 import { AI } from "@/lib/ai";
-import { BotMessage } from "@/components/custom/onboarding/message";
+import {
+  BotMessage,
+  TextStreamMessage,
+} from "@/components/custom/onboarding/message";
 import BeatLoader from "@/components/custom/onboarding/BeatLoader";
 import { getSession, onboardingComplete } from "./session";
 import { z } from "zod";
@@ -15,10 +18,17 @@ import { CoreMessage, generateId, ToolInvocation } from "ai";
 import ProjectForm from "@/components/custom/onboarding/project-form";
 import { getFirstWorkspaceOfUser } from "./workspace";
 import { getProjectOfUser } from "./project";
+import OnboardComplete from "@/components/custom/onboarding/onboard-complete";
+const aiPrompt = `
 
+`;
 export type ServerMessage = {
   id?: number;
-  name?: "should_continue" | "workspace_form" | "project_form";
+  name?:
+    | "should_continue"
+    | "workspace_form"
+    | "project_form"
+    | "onboard_complete";
   role: "user" | "assistant";
   content: string;
 };
@@ -39,31 +49,51 @@ export const sendMessage = async ({
 }: AiPrompt): Promise<ClientMessage> => {
   const history = getMutableAIState<typeof AI>();
   history.update([...history.get(), { role: "user", content: prompt }]);
-  const aiGreetingContext = await createAiGreeting();
 
+  const aiGreetingContext = await createAiGreeting();
+  const contentStream = createStreamableValue("");
+  const textComponent = <TextStreamMessage content={contentStream.value} />;
   const response = await streamUI({
     model: togetherai("meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo"),
     system: `
-    You are an onboarding assitand and you are helping users to onboard them to Plura AI.
-    -any question not related to the onbaording should not be answered by you
-    -if someone asks any message that is not related to the onboarding then you should respond with the exact same text "wlecome to Plura"
-    - the first message from the user will be  "onboard me" you should always respond with the exact text-
-    ${aiGreetingContext}.
-    -No tools should be called for this
-    -if the message comes as "should we continue" then call proceed tool
-    The workflow is as follows:
-    -User sends "yes" or "no" to proceed
-    -If the user sends "yes" then the workflow is as follows:
-    -then you call the workspace tool
-    - If the user sends "no", respond with exactly: "please create a workspace to continue your onboarding".Do not call any tools for "no"
-    - Only trigger the proceed tool when asking: "should we continue?"
-    -If the user sends any message after workspace tool is called then you should respond with the same text:"Please create a workspace to continue"
-    -dont call any tools if the user doesnt creates a workspace
-    -If the message comes as workspace {workspaceName} created then respond with the exact same text
-    "Your first workspace with name - ✅{workspaceName}  has been created"
-    -if the messages comes as "call project form withe workspaceId:{workspaceId}" then call the project tool
-    -If the message comes as  onbaordComplete then call the onboardComplete tool
-    `,
+You are an onboarding assistant for Plura AI. Your role is to guide users through the onboarding process by following these specific rules:
+
+### General Guidelines:
+1. **Onboarding Assistance Only**: Respond only to messages related to onboarding. If a message is unrelated, reply with the exact text: 
+   **"welcome to Plura"**. 
+   Do not provide any other information or take unrelated actions.
+
+2. **Initial Interaction**: 
+   When the user sends "onboard me" reply with the exact text: 
+   ${aiGreetingContext}. 
+   Do not call any tools at this stage.
+
+### Workflow for Proceeding:
+1. If the user asks **"should we continue?"**, trigger the \`proceed\` tool.
+2. After triggering \`proceed\`, wait for the user's response: 
+   - If the user responds with **"yes"**, call the \`workspace\` tool.
+   - If the user responds with **"no"**, reply with the exact text: 
+     **"please create a workspace to continue your onboarding."** 
+     Do not call any tools for this response.
+
+### Workspace Management:
+1. If the user sends a message like workspace {workspaceName} created, respond with the exact text: 
+   **"Your first workspace with name - ✅{workspaceName} has been created."**
+2. If the user sends any message after the \`workspace\` tool is called (and before a workspace is created), reply with the exact text: 
+   **"Please create a workspace to continue."**
+3. Do not proceed or call any tools unless the user successfully creates a workspace.
+
+### Project Form Handling:
+1. If the user sends call project form with workspaceId:{workspaceId}, trigger the \`project\` tool.
+-If the user sends "call onboardComplete tool" then trigger the \`onboardComplete\` tool.
+
+### Key Restrictions:
+- Only trigger tools as specified in the workflow.
+- Follow the exact sequence of steps without deviation.
+- Use exact text responses where specified.
+- Avoid unnecessary actions or tool invocations outside the defined process.
+- Only trigger tool one time for each request. */this is non negotiable/*.
+`,
     messages: [{ role: "user", content: prompt }, ...history.get()],
     temperature: 0,
     initial: (
@@ -75,9 +105,13 @@ export const sendMessage = async ({
       await sleep(1000);
       if (done) {
         history.done([...history.get(), { role: "assistant", content }]);
+
+        contentStream.done();
+      } else {
+        contentStream.update(content);
       }
 
-      return <BotMessage>{content}</BotMessage>;
+      return textComponent;
     },
     tools: {
       workspace: {
@@ -116,6 +150,34 @@ export const sendMessage = async ({
           );
         },
       },
+      onboardComplete: {
+        description:
+          "a tool that is called after the project has been created.It marks the end of onboarding of user and should  be called after project tool.",
+        parameters: z.object({}),
+        generate: async function* ({}) {
+          await sleep(2000);
+          yield (
+            <BotMessage>
+              <p>Finishing onboarding ...</p>
+            </BotMessage>
+          );
+          console.log("onboarding complete");
+          history.done([
+            ...history.get(),
+            {
+              role: "assistant",
+              name: "onboard_complete",
+              content: "should be continue rendered",
+            },
+          ]);
+
+          return (
+            <BotMessage>
+              <OnboardComplete />
+            </BotMessage>
+          );
+        },
+      },
       project: {
         description:
           "A tool that sends the project form to the user after workspace creation.",
@@ -128,7 +190,7 @@ export const sendMessage = async ({
               <BeatLoader />
             </BotMessage>
           );
-          console.log(workspaceId);
+          console.log("workspaceId", workspaceId);
           await sleep(1000);
           history.done([
             ...history.get(),
@@ -152,29 +214,11 @@ export const sendMessage = async ({
           );
         },
       },
-      onboardComplete: {
-        description: "a tool that is called after the onbaording is complete",
-        parameters: z.object({}),
-        generate: async function* ({}) {
-          yield (
-            <BotMessage>
-              <p>Onboarding complete</p>
-            </BotMessage>
-          );
-
-          await onboardingComplete();
-
-          return (
-            <BotMessage>
-              Your onboarding has been completed! redirecting to the main page
-            </BotMessage>
-          );
-        },
-      },
       proceed: {
         description: `should we continue option that contains yes and no options`,
         parameters: z.object({}),
         generate: async function* ({}) {
+          await sleep(3000);
           yield (
             <BotMessage>
               <BeatLoader />
@@ -222,6 +266,5 @@ I see your email is ${email}.📧
 Let’s make this journey smooth and fun! If you have any questions, I’m just a message away🚀.
 Ready to dive in? Let’s go!🏄‍♂️
 `.trim();
-
   return contentString;
 };
