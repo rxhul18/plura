@@ -6,8 +6,11 @@
     ".": "./src/index.ts"
   },
   "scripts": {
+    "db:studio": "prisma studio",
+    "db:validate": "prisma validate",
     "db:generate": "prisma generate --no-engine",
-    "db:push": "prisma db push --skip-generate"
+    "db:push": "prisma db push --skip-generate",
+    "db:migrate": "pnpm db:validate && prisma migrate dev"
   },
   "dependencies": {
     "@prisma/client": "^6.0.1",

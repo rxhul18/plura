@@ -98,8 +98,12 @@ export const publishContributorsTask = schedules.task({
         });
       }
 
-      const finalContributors = Object.values(contributorsMap);
+      // Create final array sorted by contributions in descending order
+      const finalContributors = Object.values(contributorsMap).sort(
+        (a, b) => b.contributions - a.contributions,
+      );
 
+      // Clear Redis list and push sorted array as a list
       await cache.del(redisKey); // Clear previous data
       await cache.rpush(
         redisKey,

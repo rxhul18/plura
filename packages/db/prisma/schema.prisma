@@ -21,6 +21,7 @@ model User {
   sessions      Session[]
   accounts      Account[]
   workspaces    Workspace[]
+  projects      Project[]
   role          String      @default("user")
 
   @@unique([email])
@@ -91,14 +92,13 @@ model Workspace {
 }
 
 model Project {
-  id         String       @id @default(uuid())
-  name String  
-  ownerId String
-  slug  String 
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  workspaceId String
-  workspace  Workspace   @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
+  id           String   @id @default(uuid())
+  name         String  
+  slug         String 
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  workspaceId  String
+  workspace    Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  userId       String
+  user         User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

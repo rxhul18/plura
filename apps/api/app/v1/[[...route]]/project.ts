@@ -45,7 +45,7 @@ const app = new Hono()
       const project = await prisma.project.create({
         data: {
           name: body.name,
-          ownerId: session.user.id,
+          userId: session.user.id,
           slug: nanoid(),
           workspaceId: body.workspaceId,
         },
@@ -71,7 +71,7 @@ const app = new Hono()
     const existingProject = await prisma.project.findUnique({
       where: {
         id: projectId,
-        ownerId: session.user.id,
+        userId: session.user.id,
       },
     });
     if (!existingProject) {
@@ -81,7 +81,7 @@ const app = new Hono()
     const project = await prisma.project.delete({
       where: {
         id: projectId,
-        ownerId: session.user.id,
+        userId: session.user.id,
       },
     });
 
