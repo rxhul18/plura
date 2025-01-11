@@ -82,7 +82,6 @@ const app = new Hono()
       },
     });
     return c.json({ user }, 200);
-
   })
   .use(checkLogin, checkAdmin)
   .get("/:id", async (c) => {
@@ -216,7 +215,6 @@ const app = new Hono()
     }
 
     return c.json({ user }, 200);
-  })
-  
+  });
 
 export default app;

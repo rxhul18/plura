@@ -31,7 +31,6 @@ export const getSession = async () => {
 };
 export const onboardingComplete = async () => {
   try {
-
     const response = await betterFetch(
       `${apiDomain}/v1/user/onboarding-complete`,
       {
@@ -39,7 +38,7 @@ export const onboardingComplete = async () => {
         headers: {
           cookie: (await headers()).get("cookie") || "",
         },
-      }
+      },
     );
     if (!response.data) {
       return { success: false };

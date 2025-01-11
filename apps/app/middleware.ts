@@ -37,7 +37,7 @@ export default async function authMiddleware(request: NextRequest) {
   if (currentPath.startsWith("/onboarding") && session.user.isOnboarding) {
     return NextResponse.redirect(`${appDomain}/dashboard`);
   }
-  if(currentPath == "/"){
+  if (currentPath == "/") {
     return NextResponse.redirect(`${appDomain}/dashboard`);
   }
   return NextResponse.next();
