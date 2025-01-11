@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 export default async function OnboardComplete() {
   const res = await onboardingComplete();
   if (res.success) {
-    redirect("/settings");
+    redirect("/dashboard");
   }
   return (
     <div>

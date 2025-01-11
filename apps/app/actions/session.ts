@@ -40,7 +40,6 @@ export const onboardingComplete = async () => {
         },
       },
     );
-
     if (!response.data) {
       return { success: false };
     }

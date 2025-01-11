@@ -35,9 +35,11 @@ export default async function authMiddleware(request: NextRequest) {
     return NextResponse.redirect(`${appDomain}/onboarding`);
   }
   if (currentPath.startsWith("/onboarding") && session.user.isOnboarding) {
-    return NextResponse.redirect(`${appDomain}/home`);
+    return NextResponse.redirect(`${appDomain}/dashboard`);
   }
-
+  if (currentPath == "/") {
+    return NextResponse.redirect(`${appDomain}/dashboard`);
+  }
   return NextResponse.next();
 }
 
