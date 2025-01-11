@@ -102,7 +102,7 @@ You are an onboarding assistant for Plura AI. Your role is to guide users throug
       </BotMessage>
     ),
     text: async function ({ content, done }) {
-      await sleep(1000);
+
       if (done) {
         history.done([...history.get(), { role: "assistant", content }]);
 
