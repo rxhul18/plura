@@ -92,7 +92,7 @@ export default function Auth() {
       name: firstName + " " + lastName,
       email,
       password,
-      isOnboarding: false,
+      isOnboarding: true,
       fetchOptions: {
         onRequest() {
           setIsLoading(true);
