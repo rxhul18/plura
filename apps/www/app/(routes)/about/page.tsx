@@ -14,7 +14,7 @@ interface ContributorData {
   login: string;
   id: number;
   avatar_url?: string;
-  github_link: string;
+  html_url: string;
   contributions: number;
 }
 
@@ -77,11 +77,10 @@ export default function About() {
         >
           <SectionHeader>
             <SectionHeaderHeading className="text-3xl md:text-4xl">
-              Made with ❤️ by our contributors
+              {siteConfig.aboutPage.contributors.title}
             </SectionHeaderHeading>
             <SectionHeaderDescription>
-              Thanks to all of our great contributors!Thanks to all of our great
-              contributors!Thanks to all of our great contributors!
+              {siteConfig.aboutPage.contributors.desc}
             </SectionHeaderDescription>
           </SectionHeader>
           <div className="px-8 md:px-12">
