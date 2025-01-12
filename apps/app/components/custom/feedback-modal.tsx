@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import { Profanity } from "profanity-validator";
 import { Frown, Meh, MessageSquare, Smile } from 'lucide-react';
 import { Textarea } from "../ui/textarea";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import {
   Form,
@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { createFeedback } from "@/actions/feedback";
 
 const profanity = new Profanity({
   customWords:["saidev", "premium",'money'],
@@ -43,28 +44,27 @@ const postSchema = z.object({
       message: "Inappropriate content detected in description",
     })
 });
-
 type PostSchema = z.infer<typeof postSchema>;
 
 export function FeedbackModal() {
-  const [selectedEmo, setSelectedEmo] = useState<'happy' | 'idle' | 'sad' | null>(null);
+  const [selectedEmo, setSelectedEmo] = useState<'happy' | 'idle' | 'sad'>("happy");
 
   const form = useForm<PostSchema>({
     resolver: zodResolver(postSchema),
   });
 
-  const onSubmit = async (data: PostSchema) => {
+  const onSubmit: SubmitHandler<PostSchema> = async (data) => {
     try {
+      console.log("started working");
       const validatedData = await postSchema.parseAsync({ ...data });
-      const finalFeedback = {
+      const res = await createFeedback({
         desc:validatedData.description,
         emotion: selectedEmo
-      }
-      console.log(finalFeedback);
-      toast.success("Feedback submitted successfully!");
+      });
+      toast.success(`Thanks for your feedback!`);
+      return res;
     } catch (error) {
-      console.error("Validation error:", error);
-      toast.error("Validation failed. Check form errors.");
+      toast.error(`Error in submiting feeback !Please try again `);
     }
   };
 
