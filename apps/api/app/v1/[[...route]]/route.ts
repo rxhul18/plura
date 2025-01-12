@@ -76,7 +76,7 @@ app.route("/user", user);
 app.route("/contributors", contributors);
 app.route("/workspace", workspace);
 app.route("/project", project);
-app.route("/feedback",feedback)
+app.route("/feedback", feedback);
 
 const GET = handle(app);
 const POST = handle(app);
