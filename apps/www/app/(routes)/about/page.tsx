@@ -16,6 +16,8 @@ interface ContributorData {
   avatar_url?: string;
   html_url: string;
   contributions: number;
+  name: string;
+  twitter_username?: string;
 }
 
 export default function About() {
