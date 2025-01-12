@@ -9,6 +9,7 @@ import health from "./health";
 import user from "./user";
 import project from "./project";
 import contributors from "./contributors";
+import feedback from "./feedback";
 import { cors } from "hono/cors";
 import workspace from "./workspace";
 import { Ratelimit } from "@upstash/ratelimit";
@@ -75,7 +76,8 @@ app.route("/auth", auth);
 app.route("/user", user);
 app.route("/contributors", contributors);
 app.route("/workspace", workspace);
-app.route("project", project);
+app.route("/project", project);
+app.route("/feedback", feedback);
 app.route("/workflow", workflow);
 
 const GET = handle(app);
