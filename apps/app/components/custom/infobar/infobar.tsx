@@ -6,7 +6,6 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import {
@@ -26,6 +25,8 @@ import { Check, ChevronsUpDown, Slash } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { FeedbackModal } from "../feedback-modal";
+import { usePathname } from "next/navigation";
 
 const frameworks = [
   {
@@ -55,19 +56,21 @@ export default function Infobar() {
   const [openPopover1, setOpenPopover1] = useState(false);
   const [openPopover2, setOpenPopover2] = useState(false);
   const [value, setValue] = useState("");
+  const pathname = usePathname()
+    .replace(/^\/|\/$/g, "")
+    .split("/");
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <nav
-      className={`flex flex-col w-full items-start sticky top-0 right-0 bg-background transition-all duration-200 ${
+      className={`flex w-full items-center sticky top-0 right-0 bg-background transition-all duration-200 ${
         isScrolled ? "shadow-sm z-10" : ""
       }`}
     >
@@ -87,7 +90,7 @@ export default function Infobar() {
                   >
                     {value
                       ? frameworks.find(
-                          (framework) => framework.value === value,
+                          (framework) => framework.value === value
                         )?.label
                       : "BlueFinZ"}
                     <ChevronsUpDown className="opacity-50" />
@@ -108,7 +111,7 @@ export default function Infobar() {
                             value={framework.value}
                             onSelect={(currentValue) => {
                               setValue(
-                                currentValue === value ? "" : currentValue,
+                                currentValue === value ? "" : currentValue
                               );
                               setOpenPopover1(false);
                             }}
@@ -119,7 +122,7 @@ export default function Infobar() {
                                 "ml-auto",
                                 value === framework.value
                                   ? "opacity-100"
-                                  : "opacity-0",
+                                  : "opacity-0"
                               )}
                             />
                           </CommandItem>
@@ -144,7 +147,7 @@ export default function Infobar() {
                   >
                     {value
                       ? frameworks.find(
-                          (framework) => framework.value === value,
+                          (framework) => framework.value === value
                         )?.label
                       : "Plura"}
                     <ChevronsUpDown className="opacity-50" />
@@ -165,7 +168,7 @@ export default function Infobar() {
                             value={framework.value}
                             onSelect={(currentValue) => {
                               setValue(
-                                currentValue === value ? "" : currentValue,
+                                currentValue === value ? "" : currentValue
                               );
                               setOpenPopover2(false);
                             }}
@@ -176,7 +179,7 @@ export default function Infobar() {
                                 "ml-auto",
                                 value === framework.value
                                   ? "opacity-100"
-                                  : "opacity-0",
+                                  : "opacity-0"
                               )}
                             />
                           </CommandItem>
@@ -190,11 +193,18 @@ export default function Infobar() {
             <BreadcrumbSeparator>
               <Slash className="h-4 w-4" />
             </BreadcrumbSeparator>
-            <BreadcrumbItem>
-              <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
-            </BreadcrumbItem>
+            {pathname[0] && (
+              <BreadcrumbItem>
+                <Button variant={'ghost'} className="text-muted-foreground hover:text-primary selection-none p-2 h-6">
+                  {pathname[0].charAt(0).toUpperCase() + pathname[0].slice(1)}
+                </Button>
+              </BreadcrumbItem>
+            )}
           </BreadcrumbList>
         </Breadcrumb>
+      </div>
+      <div>
+        <FeedbackModal />
       </div>
     </nav>
   );

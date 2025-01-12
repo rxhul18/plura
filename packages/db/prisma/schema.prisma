@@ -22,6 +22,7 @@ model User {
   accounts      Account[]
   workspaces    Workspace[]
   projects      Project[]
+  feedbacks      Feedback[]
   role          String      @default("user")
   normalizedEmail String    @unique
 
@@ -102,4 +103,12 @@ model Project {
   workspace    Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   userId       String
   user         User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Feedback {
+  id         String   @id @default(uuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade) 
+  desc       String
+  emotion    String
 }
