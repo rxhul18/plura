@@ -22,6 +22,7 @@ model User {
   accounts      Account[]
   workspaces    Workspace[]
   projects      Project[]
+  feedbacks      Feedback[]
   role          String      @default("user")
   normalizedEmail String    @unique
 
@@ -171,4 +172,12 @@ enum WorkflowStatus {
   Paused
   Running
   Stopped
+}
+
+model Feedback {
+  id         String   @id @default(uuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade) 
+  desc       String
+  emotion    String
 }

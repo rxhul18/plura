@@ -19,3 +19,8 @@ export const projectSchema = z.object({
   name: z.string(),
   workspaceId: z.string(),
 });
+
+export const feedbackSchema = z.object({
+  desc: z.string(),
+  emotion: z.enum(["happy","idle","sad"])
+})
