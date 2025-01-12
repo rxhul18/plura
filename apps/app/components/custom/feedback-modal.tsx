@@ -27,7 +27,7 @@ import { useState } from "react";
 import { createFeedback } from "@/actions/feedback";
 
 const profanity = new Profanity({
-  customWords:["saidev", "premium",'money'],
+  customWords: [""],
   heat: 0.9,
 });
 
@@ -57,13 +57,13 @@ export function FeedbackModal() {
     try {
       const validatedData = await postSchema.parseAsync({ ...data });
       const res = await createFeedback({
-        desc:validatedData.description,
+        desc: validatedData.description,
         emotion: selectedEmo
       });
       return res;
     } catch (error) {
       toast.error(`Error in submiting feeback !Please try again `);
-    } finally{
+    } finally {
       toast.success(`Thanks for your feedback!`);
     }
   };
@@ -91,7 +91,7 @@ export function FeedbackModal() {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Textarea {...field} placeholder="Can you ..." className="border min-h-[100px]"/>
+                    <Textarea {...field} placeholder="Can you ..." className="border min-h-[100px]" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
