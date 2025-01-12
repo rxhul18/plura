@@ -90,7 +90,7 @@ export default function Infobar() {
                   >
                     {value
                       ? frameworks.find(
-                          (framework) => framework.value === value
+                          (framework) => framework.value === value,
                         )?.label
                       : "BlueFinZ"}
                     <ChevronsUpDown className="opacity-50" />
@@ -111,7 +111,7 @@ export default function Infobar() {
                             value={framework.value}
                             onSelect={(currentValue) => {
                               setValue(
-                                currentValue === value ? "" : currentValue
+                                currentValue === value ? "" : currentValue,
                               );
                               setOpenPopover1(false);
                             }}
@@ -122,7 +122,7 @@ export default function Infobar() {
                                 "ml-auto",
                                 value === framework.value
                                   ? "opacity-100"
-                                  : "opacity-0"
+                                  : "opacity-0",
                               )}
                             />
                           </CommandItem>
@@ -147,7 +147,7 @@ export default function Infobar() {
                   >
                     {value
                       ? frameworks.find(
-                          (framework) => framework.value === value
+                          (framework) => framework.value === value,
                         )?.label
                       : "Plura"}
                     <ChevronsUpDown className="opacity-50" />
@@ -168,7 +168,7 @@ export default function Infobar() {
                             value={framework.value}
                             onSelect={(currentValue) => {
                               setValue(
-                                currentValue === value ? "" : currentValue
+                                currentValue === value ? "" : currentValue,
                               );
                               setOpenPopover2(false);
                             }}
@@ -179,7 +179,7 @@ export default function Infobar() {
                                 "ml-auto",
                                 value === framework.value
                                   ? "opacity-100"
-                                  : "opacity-0"
+                                  : "opacity-0",
                               )}
                             />
                           </CommandItem>
@@ -195,7 +195,10 @@ export default function Infobar() {
             </BreadcrumbSeparator>
             {pathname[0] && (
               <BreadcrumbItem>
-                <Button variant={'ghost'} className="text-muted-foreground hover:text-primary selection-none p-2 h-6">
+                <Button
+                  variant={"ghost"}
+                  className="text-muted-foreground hover:text-primary selection-none p-2 h-6"
+                >
                   {pathname[0].charAt(0).toUpperCase() + pathname[0].slice(1)}
                 </Button>
               </BreadcrumbItem>

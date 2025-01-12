@@ -33,8 +33,11 @@ const QuickActionButton = () => {
     <div className="flex items-center justify-center">
       <Button variant="default" onClick={toggleOverlay}>
         Quick Actions
-        <Badge className="rounded-md text-xs gap-1 font-semibold hover:bg-secondary" variant={"secondary"}>
-          <span className="text-xs">⌘</span>K 
+        <Badge
+          className="rounded-md text-xs gap-1 font-semibold hover:bg-secondary"
+          variant={"secondary"}
+        >
+          <span className="text-xs">⌘</span>K
         </Badge>
       </Button>
 

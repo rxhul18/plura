@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
-'use client';
-import { Button } from "@/components/ui/button"
+"use client";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,10 +8,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { Profanity } from "profanity-validator";
-import { Frown, Meh, MessageSquare, Smile } from 'lucide-react';
+import { Frown, Meh, MessageSquare, Smile } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -42,12 +42,14 @@ const postSchema = z.object({
     .min(10, "Description must be at least 10 characters")
     .refine(async (val) => await profanityCheck(val), {
       message: "Inappropriate content detected in description",
-    })
+    }),
 });
 type PostSchema = z.infer<typeof postSchema>;
 
 export function FeedbackModal() {
-  const [selectedEmo, setSelectedEmo] = useState<'happy' | 'idle' | 'sad'>("happy");
+  const [selectedEmo, setSelectedEmo] = useState<"happy" | "idle" | "sad">(
+    "happy",
+  );
 
   const form = useForm<PostSchema>({
     resolver: zodResolver(postSchema),
@@ -58,7 +60,7 @@ export function FeedbackModal() {
       const validatedData = await postSchema.parseAsync({ ...data });
       const res = await createFeedback({
         desc: validatedData.description,
-        emotion: selectedEmo
+        emotion: selectedEmo,
       });
       return res;
     } catch (error) {
@@ -71,13 +73,19 @@ export function FeedbackModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="default"> <MessageSquare /> Feedback </Button>
+        <Button variant="default">
+          {" "}
+          <MessageSquare /> Feedback{" "}
+        </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[425px] md:min-w-[480px] border">
         <DialogHeader className="!text-center w-full pt-5 pb-2">
-          <DialogTitle className="text-2xl text-primary">Leave feedback</DialogTitle>
+          <DialogTitle className="text-2xl text-primary">
+            Leave feedback
+          </DialogTitle>
           <DialogDescription>
-            We'd love to hear what went well or how we can improve the product experience.
+            We'd love to hear what went well or how we can improve the product
+            experience.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -91,7 +99,11 @@ export function FeedbackModal() {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Textarea {...field} placeholder="Can you ..." className="border min-h-[100px]" />
+                    <Textarea
+                      {...field}
+                      placeholder="Can you ..."
+                      className="border min-h-[100px]"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -100,19 +112,29 @@ export function FeedbackModal() {
             <div className="grid gap-4 py-4">
               <div className="flex gap-2">
                 <Button
-                  size="icon" variant="secondary" className={`hover:bg-secondary transition-all duration-200 ${selectedEmo === 'happy' ? 'border-primary border-[1px]' : ''}`}
-                  onClick={() => setSelectedEmo('happy')} type="button"
+                  size="icon"
+                  variant="secondary"
+                  className={`hover:bg-secondary transition-all duration-200 ${selectedEmo === "happy" ? "border-primary border-[1px]" : ""}`}
+                  onClick={() => setSelectedEmo("happy")}
+                  type="button"
                 >
                   <Smile />
                 </Button>
-                <Button size="icon" variant="secondary" className={`hover:bg-secondary transition-all duration-200 ${selectedEmo === 'idle' ? 'border-primary border-[1px]' : ''}`}
-                  onClick={() => setSelectedEmo('idle')} type="button"
+                <Button
+                  size="icon"
+                  variant="secondary"
+                  className={`hover:bg-secondary transition-all duration-200 ${selectedEmo === "idle" ? "border-primary border-[1px]" : ""}`}
+                  onClick={() => setSelectedEmo("idle")}
+                  type="button"
                 >
                   <Meh />
                 </Button>
                 <Button
-                  size="icon" variant="secondary" className={`hover:bg-secondary transition-all duration-200 ${selectedEmo === 'sad' ? 'border-primary border-[1px]' : ''}`}
-                  onClick={() => setSelectedEmo('sad')} type="button"
+                  size="icon"
+                  variant="secondary"
+                  className={`hover:bg-secondary transition-all duration-200 ${selectedEmo === "sad" ? "border-primary border-[1px]" : ""}`}
+                  onClick={() => setSelectedEmo("sad")}
+                  type="button"
                 >
                   <Frown />
                 </Button>
@@ -125,5 +147,5 @@ export function FeedbackModal() {
         </Form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
