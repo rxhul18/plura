@@ -23,6 +23,7 @@ model User {
   workspaces    Workspace[]
   projects      Project[]
   role          String      @default("user")
+  normalizedEmail String    @unique
 
   @@unique([email])
   @@map("user")

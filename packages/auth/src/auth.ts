@@ -2,6 +2,7 @@ import { betterAuth, BetterAuthOptions } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "@plura/db";
 import { multiSession } from "better-auth/plugins";
+import { emailHarmony } from 'better-auth-harmony';
 
 const BaseDomain = process.env.NODE_ENV === "production" ? "https://api.plura.pro": "http://localhost:3001";
 
@@ -19,7 +20,9 @@ export const auth = betterAuth({
     provider: "postgresql",
   }),
   secret: process.env.BETTER_AUTH_SECRET,
-  plugins: [multiSession()],
+  plugins: [multiSession(), emailHarmony({
+    allowNormalizedSignin: false,
+  })],
   user: {
     additionalFields:{
       isOnboarding: {
@@ -35,6 +38,10 @@ export const auth = betterAuth({
         required : true,
         input : false,
         defaultValue : "user"
+      },
+      normalizedEmail : {
+        type : "string",
+        unique : true
       }
     }
   },

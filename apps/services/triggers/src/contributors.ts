@@ -1,5 +1,5 @@
 import { cache } from "@plura/cache";
-import { logger, schedules } from "@trigger.dev/sdk/v3";
+import { logger, schedules, wait } from "@trigger.dev/sdk/v3";
 
 type ContributorData = {
   login: string;
@@ -9,14 +9,13 @@ type ContributorData = {
   contributions: number;
 };
 
-export const publishContributorsTask = schedules.task({
-  id: "publish-contributors",
-  cron: "0 0 * * 0", // Runs every Sunday at midnight
+export const ContributorsData = schedules.task({
+  id: "contributors",
+  cron: "0 0 * * 1,4,7", // Runs at midnight on Monday, Thursday, and Sunday
   maxDuration: 60,
   run: async () => {
     const owner = "plura-ai";
     const repos = ["plura", "docs", "agents", "chatbot"];
-    const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
     const MAX_PAGES = 50; // Limit total pages to prevent excessive API calls
     const redisKey = "contributors";
@@ -25,55 +24,64 @@ export const publishContributorsTask = schedules.task({
     const fetchContributors = async (repo: string) => {
       let contributors: ContributorData[] = [];
       let page = 1;
-
+    
       try {
         do {
           if (page > MAX_PAGES) {
-            logger.warn(
-              `Reached maximum page limit of ${MAX_PAGES} for ${repo}`,
-            );
+            logger.warn(`Reached maximum page limit of ${MAX_PAGES} for ${repo}`);
             break;
           }
-
+    
           const response = await fetch(
             `https://api.github.com/repos/${owner}/${repo}/contributors?per_page=100&page=${page}`,
             {
               headers: {
-                Authorization: `token ${GITHUB_TOKEN}`,
                 Accept: "application/vnd.github.v3+json",
               },
             },
           );
-
+    
           const rateLimit = response.headers.get("x-ratelimit-remaining");
+          const rateLimitReset = response.headers.get("x-ratelimit-reset");
+    
           if (rateLimit === "0") {
-            logger.error(`GitHub API rate limit exceeded for ${repo}`);
-            return [];
+            const resetTime = Number(rateLimitReset) * 1000;
+            const delayTime = resetTime - Date.now();
+            logger.log(`Rate limit hit. Retrying after ${delayTime / 1000}s`);
+            await wait.for({ seconds: delayTime / 1000 });
+            continue; // Retry after delay
           }
-
+    
           if (!response.ok) {
-            logger.error(
-              `GitHub API request failed for ${repo} with status ${response.status}`,
-            );
+            const errorMessage = await response.json();
+            logger.error(`GitHub API request failed for ${repo}`, {
+              status: response.status,
+              statusText: response.statusText,
+              message: errorMessage.message,
+            });
             return [];
           }
-
+    
           const data = await response.json();
           if (data.length === 0) break;
-
+    
           contributors = contributors.concat(
             data.filter(
-              (contributor: any) =>
-                !contributor.login.toLowerCase().includes("bot"),
+              (contributor: any) => !contributor.login.toLowerCase().includes("bot"),
             ),
           );
+    
           page += 1;
+    
+          // Wait for 20 seconds before the next API hit
+          logger.log(`Waiting 20 seconds before the next request...`);
+          await wait.for({ seconds: 20 });
         } while (page <= MAX_PAGES);
       } catch (error) {
         logger.error(`Error fetching contributors for ${repo}`, { error });
         throw error;
       }
-
+    
       return contributors.map((contributor: any) => ({
         login: contributor.login,
         id: contributor.id,
@@ -82,6 +90,7 @@ export const publishContributorsTask = schedules.task({
         contributions: contributor.contributions,
       }));
     };
+    
 
     try {
       // Fetch and process contributors for each repository
