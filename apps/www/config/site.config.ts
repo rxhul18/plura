@@ -11,6 +11,10 @@ What started as a simple issue tracker, has since evolved into a powerful projec
       title: "We care deeply about the quality of our work",
       desc: "Linear has always been a fully remote company. Today, our small but mighty team is distributed across North America and Europe. What unites us is relentless focus, fast execution, and our passion for software craftsmanship. We are all makers at heart and care deeply about the quality of our work, down to the smallest detail.",
     },
+    contributors: {
+      title: "Made with ❤️ by our contributors",
+      desc: `Thanks to all of our great contributors!Thanks to all of our great contributors!Thanks to all of our great contributors!`,
+    },
   },
   homePage: {
     heading: "Integrate Ai services in your products with own Ai agents",

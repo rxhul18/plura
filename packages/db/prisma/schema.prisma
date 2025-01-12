@@ -103,6 +103,75 @@ model Project {
   workspace    Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   userId       String
   user         User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workflows    Workflow[]
+}
+
+model Workflow {
+  id               String         @id @default(uuid())
+  name             String
+  status           WorkflowStatus
+  services         Int            @default(0)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  projectId        String
+  project          Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  nodes            Node[]
+  edges            Edge[]
+}
+
+model Node {
+  id                 String          @id @default(uuid())
+  type               NodeType
+  workflowId         String
+  workflow           Workflow        @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  position           Position?
+  data               NodeData?
+  connections        Connection?
+}
+
+model Connection {
+  id                 String          @id @default(uuid())
+  sourceOf           String[]        @default([])
+  targetOf           String[]        @default([])
+  nodeId             String          @unique
+  node               Node            @relation(fields: [nodeId], references: [id], onDelete: Cascade)
+}
+
+model Position {
+  id                 String          @id @default(uuid())
+  x                  Float
+  y                  Float
+  nodeId             String          @unique
+  node               Node            @relation(fields: [nodeId], references: [id], onDelete: Cascade)
+}
+
+model NodeData {
+  id                 String          @id @default(uuid())
+  label              String
+  selected           String?
+  serviceId          String?
+  nodeId             String          @unique
+  node               Node            @relation(fields: [nodeId], references: [id], onDelete: Cascade)
+}
+
+model Edge {
+  id                 String          @id @default(uuid())
+  source             String
+  target             String
+  workflowId         String
+  workflow           Workflow        @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+}
+
+enum NodeType {
+  agentNode
+  memoryNode
+  serviceNode
+}
+
+enum WorkflowStatus {
+  Paused
+  Running
+  Stopped
 }
 
 model Feedback {
