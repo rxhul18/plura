@@ -40,9 +40,7 @@ export default function ContributorsGrid({ data }: ContributorsGridProps) {
                     alt={contributor.login}
                     className="rounded-full grayscale"
                   />
-                  <AvatarFallback>
-                    {contributor.login}
-                  </AvatarFallback>
+                  <AvatarFallback>{contributor.login}</AvatarFallback>
                 </Avatar>
                 <p className="text-sm/3 select-none truncate">
                   {contributor.name ? contributor.name : contributor.login}
@@ -61,47 +59,47 @@ export default function ContributorsGrid({ data }: ContributorsGridProps) {
                     </AvatarFallback>
                   </Avatar>
                   <p className="text-primary font-medium text-sm">
-                  {contributor.name ? contributor.name : contributor.login}
+                    {contributor.name ? contributor.name : contributor.login}
                   </p>
                   <div className="flex gap-1 ml-auto">
-                  <Link
-                    href={contributor.html_url || "#"}
-                    target={contributor.html_url ? "_blank" : undefined}
-                    rel={contributor.html_url ? "noreferrer" : undefined}
-                    className="ml-auto hidden md:flex items-center"
-                  >
-                    <div
-                      className={cn(
-                        buttonVariants({
-                          variant: "secondary",
-                        }),
-                        "h-8 w-8 flex items-center justify-center",
-                      )}
-                    >
-                      <Icons.gitHub className="h-5 w-5 fill-current" />
-                      <span className="sr-only">GitHub</span>
-                    </div>
-                  </Link>
-                  {contributor.twitter_username && (
                     <Link
-                    href={`https://x.com/${contributor.twitter_username}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="ml-auto hidden md:flex items-center"
-                  >
-                    <div
-                      className={cn(
-                        buttonVariants({
-                          variant: "secondary",
-                        }),
-                        "h-8 w-8 flex items-center justify-center",
-                      )}
+                      href={contributor.html_url || "#"}
+                      target={contributor.html_url ? "_blank" : undefined}
+                      rel={contributor.html_url ? "noreferrer" : undefined}
+                      className="ml-auto hidden md:flex items-center"
                     >
-                      <Icons.twitter className="h-5 w-5 fill-current" />
-                      <span className="sr-only">X</span>
-                    </div>
-                  </Link>
-                  )}
+                      <div
+                        className={cn(
+                          buttonVariants({
+                            variant: "secondary",
+                          }),
+                          "h-8 w-8 flex items-center justify-center",
+                        )}
+                      >
+                        <Icons.gitHub className="h-5 w-5 fill-current" />
+                        <span className="sr-only">GitHub</span>
+                      </div>
+                    </Link>
+                    {contributor.twitter_username && (
+                      <Link
+                        href={`https://x.com/${contributor.twitter_username}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="ml-auto hidden md:flex items-center"
+                      >
+                        <div
+                          className={cn(
+                            buttonVariants({
+                              variant: "secondary",
+                            }),
+                            "h-8 w-8 flex items-center justify-center",
+                          )}
+                        >
+                          <Icons.twitter className="h-5 w-5 fill-current" />
+                          <span className="sr-only">X</span>
+                        </div>
+                      </Link>
+                    )}
                   </div>
                 </div>
                 <Badge
