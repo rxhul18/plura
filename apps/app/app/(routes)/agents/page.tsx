@@ -1,6 +1,6 @@
 "use client";
 
-import Agents from "@/components/pages/agents";
+import Agents from "@/components/custom/agents/agents";
 import AgentsCreateDialog from "@/components/custom/agents/AgentsCreateDialog";
 
 export default function page() {

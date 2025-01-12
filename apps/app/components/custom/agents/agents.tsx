@@ -1,7 +1,7 @@
 import React from "react";
-import { Card } from "../ui/card";
+import { Card } from "../../ui/card";
 import { ImagePlus } from "lucide-react";
-import { Badge } from "../ui/badge";
+import { Badge } from "../../ui/badge";
 
 type Agent = {
   id: string;
