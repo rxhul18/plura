@@ -104,7 +104,10 @@ export default function ContributorsGrid({ data }: ContributorsGridProps) {
                   )}
                   </div>
                 </div>
-                <Badge variant="secondary" className="mt-2 text-sm gap-2 w-full">
+                <Badge
+                  variant="secondary"
+                  className="mt-2 text-sm gap-2 w-full"
+                >
                   <p className="text-emerald-500 font-bold">
                     {contributor.contributions || "000"}+
                   </p>
