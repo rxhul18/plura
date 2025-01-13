@@ -17,7 +17,7 @@ What started as a simple issue tracker, has since evolved into a powerful projec
     },
   },
   homePage: {
-    heading: "Integrate Ai services in your products with own Ai agents",
+    heading: "Integrate AI services in your products with own AI agents",
     description: `Empower your SAAS support service with your own AI agent. Let our
           intelligent assistant handle your customer queries, provide instant
           solutions, and enhance your customer satisfaction.`,
@@ -29,7 +29,7 @@ What started as a simple issue tracker, has since evolved into a powerful projec
         description: `Linear is shaped by the practices and principles that distinguish world-class product teams from the rest: relentless focus, fast execution, and a commitment to the quality of craft.`,
       },
       agents: {
-        heading: "Build your own Ai agents",
+        heading: "Build your own AI agents",
         description: `Linear is shaped by the practices and principles that distinguish world-class product teams from the rest: relentless focus, fast execution, and a commitment to the quality of craft.`,
       },
       widgets: {

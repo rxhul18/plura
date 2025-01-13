@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/hooks/theme-provider";
 import { PosthogProvider } from "@/hooks/posthog";
 import { Toaster } from "@/components/ui/toaster";
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
   title: "Plura",
@@ -19,7 +22,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning suppressContentEditableWarning>
       <PosthogProvider>
         <body
-          className={` bg-background font-sans min-h-screen min-w-80 ${GeistSans.variable} antialiased`}
+          className={`bg-background min-h-screen min-w-80 ${GeistSans.variable} ${inter.variable} font-inter antialiased`}
         >
           <ThemeProvider
             attribute="class"
