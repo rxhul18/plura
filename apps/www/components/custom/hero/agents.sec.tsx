@@ -66,7 +66,7 @@ export default function AgentsSec() {
               key={index}
               className={cn(
                 card.class,
-                "relative group overflow-hidden backdrop-blur-sm rounded-3xl p-8 hover:bg-accent/10 transition-all duration-300 border-2 border-accent/50"
+                "relative group overflow-hidden backdrop-blur-sm rounded-3xl p-8 hover:bg-accent/10 transition-all duration-300 border-2 border-accent/50",
               )}
             >
               {/* <card.icon className="w-10 h-10 text-primary mb-4" /> */}
