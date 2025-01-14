@@ -58,11 +58,17 @@ export default function Home() {
         <AboutSection />
       </section>
 
-      <section id="agents" className="flex flex-1 items-center justify-center">
+      <section
+        id="agents"
+        className="flex w-full flex-1 items-center justify-center"
+      >
         <AgentsSec />
       </section>
 
-      <section id="widgets" className="flex flex-1 items-center justify-center">
+      <section
+        id="widgets"
+        className="flex w-full flex-1 items-center justify-center"
+      >
         <WidgetsSec />
       </section>
     </div>
