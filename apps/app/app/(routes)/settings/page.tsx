@@ -1,5 +1,7 @@
 "use client";
 import InfoBreadCrumb from "@/components/custom/infobar/bread-crumb";
+import { ApiSettings } from "@/components/custom/settings/api.settings";
+
 import BillingSettings from "@/components/custom/settings/billing.settings";
 import ThemeSettings from "@/components/custom/settings/theme.settings";
 import React from "react";
@@ -11,6 +13,7 @@ export default function SettingsPage() {
       <div className="flex flex-col gap-10">
         <BillingSettings />
         <ThemeSettings />
+        <ApiSettings />
       </div>
     </div>
   );
