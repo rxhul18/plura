@@ -11,10 +11,10 @@ type ContributorData = {
   twitter_username?: string;
 };
 
-export const ContributorsData = schedules.task({
-  id: "contributors-data",
+export const FetchContributors = schedules.task({
+  id: "fetch-contributors",
   cron: "0 0 * * 1,4,7",
-  maxDuration: 60,
+  maxDuration: 300,
   run: async () => {
     const owner = "plura-ai";
     const repos = ["plura", "docs", "agents", "chatbot"];
@@ -45,11 +45,15 @@ export const ContributorsData = schedules.task({
           if (rateLimit === "0") {
             const resetTime = Number(rateLimitReset) * 1000;
             const delayTime = resetTime - Date.now();
+            logger.warn("Rate limit reached. Delaying request.", { delayTime });
             await wait.for({ seconds: delayTime / 1000 });
             continue;
           }
 
-          if (!response.ok) return [];
+          if (!response.ok) {
+            logger.error("Failed to fetch contributors", { repo, page, status: response.status });
+            return [];
+          }
 
           const data = await response.json();
           if (data.length === 0) break;
@@ -63,7 +67,8 @@ export const ContributorsData = schedules.task({
           page += 1;
           await wait.for({ seconds: 20 });
         } while (page <= MAX_PAGES);
-      } catch {
+      } catch (error) {
+        logger.error("Error fetching contributors", { repo, page, error });
         return [];
       }
 
@@ -77,7 +82,6 @@ export const ContributorsData = schedules.task({
     };
 
     const fetchAdditionalUserData = async (login: string) => {
-      await wait.for({ seconds: 5 });
       try {
         const response = await fetch(`https://api.github.com/users/${login}`, {
           headers: {
@@ -85,13 +89,18 @@ export const ContributorsData = schedules.task({
           },
         });
 
-        if (!response.ok) return {};
+        if (!response.ok) {
+          logger.warn("Failed to fetch additional user data", { login, status: response.status });
+          return {};
+        }
+
         const data = await response.json();
         return {
           name: data.name || null,
           twitter_username: data.twitter_username || null,
         };
-      } catch {
+      } catch (error) {
+        logger.error("Error fetching additional user data", { login, error });
         return {};
       }
     };
@@ -125,8 +134,9 @@ export const ContributorsData = schedules.task({
       logger.log("Published updated contributors data with additional fields", {
         finalContributors,
       });
-    } catch {
-      throw new Error("Error processing contributors");
+    } catch (error) {
+      logger.error("Error processing contributors data", { error });
+      throw new Error("Error processing contributors data");
     }
   },
 });
