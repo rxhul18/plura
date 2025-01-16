@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Unkey } from "@unkey/api";
 
 export function ApiButton() {
   const [isFirstDialogOpen, setIsFirstDialogOpen] = useState(false); // First dialog state
@@ -21,45 +22,53 @@ export function ApiButton() {
   const [apiKeyData, setApiKeyData] = useState(null); // State to store API key data
   const [isLoading, setIsLoading] = useState(false); // State to manage loading state
   const [error, setError] = useState(null); // State to handle errors
+  const unkey = new Unkey({ rootKey: "api_2bPaGiPMLmSeUGZVCnWTPk4FKEfi" });
 
-  const handleCreateApiKey = async () => {
-    setIsLoading(true);
-    setError(null);
+  const keyhandle = async () => {
+    const res = await unkey.keys.create({
+      apiId: "ws_3AammNhMJBfSDCdejg1UGa23he2v",
+      prefix: "Mr",
+      name: "Rahul"
+    })
+    console.log(res,"res"); 
+  }
+  // const handleCreateApiKey = async () => {
+  //   setIsLoading(true);
+  //   setError(null);
+  //   try {
+  //     // Simulating a POST request (replace this with your actual API call)
+  //     const response = await fetch("/api/create-key", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         name: "Pedro Duarte",
+  //         username: "@peduarte",
+  //       }),
+  //     });
 
-    try {
-      // Simulating a POST request (replace this with your actual API call)
-      const response = await fetch("/api/create-key", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: "Pedro Duarte",
-          username: "@peduarte",
-        }),
-      });
+  //     if (!response.ok) {
+  //       throw new Error("Failed to create API key");
+  //     }
 
-      if (!response.ok) {
-        throw new Error("Failed to create API key");
-      }
-
-      const data = await response.json(); // Get API response data
-      setApiKeyData(data); // Store the response data
-      setIsFirstDialogOpen(false); // Close the first dialog
-      setIsSecondDialogOpen(true); // Open the second dialog
-    } catch (err) {
-      setError(err.message); // Set the error state
-    } finally {
-      setIsLoading(false); // Stop the loading state
-    }
-  };
+  //     const data = await response.json(); // Get API response data
+  //     setApiKeyData(data); // Store the response data
+  //     setIsFirstDialogOpen(false); // Close the first dialog
+  //     setIsSecondDialogOpen(true); // Open the second dialog
+  //   } catch (err) {
+  //     setError(err.message); // Set the error state
+  //   } finally {
+  //     setIsLoading(false); // Stop the loading state
+  //   }
+  // };
 
   return (
     <>
       {/* First Dialog */}
       <Dialog open={isFirstDialogOpen} onOpenChange={setIsFirstDialogOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline" onClick={() => setIsFirstDialogOpen(true)}>
+          <Button variant="default" onClick={() => setIsFirstDialogOpen(true)}>
             Create API Key
           </Button>
         </DialogTrigger>
@@ -85,7 +94,7 @@ export function ApiButton() {
             </div>
           </div>
           <DialogFooter>
-            <Button onClick={handleCreateApiKey} disabled={isLoading}>
+            <Button onClick={keyhandle} disabled={isLoading}>
               {isLoading ? "Creating..." : "Create API"}
             </Button>
           </DialogFooter>
