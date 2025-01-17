@@ -59,20 +59,22 @@ export const getProjectOfUser = async (workspaceId: string) => {
   } catch (error) {}
 };
 
-export const curnProjectData = async({
-  projectId
-}:{
-  projectId:string;
-}) => {
+export const curnProjectData = async(
+  projectId:string
+) => {
   const user = await getSession();
   if(!user){
     return;
   }
+
+  console.log("projectId", projectId);
+
   const curnProject = await betterFetch(`${API_ENDPOINT}/v1/project/${projectId}`,{
     method: "GET",
     headers:{
       cookie: (await headers()).get("cookie") || "",
     }
   })
-  return curnProject
+  console.log('logg', curnProject)
+  return curnProject;
 }

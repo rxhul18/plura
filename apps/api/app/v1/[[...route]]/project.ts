@@ -37,6 +37,8 @@ const app = new Hono()
     const session = await auth.api.getSession({
       headers: c.req.raw.headers,
     });
+    console.log(session, "headers");
+    
     if (!session) {
       return c.json({ message: "Unauthorized", status: 401 }, 401);
     }
