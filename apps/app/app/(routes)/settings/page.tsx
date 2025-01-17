@@ -4,7 +4,6 @@ import { ApiSettings } from "@/components/custom/settings/api.settings";
 
 import BillingSettings from "@/components/custom/settings/billing.settings";
 import ThemeSettings from "@/components/custom/settings/theme.settings";
-import React from "react";
 
 export default function SettingsPage() {
   return (

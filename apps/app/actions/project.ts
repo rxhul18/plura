@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { betterFetch } from "@better-fetch/fetch";
@@ -57,3 +58,21 @@ export const getProjectOfUser = async (workspaceId: string) => {
     return project;
   } catch (error) {}
 };
+
+export const curnProjectData = async({
+  projectId
+}:{
+  projectId:string;
+}) => {
+  const user = await getSession();
+  if(!user){
+    return;
+  }
+  const curnProject = await betterFetch(`${API_ENDPOINT}/v1/project/${projectId}`,{
+    method: "GET",
+    headers:{
+      cookie: (await headers()).get("cookie") || "",
+    }
+  })
+  return curnProject
+}

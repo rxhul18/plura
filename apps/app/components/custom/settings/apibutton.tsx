@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Unkey } from "@unkey/api";
+import { prisma } from "@plura/db";
 
 export function ApiButton() {
   const [isFirstDialogOpen, setIsFirstDialogOpen] = useState(false); // First dialog state
@@ -68,7 +69,7 @@ export function ApiButton() {
       {/* First Dialog */}
       <Dialog open={isFirstDialogOpen} onOpenChange={setIsFirstDialogOpen}>
         <DialogTrigger asChild>
-          <Button variant="default" onClick={() => setIsFirstDialogOpen(true)}>
+          <Button variant="secondary" className="bg-black text-white mt-5" onClick={() => setIsFirstDialogOpen(true)}>
             Create API Key
           </Button>
         </DialogTrigger>
@@ -81,10 +82,10 @@ export function ApiButton() {
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Name
+              <Label htmlFor="expire" className="text-right">
+                Expried in days
               </Label>
-              <Input id="name" defaultValue="Pedro Duarte" className="col-span-3" />
+              <Input id="expire" defaultValue="30" className="col-span-3" />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="username" className="text-right">

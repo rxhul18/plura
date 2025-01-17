@@ -28,9 +28,31 @@ const app = new Hono()
           createdAt: "asc",
         },
       });
-      return c.json(projects[0], 200);
+      return c.json(projects, 200);
     } catch (error) {
       return c.json({ message: "Error fetching projects", status: 400 }, 400);
+    }
+  })
+  .get("/:projectid", async(c)=>{
+    const session = await auth.api.getSession({
+      headers: c.req.raw.headers,
+    });
+    if (!session) {
+      return c.json({ message: "Unauthorized", status: 401 }, 401);
+    }
+    const projectId = c.req.param("projectid");
+    if(!projectId){
+      return c.json({ message: "Missing project id", status: 400 }, 400);
+    }
+    try{
+      const project = await prisma.project.findUnique({
+        where:{
+          id: projectId
+        }
+      })
+      return c.json(project, 200);
+    } catch(error){
+      return c.json({ message: "Error fetching project", status: 400 }, 400);
     }
   })
   .post("/", zValidator("json", projectSchema), async (c) => {
