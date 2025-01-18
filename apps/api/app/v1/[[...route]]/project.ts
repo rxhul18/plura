@@ -1,10 +1,13 @@
 import { zValidator } from "@hono/zod-validator";
 import { prisma } from "@plura/db";
 import { Hono } from "hono";
-import { projectSchema } from "@repo/types";
+import { projectApiSchema, projectSchema } from "@repo/types";
 import { auth } from "@plura/auth";
 import { cache } from "@plura/cache";
 import { nanoid } from "nanoid";
+import { Unkey } from "@unkey/api";
+
+const unkey = new Unkey({ rootKey: "<UNKEY_ROOT_KEY>" });
 
 const CACHE_EXPIRY = 300;
 const app = new Hono()
@@ -38,7 +41,6 @@ const app = new Hono()
       headers: c.req.raw.headers,
     });
     console.log(session, "headers");
-    
     if (!session) {
       return c.json({ message: "Unauthorized", status: 401 }, 401);
     }
@@ -51,6 +53,52 @@ const app = new Hono()
         where:{
           id: projectId
         }
+      })
+      return c.json(project, 200);
+    } catch(error){
+      return c.json({ message: "Error fetching project", status: 400 }, 400);
+    }
+  })
+  .put("/api/:projectid", zValidator("json", projectApiSchema), async (c) => {
+    const session = await auth.api.getSession({
+      headers: c.req.raw.headers,
+    });
+    if (!session) {
+      return c.json({ message: "Unauthorized", status: 401 }, 401);
+    }
+    console.log(session, "headers");
+    const projectId = c.req.param("projectid");
+    const body = c.req.valid("json");
+    if(!projectId){
+      return c.json({ message: "Missing project id", status: 400 }, 400);
+    }
+    try{
+      const apiKey = await unkey.keys.create({
+        apiId:"api_7oKUUscTZy22jmVf9THxDA",
+        prefix:"xyz",
+        byteLength:16,
+        ownerId:"chronark",
+        meta:{
+          hello: "world"
+        },
+        expires: 1686941966471,
+        ratelimit: {
+            type: "async",
+            duration: 1000,
+            limit: 10,
+        },
+        remaining: 1000,
+          refill: {
+            interval: "monthly",
+            amount: 100,
+            refillDay: 15,
+          },
+        enabled: true
+      })      
+
+      const project = await prisma.project.update({
+        where: { id: projectId },
+        data: { apiKey: apiKey.result?.key }
       })
       return c.json(project, 200);
     } catch(error){

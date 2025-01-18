@@ -23,17 +23,16 @@ export default function SettingsPage() {
 
   useEffect(() => {
     console.log("effect started");
-    if(!proj){
-      const apiKeyStatus = async () => {
-        console.log("started");
-        const res = await curnProjectData(
-          "27f0281c-716f-4f46-b1e8-c8661b5fc34b"
-        )
-        console.log('fuck:', res);
-        setProj(res)
-      };
+    const apiKeyStatus = async () => {
+      console.log("started");
+      const res = await curnProjectData({
+        projectId: "27f0281c-716f-4f46-b1e8-c8661b5fc34b", // This is the project ID
+      })
+      console.log('fuck:', res);
     }
-  }, [proj]);
+    console.log(apiKeyStatus,"dasfd");
+    
+  }, []);
 
 
   return (
@@ -42,7 +41,7 @@ export default function SettingsPage() {
       <div className="flex flex-col gap-10">
         <BillingSettings />
         <ThemeSettings />
-        <ApiSettings project={proj} />
+        <ApiSettings />
       </div>
     </div>
   );

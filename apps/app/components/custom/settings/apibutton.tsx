@@ -33,43 +33,43 @@ export function ApiButton() {
     })
     console.log(res,"res"); 
   }
-  // const handleCreateApiKey = async () => {
-  //   setIsLoading(true);
-  //   setError(null);
-  //   try {
-  //     // Simulating a POST request (replace this with your actual API call)
-  //     const response = await fetch("/api/create-key", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         name: "Pedro Duarte",
-  //         username: "@peduarte",
-  //       }),
-  //     });
+  const handleCreateApiKey = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      // Simulating a POST request (replace this with your actual API call)
+      const response = await fetch("/api/create-key", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: "Pedro Duarte",
+          username: "@peduarte",
+        }),
+      });
 
-  //     if (!response.ok) {
-  //       throw new Error("Failed to create API key");
-  //     }
+      if (!response.ok) {
+        throw new Error("Failed to create API key");
+      }
 
-  //     const data = await response.json(); // Get API response data
-  //     setApiKeyData(data); // Store the response data
-  //     setIsFirstDialogOpen(false); // Close the first dialog
-  //     setIsSecondDialogOpen(true); // Open the second dialog
-  //   } catch (err) {
-  //     setError(err.message); // Set the error state
-  //   } finally {
-  //     setIsLoading(false); // Stop the loading state
-  //   }
-  // };
+      const data = await response.json(); // Get API response data
+      setApiKeyData(data); // Store the response data
+      setIsFirstDialogOpen(false); // Close the first dialog
+      setIsSecondDialogOpen(true); // Open the second dialog
+    } catch (err) {
+      console.log(err) // Set the error state
+    } finally {
+      setIsLoading(false); // Stop the loading state
+    }
+  };
 
   return (
     <>
       {/* First Dialog */}
       <Dialog open={isFirstDialogOpen} onOpenChange={setIsFirstDialogOpen}>
         <DialogTrigger asChild>
-          <Button variant="secondary" className="bg-black text-white mt-5" onClick={() => setIsFirstDialogOpen(true)}>
+          <Button variant="secondary" className="bg-black hover:bg-black text-white mt-5" onClick={() => setIsFirstDialogOpen(true)}>
             Create API Key
           </Button>
         </DialogTrigger>
@@ -87,11 +87,11 @@ export function ApiButton() {
               </Label>
               <Input id="expire" defaultValue="30" className="col-span-3" />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="username" className="text-right">
-                Username
+            <div className="grid grid-cols-5 items-center gap-4">
+              <Label htmlFor="ratelimit" className="text-left col-span-2">
+                Rate Limit
               </Label>
-              <Input id="username" defaultValue="@peduarte" className="col-span-3" />
+              <Input id="ratelimit" defaultValue="@peduarte" className="col-span-3" />
             </div>
           </div>
           <DialogFooter>

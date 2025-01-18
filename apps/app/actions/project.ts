@@ -59,9 +59,11 @@ export const getProjectOfUser = async (workspaceId: string) => {
   } catch (error) {}
 };
 
-export const curnProjectData = async(
-  projectId:string
-) => {
+export const curnProjectData = async({
+  projectId
+}:{
+    projectId:string
+}) => {
   const user = await getSession();
   if(!user){
     return;
