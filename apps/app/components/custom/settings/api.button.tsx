@@ -14,7 +14,6 @@ import { z } from "zod";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Switch } from "@/components/ui/switch";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -22,14 +21,11 @@ import { createProjectKey } from "@/actions/project";
 
 const apiSchema = z.object({
   expire: z.number().min(1, "Minimum 1 day"),
-  ratelimit: z.number().min(5, "Rate limit must be at least 5"),
-  enabled: z.boolean()
 });
 type ApiSchema = z.infer<typeof apiSchema>;
 
 export function ApiButton() {
   const [isFirstDialogOpen, setIsFirstDialogOpen] = useState(false); // First dialog state
-  // const [isSecondDialogOpen, setIsSecondDialogOpen] = useState(false); // Second dialog state
 
   const form = useForm<ApiSchema>({
     resolver: zodResolver(apiSchema),
@@ -40,9 +36,7 @@ export function ApiButton() {
       const validatedData = await apiSchema.parseAsync(data);
       await createProjectKey({
         projectId: "27f0281c-716f-4f46-b1e8-c8661b5fc34b",
-        expire: validatedData.expire,
-        ratetLimit: validatedData.ratelimit,
-        enabled: validatedData.enabled
+        expire: validatedData.expire
       })
       toast.success(`API Created Succesfully!`);
     } catch (error) {
@@ -77,38 +71,6 @@ export function ApiButton() {
                         Exipres in day
                       </Label>
                       <Input id="expire" type="number" placeholder="eg: 69" className="flex-1" required {...field} onChange={(e) => field.onChange(parseInt(e.target.value, 10))}/>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-              />
-              <FormField control={form.control} name="ratelimit" render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <div className="flex items-center space-x-4">
-                      <Label htmlFor="lastName" className="w-1/3">
-                        RateLimit Time
-                      </Label>
-                      <Input id="ratelimit" type="number" placeholder="eg: 12" className="flex-1" required {...field} onChange={(e) => field.onChange(parseInt(e.target.value, 10))}/>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-              />
-              <FormField control={form.control} name="enabled" render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="enabled" className="flex items-center space-x-2">
-                        <span>Key enabled</span>
-                        <Switch
-                          id="enabled"
-                          checked={field.value}
-                          onCheckedChange={field.onChange} // Correctly map to field.onChange
-                        />
-                      </Label>
                     </div>
                   </FormControl>
                   <FormMessage />

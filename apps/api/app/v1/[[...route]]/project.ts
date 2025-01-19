@@ -5,9 +5,11 @@ import { projectApiSchema, projectSchema } from "@repo/types";
 import { auth } from "@plura/auth";
 import { cache } from "@plura/cache";
 import { nanoid } from "nanoid";
+import { checkLogin } from "@/app/actions/checkLogin";
 
 const CACHE_EXPIRY = 300;
 const app = new Hono()
+  .use(checkLogin)
   .get("/workspace/:workspaceId", async (c) => {
     const session = await auth.api.getSession({
       headers: c.req.raw.headers,
@@ -37,7 +39,6 @@ const app = new Hono()
     const session = await auth.api.getSession({
       headers: c.req.raw.headers,
     });
-    console.log(session, "headers");
     if (!session) {
       return c.json({ message: "Unauthorized", status: 401 }, 401);
     }
@@ -56,21 +57,19 @@ const app = new Hono()
       return c.json({ message: "Error fetching project", status: 400 }, 400);
     }
   })
-  .put("/api/:projectid", zValidator("json", projectApiSchema), async (c) => {
+  .patch("/:projectid", zValidator("json", projectApiSchema), async (c) => {
     const session = await auth.api.getSession({
       headers: c.req.raw.headers,
     });
     if (!session) {
       return c.json({ message: "Unauthorized", status: 401 }, 401);
     }
-    console.log(session, "headers");
     const projectId = c.req.param("projectid");
     const body = c.req.valid("json");
     if(!projectId){
       return c.json({ message: "Missing project id", status: 400 }, 400);
     }
-    try{     
-
+    try{
       const project = await prisma.project.update({
         where: { id: projectId },
         data: { apiKey: body.apiKey },

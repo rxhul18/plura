@@ -4,6 +4,7 @@ import { ApiButton } from "./api.button"
 import SectionLabel from "../section/section.label"
 import { curnProjectData } from "@/actions/project"
 import ApiKey from "./api.key";
+import { Card } from "@/components/ui/card";
 
 export default async function ApiSettings() {
 
@@ -14,26 +15,28 @@ export default async function ApiSettings() {
     return <div></div>;
   }
   return (
-    <div className="w-full container">
-      <div>
-        <div className="flex items-start justify-between gap-4">
-          <SectionLabel
-            label="API Settings"
-            msg="Next we will get you to create your first API. This is the API that you will be protecting with Unkey. You can create as many APIs as you like, but for now we’ll just create one"
-          />
-        </div>
+    <div className="grid grid-cols-1 lg:grid-cols-4 gap-10">
+      <div className="lg:col-span-1">
+        <SectionLabel
+          label="API Settings"
+          msg="Next we will get you to create your first API. This is the API that"
+        />
       </div>
-      <div className="border rounded-lg p-6 mt-5 bg-secondary shadow-md min-w-full max-w-lg">
-        <h2 className="text-primary">API ID</h2>
-        <p className="mt-1 text-sm text-gray-500">
-          This is your api ID. It's used in some API calls.
-        </p>
-        {data?.data?.apiKey === "" && (
-          <ApiButton />
-        )}
-        {data?.data?.apiKey !== "" && (
-          <ApiKey apiKey={data.data.apiKey}/>
-        )}
+      <div className="lg:col-span-3 w-full flex justify-start lg:justify-start ">
+        <Card className="">
+          <div className="border rounded-lg p-6 bg-secondary shadow-md">
+            <h2 className="text-primary">API ID</h2>
+            <p className="mt-1 text-sm text-gray-400">
+              This is your api ID. It's used in some API calls.
+            </p>
+            {data?.data?.apiKey === "" && (
+              <ApiButton />
+            )}
+            {data?.data?.apiKey !== "" && (
+              <ApiKey apiKey={data.data.apiKey} />
+            )}
+          </div>
+        </Card>
       </div>
     </div>
   )
