@@ -35,7 +35,7 @@ const app = new Hono()
       return c.json({ message: "Error fetching projects", status: 400 }, 400);
     }
   })
-  .get("/:projectid", async(c)=>{
+  .get("/:projectid", async (c) => {
     const session = await auth.api.getSession({
       headers: c.req.raw.headers,
     });
@@ -43,17 +43,17 @@ const app = new Hono()
       return c.json({ message: "Unauthorized", status: 401 }, 401);
     }
     const projectId = c.req.param("projectid");
-    if(!projectId){
+    if (!projectId) {
       return c.json({ message: "Missing project id", status: 400 }, 400);
     }
-    try{
+    try {
       const project = await prisma.project.findUnique({
-        where:{
-          id: projectId
-        }
-      })
+        where: {
+          id: projectId,
+        },
+      });
       return c.json(project, 200);
-    } catch(error){
+    } catch (error) {
       return c.json({ message: "Error fetching project", status: 400 }, 400);
     }
   })
@@ -66,16 +66,16 @@ const app = new Hono()
     }
     const projectId = c.req.param("projectid");
     const body = c.req.valid("json");
-    if(!projectId){
+    if (!projectId) {
       return c.json({ message: "Missing project id", status: 400 }, 400);
     }
-    try{
+    try {
       const project = await prisma.project.update({
         where: { id: projectId },
         data: { apiKey: body.apiKey },
-      })
+      });
       return c.json(project, 200);
-    } catch(error){
+    } catch (error) {
       return c.json({ message: "Error fetching project", status: 400 }, 400);
     }
   })

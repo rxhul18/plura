@@ -1,13 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 
-import { ApiButton } from "./api.button"
-import SectionLabel from "../section/section.label"
-import { curnProjectData } from "@/actions/project"
+import { ApiButton } from "./api.button";
+import SectionLabel from "../section/section.label";
+import { curnProjectData } from "@/actions/project";
 import ApiKey from "./api.key";
 import { Card } from "@/components/ui/card";
 
 export default async function ApiSettings() {
-
   const projectId = "27f0281c-716f-4f46-b1e8-c8661b5fc34b";
   const data = await curnProjectData({ projectId });
 
@@ -29,15 +28,11 @@ export default async function ApiSettings() {
             <p className="mt-1 text-sm text-gray-400">
               This is your api ID. It's used in some API calls.
             </p>
-            {data?.data?.apiKey === "" && (
-              <ApiButton />
-            )}
-            {data?.data?.apiKey !== "" && (
-              <ApiKey apiKey={data.data.apiKey} />
-            )}
+            {data?.data?.apiKey === "" && <ApiButton />}
+            {data?.data?.apiKey !== "" && <ApiKey apiKey={data.data.apiKey} />}
           </div>
         </Card>
       </div>
     </div>
-  )
+  );
 }

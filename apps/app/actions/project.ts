@@ -72,50 +72,49 @@ export const getProjectOfUser = async (workspaceId: string) => {
   } catch (error) {}
 };
 
-export const curnProjectData = async({
-  projectId
-}:{
-    projectId:string
-}) => {
+export const curnProjectData = async ({ projectId }: { projectId: string }) => {
   const user = await getSession();
-  if(!user){
+  if (!user) {
     return;
   }
-  const curnProject = await betterFetch<Project>(`${API_ENDPOINT}/v1/project/${projectId}`,{
-    method: "GET",
-    headers:{
-      cookie: (await headers()).get("cookie") || "",
-    }
-  })
+  const curnProject = await betterFetch<Project>(
+    `${API_ENDPOINT}/v1/project/${projectId}`,
+    {
+      method: "GET",
+      headers: {
+        cookie: (await headers()).get("cookie") || "",
+      },
+    },
+  );
   return curnProject;
-}
+};
 
 export const createProjectKey = async ({
   projectId,
   expire,
-}:{
-  projectId:string
-  expire:number
-}) =>{
-  const unkey = new Unkey({ rootKey: process.env.UNKEY_ROOT_KEY!});
+}: {
+  projectId: string;
+  expire: number;
+}) => {
+  const unkey = new Unkey({ rootKey: process.env.UNKEY_ROOT_KEY! });
   const user = await getSession();
-  if(!user){
+  if (!user) {
     return;
   }
-  
+
   const apiKey = await unkey.keys.create({
-    apiId:process.env.UNKEY_API_KEY!,
-    prefix:"plura",
-    byteLength:64,
-    ownerId:"chronark",
-    meta:{
-      hello: "world"
+    apiId: process.env.UNKEY_API_KEY!,
+    prefix: "plura",
+    byteLength: 64,
+    ownerId: "chronark",
+    meta: {
+      hello: "world",
     },
     expires: 86400000 * expire,
     ratelimit: {
-        type: "fast",
-        duration: 1000,
-        limit: 10,
+      type: "fast",
+      duration: 1000,
+      limit: 10,
     },
     remaining: 1000,
     refill: {
@@ -123,19 +122,22 @@ export const createProjectKey = async ({
       amount: 100,
       refillDay: 15,
     },
-    enabled: true
-  })
-  
-  const projectKey = await betterFetch(`${API_ENDPOINT}/v1/project/${projectId}`,{
-    method: "PATCH",
-    body:{
-      projectId:projectId,
-      apiKey:apiKey.result?.keyId
+    enabled: true,
+  });
+
+  const projectKey = await betterFetch(
+    `${API_ENDPOINT}/v1/project/${projectId}`,
+    {
+      method: "PATCH",
+      body: {
+        projectId: projectId,
+        apiKey: apiKey.result?.keyId,
+      },
+      headers: {
+        cookie: (await headers()).get("cookie") || "",
+      },
     },
-    headers:{
-      cookie: (await headers()).get("cookie") || "",
-    }
-  })
+  );
   revalidatePath("/settings");
   return projectKey;
-}
+};
