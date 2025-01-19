@@ -85,5 +85,6 @@ const POST = handle(app);
 const PATCH = handle(app);
 const DELETE = handle(app);
 const OPTIONS = handle(app);
+const PUT = handle(app);
 
-export { GET, PATCH, POST, DELETE, OPTIONS };
+export { GET, PUT, PATCH, POST, DELETE, OPTIONS };
