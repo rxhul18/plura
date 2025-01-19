@@ -7,6 +7,7 @@ import { checkLogin } from "@/app/actions/checkLogin";
 import { checkAdmin } from "@/app/actions/checkAdmin";
 
 const app = new Hono()
+  .use(checkLogin)
   .post("/", zValidator("json", feedbackSchema), async (c) => {
     const session = await auth.api.getSession({
       headers: c.req.raw.headers,
@@ -40,7 +41,7 @@ const app = new Hono()
       );
     }
   })
-  .use(checkLogin, checkAdmin)
+  .use(checkAdmin)
   .get("/all", async (c) => {
     try {
       const feedbacks = await prisma.feedback.findMany();

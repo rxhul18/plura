@@ -5,9 +5,6 @@ import { projectApiSchema, projectSchema } from "@repo/types";
 import { auth } from "@plura/auth";
 import { cache } from "@plura/cache";
 import { nanoid } from "nanoid";
-import { Unkey } from "@unkey/api";
-
-const unkey = new Unkey({ rootKey: "<UNKEY_ROOT_KEY>" });
 
 const CACHE_EXPIRY = 300;
 const app = new Hono()
@@ -72,33 +69,11 @@ const app = new Hono()
     if(!projectId){
       return c.json({ message: "Missing project id", status: 400 }, 400);
     }
-    try{
-      const apiKey = await unkey.keys.create({
-        apiId:"api_7oKUUscTZy22jmVf9THxDA",
-        prefix:"xyz",
-        byteLength:16,
-        ownerId:"chronark",
-        meta:{
-          hello: "world"
-        },
-        expires: 1686941966471,
-        ratelimit: {
-            type: "async",
-            duration: 1000,
-            limit: 10,
-        },
-        remaining: 1000,
-          refill: {
-            interval: "monthly",
-            amount: 100,
-            refillDay: 15,
-          },
-        enabled: true
-      })      
+    try{     
 
       const project = await prisma.project.update({
         where: { id: projectId },
-        data: { apiKey: apiKey.result?.key }
+        data: { apiKey: body.apiKey },
       })
       return c.json(project, 200);
     } catch(error){

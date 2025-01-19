@@ -12,64 +12,56 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { z } from "zod";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Unkey } from "@unkey/api";
-import { prisma } from "@plura/db";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Switch } from "@/components/ui/switch";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+import { createProjectKey } from "@/actions/project";
+
+const apiSchema = z.object({
+  expire: z.number().min(1, "Minimum 1 day"),
+  ratelimit: z.number().min(5, "Rate limit must be at least 5"),
+  enabled: z.boolean()
+});
+type ApiSchema = z.infer<typeof apiSchema>;
 
 export function ApiButton() {
   const [isFirstDialogOpen, setIsFirstDialogOpen] = useState(false); // First dialog state
   const [isSecondDialogOpen, setIsSecondDialogOpen] = useState(false); // Second dialog state
   const [apiKeyData, setApiKeyData] = useState(null); // State to store API key data
-  const [isLoading, setIsLoading] = useState(false); // State to manage loading state
-  const [error, setError] = useState(null); // State to handle errors
-  const unkey = new Unkey({ rootKey: "api_2bPaGiPMLmSeUGZVCnWTPk4FKEfi" });
 
-  const keyhandle = async () => {
-    const res = await unkey.keys.create({
-      apiId: "ws_3AammNhMJBfSDCdejg1UGa23he2v",
-      prefix: "Mr",
-      name: "Rahul"
-    })
-    console.log(res,"res"); 
-  }
-  const handleCreateApiKey = async () => {
-    setIsLoading(true);
-    setError(null);
+  const form = useForm<ApiSchema>({
+    resolver: zodResolver(apiSchema),
+  });
+
+  const onSubmit: SubmitHandler<ApiSchema> = async (data) => {
     try {
-      // Simulating a POST request (replace this with your actual API call)
-      const response = await fetch("/api/create-key", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: "Pedro Duarte",
-          username: "@peduarte",
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to create API key");
-      }
-
-      const data = await response.json(); // Get API response data
-      setApiKeyData(data); // Store the response data
-      setIsFirstDialogOpen(false); // Close the first dialog
-      setIsSecondDialogOpen(true); // Open the second dialog
-    } catch (err) {
-      console.log(err) // Set the error state
-    } finally {
-      setIsLoading(false); // Stop the loading state
+      const validatedData = apiSchema.parse(data);
+      const res = await createProjectKey({
+        projectId: "27f0281c-716f-4f46-b1e8-c8661b5fc34b",
+        expire: validatedData.expire,
+        ratetLimit: validatedData.ratelimit,
+        enabled: validatedData.enabled
+      })
+      console.log("Validated Data",res);
+      toast.success(`API Created Succesfully!`);
+    } catch (error) {
+      console.error(error);
+      toast.error(`Error in Creating api key! Please try again.`);
+    }finally{
+      setIsFirstDialogOpen(false)
     }
   };
-
   return (
     <>
       {/* First Dialog */}
       <Dialog open={isFirstDialogOpen} onOpenChange={setIsFirstDialogOpen}>
         <DialogTrigger asChild>
-          <Button variant="secondary" className="bg-black hover:bg-black text-white mt-5" onClick={() => setIsFirstDialogOpen(true)}>
+          <Button variant="secondary" className="bg-primary hover:bg-primary text-white dark:text-black mt-5" onClick={() => setIsFirstDialogOpen(true)}>
             Create API Key
           </Button>
         </DialogTrigger>
@@ -80,26 +72,60 @@ export function ApiButton() {
               Make changes to your profile here. Click create when you're done.
             </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="expire" className="text-right">
-                Expried in days
-              </Label>
-              <Input id="expire" defaultValue="30" className="col-span-3" />
-            </div>
-            <div className="grid grid-cols-5 items-center gap-4">
-              <Label htmlFor="ratelimit" className="text-left col-span-2">
-                Rate Limit
-              </Label>
-              <Input id="ratelimit" defaultValue="@peduarte" className="col-span-3" />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button onClick={keyhandle} disabled={isLoading}>
-              {isLoading ? "Creating..." : "Create API"}
-            </Button>
-          </DialogFooter>
-          {error && <p className="text-red-500 mt-2">{error}</p>}
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 max-w-md mx-auto border p-6 rounded-lg shadow-md" >
+              {/* Input Field 1 */}
+              <FormField control={form.control} name="expire" render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <div className="flex items-center space-x-4">
+                      <Label htmlFor="firstName" className="w-1/3">
+                        Exipres in day
+                      </Label>
+                      <Input id="expire" type="number" placeholder="eg: 69" className="flex-1" required {...field} onChange={(e) => field.onChange(parseInt(e.target.value, 10))}/>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+              />
+              <FormField control={form.control} name="ratelimit" render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <div className="flex items-center space-x-4">
+                      <Label htmlFor="lastName" className="w-1/3">
+                        RateLimit Time
+                      </Label>
+                      <Input id="ratelimit" type="number" placeholder="eg: 12" className="flex-1" required {...field} onChange={(e) => field.onChange(parseInt(e.target.value, 10))}/>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+              />
+              <FormField control={form.control} name="enabled" render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="enabled" className="flex items-center space-x-2">
+                        <span>Key enabled</span>
+                        <Switch
+                          id="enabled"
+                          checked={field.value}
+                          onCheckedChange={field.onChange} // Correctly map to field.onChange
+                        />
+                      </Label>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+              />
+              <Button type="submit" className="w-full">
+                {form.formState.isSubmitting ? "Checking..." : "Submit"}
+              </Button>
+            </form>
+          </Form>
         </DialogContent>
       </Dialog>
 

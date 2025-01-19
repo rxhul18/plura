@@ -4,6 +4,7 @@
 import { betterFetch } from "@better-fetch/fetch";
 import { getSession } from "./session";
 import { headers } from "next/headers";
+import { Unkey } from "@unkey/api";
 
 const API_ENDPOINT =
   process.env.NODE_ENV === "production"
@@ -79,4 +80,60 @@ export const curnProjectData = async({
   })
   console.log('logg', curnProject)
   return curnProject;
+}
+
+export const createProjectKey = async ({
+  projectId,
+  expire,
+  ratetLimit,
+  enabled
+}:{
+  projectId:string
+  expire:number
+  ratetLimit:number
+  enabled:boolean
+}) =>{
+  const unkey = new Unkey({ rootKey: process.env.UNKEY_ROOT_KEY!});
+  const user = await getSession();
+  if(!user){
+    return;
+  }
+  const apiKey = await unkey.keys.create({
+    apiId:process.env.UNKEY_API_ID!,
+    prefix:"plura",
+    byteLength:16,
+    ownerId:"chronark",
+    meta:{
+      hello: "world"
+    },
+    expires: 86400000*expire,
+    ratelimit: {
+        type: "async",
+        duration: 1000,
+        limit: ratetLimit,
+    },
+    remaining: 1000,
+    refill: {
+      interval: "monthly",
+      amount: 100,
+      refillDay: 15,
+    },
+    enabled: enabled
+  }) 
+  console.log({
+    projectId:projectId,
+    apiKey:apiKey.result?.key
+  },"Sdfasdf");
+  
+  const projectKey = await betterFetch(`${API_ENDPOINT}/v1/project/api/${projectId}`,{
+    method: "PUT",
+    body:{
+      projectId:projectId,
+      apiKey:apiKey.result?.key
+    },
+    headers:{
+      cookie: (await headers()).get("cookie") || "",
+    }
+  })
+  return projectKey;
 }

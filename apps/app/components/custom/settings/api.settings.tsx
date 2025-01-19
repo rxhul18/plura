@@ -7,7 +7,7 @@ import SectionLabel from "../section/section.label"
 import { Button } from "@/components/ui/button"
 import { Eye, EyeOff } from "lucide-react"
 import { curnProjectData } from "@/actions/project"
-// import { betterFetch } from "@better-fetch/fetch"
+import { Skeleton } from "@/components/ui/skeleton"
 
 interface Project {
   id: string;
@@ -23,7 +23,6 @@ interface Project {
 export default function ApiSettings() {
   const [project, setProject] = useState<Project | null>(null); // State to store the project
   const [loading, setLoading] = useState<boolean>(true); 
-  const [error, setError] = useState<string | null>(null);
   const [visible, setVisible] = useState<boolean>(false);
   const workspaceID = project?.apiKey;
 
@@ -33,14 +32,12 @@ export default function ApiSettings() {
         const projectId = "27f0281c-716f-4f46-b1e8-c8661b5fc34b";
         const data = await curnProjectData({ projectId });
         if (!data) {
-          setError("No project data found or user is not authenticated.");
+          console.log(("No Current Project Data found"));
         } else {
-          console.log(data,"data");
-          
           setProject(data?.data as Project);
         }
       } catch (err) {
-        setError( "An error occurred while fetching the project data.");
+        console.log("err",err);
       } finally {
         setLoading(false);
       }
@@ -49,9 +46,24 @@ export default function ApiSettings() {
   }, []); 
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <div className="w-full container">
+        <div className="flex items-start justify-between gap-4">
+          <SectionLabel
+              label="API Settings"
+              msg="Next we will get you to create your first API. This is the API that you will be protecting with Unkey. You can create as many APIs as you like, but for now we’ll just create one"
+            />
+        </div>
+        <div className="border rounded-lg p-6 mt-5 bg-secondary shadow-md min-w-full max-w-lg">
+          <Skeleton className="h-6 w-1/4" /> 
+          <Skeleton className="h-4 w-2/3 mt-2" /> 
+          <div className="mt-4 flex items-center gap-4">
+            <Skeleton className="h-10 w-40" />
+          </div>
+        </div>
+      </div>
+    );
   }
-
   return (
     <div className="w-full container">
       <div>
@@ -62,8 +74,8 @@ export default function ApiSettings() {
           />
         </div>
       </div>
-      <div className="border rounded-lg p-6 mt-5 bg-white shadow-md min-w-full max-w-lg">
-        <h2 className="text-lg dark:text-black">API ID</h2>
+      <div className="border rounded-lg p-6 mt-5 bg-secondary shadow-md min-w-full max-w-lg">
+        <h2 className="text-primary">API ID</h2>
         <p className="mt-1 text-sm text-gray-500">
           This is your api ID. It's used in some API calls.
         </p>
@@ -87,28 +99,4 @@ export default function ApiSettings() {
       </div>
     </div>
   )
-  // return (
-  //   <div className="w-full container">
-  //     <h1>API Settings</h1>
-  //     {project ? (
-  //       <div>
-  //         <p><strong>ID:</strong> {project.id}</p>
-  //         <p><strong>Name:</strong> {project.name}</p>
-  //         <p><strong>Slug:</strong> {project.slug}</p>
-  //         <p><strong>Created At:</strong> {new Date(project.createdAt).toLocaleString()}</p>
-  //         <p><strong>Updated At:</strong> {new Date(project.updatedAt).toLocaleString()}</p>
-  //         <p><strong>Workspace ID:</strong> {project.workspaceId}</p>
-  //         <p><strong>User ID:</strong> {project.userId}</p>
-  //         <p><strong>API Key:</strong> {project.apiKey}</p>
-  //       </div>
-  //     ) : (
-  //       <p>No project data found.</p>
-  //     )}
-  //   </div>
-  // );
 }
-
-// export default function ApiSettings() {
-
-  
-// }
