@@ -5,11 +5,23 @@ import { betterFetch } from "@better-fetch/fetch";
 import { getSession } from "./session";
 import { headers } from "next/headers";
 import { Unkey } from "@unkey/api";
+import { revalidatePath } from "next/cache";
 
 const API_ENDPOINT =
   process.env.NODE_ENV === "production"
     ? "https://api.plura.pro/"
     : "http://localhost:3001";
+
+interface Project {
+  id: string;
+  name: string;
+  slug: string;
+  createdAt: string; // Use `string` for dates if they come as ISO strings from the backend
+  updatedAt: string;
+  workspaceId: string; // Define a Workspace interface separately
+  userId: string;
+  apiKey: string;
+}
 
 export const createProject = async ({
   workspaceId,
@@ -69,10 +81,9 @@ export const curnProjectData = async({
   if(!user){
     return;
   }
-
   console.log("projectId", projectId);
 
-  const curnProject = await betterFetch(`${API_ENDPOINT}/v1/project/${projectId}`,{
+  const curnProject = await betterFetch<Project>(`${API_ENDPOINT}/v1/project/${projectId}`,{
     method: "GET",
     headers:{
       cookie: (await headers()).get("cookie") || "",
@@ -98,17 +109,19 @@ export const createProjectKey = async ({
   if(!user){
     return;
   }
+  console.log("chal rha hai");
+  
   const apiKey = await unkey.keys.create({
-    apiId:process.env.UNKEY_API_ID!,
+    apiId:process.env.UNKEY_API_KEY!,
     prefix:"plura",
     byteLength:16,
     ownerId:"chronark",
     meta:{
       hello: "world"
     },
-    expires: 86400000*expire,
+    expires: 86400000 * expire,
     ratelimit: {
-        type: "async",
+        type: "fast",
         duration: 1000,
         limit: ratetLimit,
     },
@@ -119,21 +132,19 @@ export const createProjectKey = async ({
       refillDay: 15,
     },
     enabled: enabled
-  }) 
-  console.log({
-    projectId:projectId,
-    apiKey:apiKey.result?.key
-  },"Sdfasdf");
+  })
   
   const projectKey = await betterFetch(`${API_ENDPOINT}/v1/project/api/${projectId}`,{
     method: "PUT",
     body:{
       projectId:projectId,
-      apiKey:apiKey.result?.key
+      apiKey:apiKey.result?.keyId
     },
     headers:{
       cookie: (await headers()).get("cookie") || "",
     }
   })
+  console.log("projectKey", projectKey);
+  revalidatePath("/settings");
   return projectKey;
 }

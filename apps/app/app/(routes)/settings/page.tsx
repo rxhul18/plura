@@ -1,39 +1,11 @@
-"use client";
-import { curnProjectData } from "@/actions/project";
 import InfoBreadCrumb from "@/components/custom/infobar/bread-crumb";
 import ApiSettings from "@/components/custom/settings/api.settings";
+import ApiSkeleton from "@/components/custom/settings/api.skeleton";
 import BillingSettings from "@/components/custom/settings/billing.settings";
 import ThemeSettings from "@/components/custom/settings/theme.settings";
-
-import { useEffect, useState } from "react";
-
-interface ProjectT {
-  id: string;
-  name: string;
-  slug: string;
-  createdAt: string; // Use `string` for dates if they come as ISO strings from the backend
-  updatedAt: string;
-  workspaceId: string; // Define a Workspace interface separately
-  userId: string;
-  apiKey: string;
-}
+import {Suspense} from "react";
 
 export default function SettingsPage() {
-  const [proj, setProj] = useState<ProjectT | null>(null);
-
-  useEffect(() => {
-    console.log("effect started");
-    const apiKeyStatus = async () => {
-      console.log("started");
-      const res = await curnProjectData({
-        projectId: "27f0281c-716f-4f46-b1e8-c8661b5fc34b", // This is the project ID
-      })
-      console.log('fuck:', res);
-    }
-    console.log(apiKeyStatus,"dasfd");
-    
-  }, []);
-
 
   return (
     <div className="flex flex-col h-full w-full items-start overflow-hidden px-5 md:px-2">
@@ -41,7 +13,10 @@ export default function SettingsPage() {
       <div className="flex flex-col gap-10">
         <BillingSettings />
         <ThemeSettings />
-        <ApiSettings />
+        <Suspense fallback={<ApiSkeleton />}>
+          {/* @ts-expect-error Async Server Component */}
+          <ApiSettings />
+        </Suspense>
       </div>
     </div>
   );

@@ -4,10 +4,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -31,8 +29,7 @@ type ApiSchema = z.infer<typeof apiSchema>;
 
 export function ApiButton() {
   const [isFirstDialogOpen, setIsFirstDialogOpen] = useState(false); // First dialog state
-  const [isSecondDialogOpen, setIsSecondDialogOpen] = useState(false); // Second dialog state
-  const [apiKeyData, setApiKeyData] = useState(null); // State to store API key data
+  // const [isSecondDialogOpen, setIsSecondDialogOpen] = useState(false); // Second dialog state
 
   const form = useForm<ApiSchema>({
     resolver: zodResolver(apiSchema),
@@ -40,25 +37,23 @@ export function ApiButton() {
 
   const onSubmit: SubmitHandler<ApiSchema> = async (data) => {
     try {
-      const validatedData = apiSchema.parse(data);
-      const res = await createProjectKey({
+      const validatedData = await apiSchema.parseAsync(data);
+      await createProjectKey({
         projectId: "27f0281c-716f-4f46-b1e8-c8661b5fc34b",
         expire: validatedData.expire,
         ratetLimit: validatedData.ratelimit,
         enabled: validatedData.enabled
       })
-      console.log("Validated Data",res);
       toast.success(`API Created Succesfully!`);
     } catch (error) {
       console.error(error);
       toast.error(`Error in Creating api key! Please try again.`);
     }finally{
-      setIsFirstDialogOpen(false)
+      setIsFirstDialogOpen(false);
     }
   };
   return (
-    <>
-      {/* First Dialog */}
+    <div>
       <Dialog open={isFirstDialogOpen} onOpenChange={setIsFirstDialogOpen}>
         <DialogTrigger asChild>
           <Button variant="secondary" className="bg-primary hover:bg-primary text-white dark:text-black mt-5" onClick={() => setIsFirstDialogOpen(true)}>
@@ -69,12 +64,11 @@ export function ApiButton() {
           <DialogHeader>
             <DialogTitle>Create New Secret Key</DialogTitle>
             <DialogDescription>
-              Make changes to your profile here. Click create when you're done.
+              Make your api key here. Click to create .
             </DialogDescription>
           </DialogHeader>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 max-w-md mx-auto border p-6 rounded-lg shadow-md" >
-              {/* Input Field 1 */}
               <FormField control={form.control} name="expire" render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -122,31 +116,13 @@ export function ApiButton() {
               )}
               />
               <Button type="submit" className="w-full">
-                {form.formState.isSubmitting ? "Checking..." : "Submit"}
+                {form.formState.isSubmitting ? "Creating..." : "Create API Key"}
               </Button>
             </form>
           </Form>
         </DialogContent>
       </Dialog>
-
-      {/* Second Dialog */}
-      <Dialog open={isSecondDialogOpen} onOpenChange={setIsSecondDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>API Key Created Successfully</DialogTitle>
-          </DialogHeader>
-          <div>
-            <p>Your new API key:</p>
-            <pre className="bg-gray-100 p-2 rounded">{JSON.stringify(apiKeyData, null, 2)}</pre>
-          </div>
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button onClick={() => setIsSecondDialogOpen(false)}>Close</Button>
-            </DialogClose>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </>
+    </div>
   );
 }
 
