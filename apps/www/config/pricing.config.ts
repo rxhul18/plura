@@ -23,6 +23,7 @@ export const pricingCardConfig = [
       "Available in TypeScript and JavaScript",
       "Cancel anytime",
     ],
+    checkoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_wFPMf0fAuqbaZUJeOv4zxLmCsumyqRixR3U8b1fWtLk/redirect"
   },
 
   {
@@ -49,6 +50,7 @@ export const pricingCardConfig = [
       "Available in TypeScript and JavaScript",
       "Cancel anytime",
     ],
+    checkoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_NUODH9lbew99axDZo1f6chDOEgthrFydM8G1q2YRBWm/redirect"
   },
 
   {
@@ -75,5 +77,6 @@ export const pricingCardConfig = [
       "Available in TypeScript and JavaScript",
       "Cancel anytime",
     ],
+    checkoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_HI2hbydRWcg41qlEnApWA118DyskOnh6yHCpU1FL2NJ/redirect"
   },
 ];

@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -5,6 +6,9 @@ import { Badge } from "@/components/ui/badge";
 import { TextMorph } from "../text-morph";
 import { AnimatedNumber } from "../anim-numb";
 import { IconCheck } from "@tabler/icons-react";
+import Link from 'next/link';
+import { PolarEmbedCheckout } from '@polar-sh/checkout/embed'
+import { useEffect } from 'react'
 
 export interface PCards {
   isYearly: boolean;
@@ -21,10 +25,15 @@ export interface PCards {
     discountYearly: number;
     discountMonthly: number;
     benifits: string[];
+    checkoutLink: string
   }>;
 }
 
 export default function PricingCards({ isYearly, items }: PCards) {
+  useEffect(() => {
+    PolarEmbedCheckout.init()
+  }, [])
+
   return (
     <div className="grid md:grid-cols-3 gap-5">
       {items.map((item, index) => (
@@ -83,10 +92,15 @@ export default function PricingCards({ isYearly, items }: PCards) {
                 </Badge>
               </div>
             </div>
+            
 
-            <Button className="w-full bg-white text-black hover:bg-gray-200">
-              {item.btn}
-            </Button>
+            
+              <Button className="w-full bg-white text-black hover:bg-gray-200">
+                <Link href={ item.checkoutLink } data-polar-checkout data-polar-checkout-theme="dark" className="w-full">
+                    {item.btn}
+                </Link>
+              </Button>  
+
           </CardHeader>
           <CardContent className="space-y-6 mt-14">
             <ul className="space-y-2.5">
