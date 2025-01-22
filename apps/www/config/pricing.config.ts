@@ -23,7 +23,8 @@ export const pricingCardConfig = [
       "Available in TypeScript and JavaScript",
       "Cancel anytime",
     ],
-    checkoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_wFPMf0fAuqbaZUJeOv4zxLmCsumyqRixR3U8b1fWtLk/redirect"
+    monthlyCheckoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_6W9GB9WuXlKKCn9WfYRLY0nESFVXkYgXhpaq74eziFb/redirect",
+    yearlyCheckoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_6W9GB9WuXlKKCn9WfYRLY0nESFVXkYgXhpaq74eziFb/redirect"
   },
 
   {
@@ -50,7 +51,8 @@ export const pricingCardConfig = [
       "Available in TypeScript and JavaScript",
       "Cancel anytime",
     ],
-    checkoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_NUODH9lbew99axDZo1f6chDOEgthrFydM8G1q2YRBWm/redirect"
+    monthlyCheckoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_YVEPwZdFl4pi6HOQSwWnujPkz3ZAILQb9rS9r22NEPg/redirect",
+    yearlyCheckoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_b7DUCWnEtHjEbpLMUWW1r75RNRvfMxqrLcFrx4Abs4o/redirect"
   },
 
   {
@@ -77,6 +79,7 @@ export const pricingCardConfig = [
       "Available in TypeScript and JavaScript",
       "Cancel anytime",
     ],
-    checkoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_HI2hbydRWcg41qlEnApWA118DyskOnh6yHCpU1FL2NJ/redirect"
+    monthlyCheckoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_js6sVSuksNqZMN6pVGKPl6Vk38sMyTpXnEMB41H2UyH/redirect",
+    yearlyCheckoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_7WZRA6WybipfkQ8gcAw15M76VfeyL41Shoqjj2rr96P/redirect"
   },
 ];

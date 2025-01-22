@@ -1,6 +1,6 @@
 "use client"
 import React from "react";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TextMorph } from "../text-morph";
@@ -25,11 +25,13 @@ export interface PCards {
     discountYearly: number;
     discountMonthly: number;
     benifits: string[];
-    checkoutLink: string
+    monthlyCheckoutLink: string,
+    yearlyCheckoutLink: string;
   }>;
 }
 
 export default function PricingCards({ isYearly, items }: PCards) {
+
   useEffect(() => {
     PolarEmbedCheckout.init()
   }, [])
@@ -92,14 +94,10 @@ export default function PricingCards({ isYearly, items }: PCards) {
                 </Badge>
               </div>
             </div>
-            
 
-            
-              <Button className="w-full bg-white text-black hover:bg-gray-200">
-                <Link href={ item.checkoutLink } data-polar-checkout data-polar-checkout-theme="dark" className="w-full">
-                    {item.btn}
-                </Link>
-              </Button>  
+          <Link href={ isYearly ? item.yearlyCheckoutLink : item.monthlyCheckoutLink } data-polar-checkout data-polar-checkout-theme="dark" className={ buttonVariants( { variant: "default" } )} >
+              {item.btn}
+          </Link>
 
           </CardHeader>
           <CardContent className="space-y-6 mt-14">
