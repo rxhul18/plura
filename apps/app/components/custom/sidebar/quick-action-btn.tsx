@@ -11,8 +11,12 @@ import {
   CommandList,
 } from "@/components/ui/command";
 
-const QuickActionButton = () => {
-  const [isOpen, setIsOpen] = useState(false);
+type QuickActionButtonProps = {
+  collapse: String;
+};
+
+const QuickActionButton: React.FC<QuickActionButtonProps> = ({ collapse }) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const toggleOverlay = () => setIsOpen(!isOpen);
 
@@ -31,15 +35,16 @@ const QuickActionButton = () => {
 
   return (
     <div className="flex items-center justify-center">
-      <Button variant="default" onClick={toggleOverlay}>
-        Quick Actions
-        <Badge
-          className="rounded-md text-xs gap-1 font-semibold hover:bg-secondary"
-          variant={"secondary"}
-        >
-          <span className="text-xs">⌘</span>K
-        </Badge>
-      </Button>
+      {collapse === "expanded" && (
+        <Button variant="default" onClick={toggleOverlay}>
+          Quick Actions
+          <Badge
+            className="rounded-md text-xs gap-1 font-semibold hover:bg-secondary"
+            variant={"secondary"}>
+            <span className="text-xs">⌘</span>K
+          </Badge>
+        </Button>
+      )}
 
       <CommandDialog open={isOpen} onOpenChange={setIsOpen}>
         <CommandInput placeholder="Type a command or search..." />

@@ -18,11 +18,11 @@ export const Chats: React.FC<ChatsProps> = ({ chats }) => {
 
   return (
     <>
-      <div className="border rounded-xl bg-card py-2">
+      <div className="border rounded-xl bg-card py-2 shadow-sm">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="px-1 md:px-4">Ticket</TableHead>
+              <TableHead className="px-2 md:px-4">Ticket</TableHead>
               <TableHead className="hidden md:table-cell">Status</TableHead>
               <TableHead>Date</TableHead>
             </TableRow>
@@ -31,7 +31,7 @@ export const Chats: React.FC<ChatsProps> = ({ chats }) => {
             {(isDropdownOpen ? chats : chats.slice(0, 5)).map(
               (chat: any, i: number) => (
                 <TableRow key={i}>
-                  <TableCell className="px-1 md:px-4">
+                  <TableCell className="px-2 md:px-4">
                     <div className="flex items-center">
                       <div className="rounded-full flex items-center justify-center">
                         <UserRound />
@@ -39,14 +39,13 @@ export const Chats: React.FC<ChatsProps> = ({ chats }) => {
                       <div className="ml-2">
                         <p className="text ">{chat.ticketId}</p>
                         <Badge
-                          variant={`${chat.status === "open" ? "secondary" : "destructive"}`}
-                        >
+                          variant={`${chat.status === "open" ? "secondary" : "destructive"}`}>
                           {chat.status}
                         </Badge>
                       </div>
                     </div>
                   </TableCell>
-                  <TableCell className="hidden md:table-cell">
+                  <TableCell className="hidden text-slate-200 md:table-cell">
                     {chat.status2}
                   </TableCell>
                   <TableCell>
@@ -66,16 +65,15 @@ export const Chats: React.FC<ChatsProps> = ({ chats }) => {
                     </div>
                   </TableCell>
                 </TableRow>
-              ),
+              )
             )}
           </TableBody>
         </Table>
       </div>
       <div className="text-center">
         <button
-          className="p-2 border rounded-lg w-full bg-card"
-          onClick={() => setIsDropdownOpen((prev) => !prev)}
-        >
+          className="p-2 border rounded-lg text-slate-200 text-sm w-full bg-card"
+          onClick={() => setIsDropdownOpen((prev) => !prev)}>
           {isDropdownOpen ? "View Less" : "View More"}
         </button>
       </div>
