@@ -1,10 +1,16 @@
+"use client"
 import React from "react";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TextMorph } from "../text-morph";
 import { AnimatedNumber } from "../anim-numb";
 import { IconCheck } from "@tabler/icons-react";
+import Link from 'next/link';
+import { PolarEmbedCheckout } from '@polar-sh/checkout/embed'
+import { useEffect } from 'react'
+
+const inProduction = process.env.NODE_ENV === "production";
 
 export interface PCards {
   isYearly: boolean;
@@ -21,10 +27,25 @@ export interface PCards {
     discountYearly: number;
     discountMonthly: number;
     benifits: string[];
+    monthlyCheckoutLink: string,
+    yearlyCheckoutLink: string;
+    development: {
+      monthlyCheckoutLink: string,
+      yearlyCheckoutLink: string
+    },
+    production: {
+      monthlyCheckoutLink: string,
+      yearlyCheckoutLink: string
+    }
   }>;
 }
 
 export default function PricingCards({ isYearly, items }: PCards) {
+
+  useEffect(() => {
+    PolarEmbedCheckout.init()
+  }, [])
+
   return (
     <div className="grid md:grid-cols-3 gap-5">
       {items.map((item, index) => (
@@ -41,7 +62,7 @@ export default function PricingCards({ isYearly, items }: PCards) {
             </div>
             <p className="text-xs inline-flex gap-1">
               Billed
-              <TextMorph>{isYearly ? "Yearly" : "Monthly"}</TextMorph>
+              <TextMorph>{ isYearly ? "Yearly" : "Monthly"}</TextMorph>
             </p>
             <div className="flex flex-row items-center gap-2 pt-4 pb-6">
               <span className="text-7xl font-bold tracking-tight">
@@ -84,9 +105,19 @@ export default function PricingCards({ isYearly, items }: PCards) {
               </div>
             </div>
 
-            <Button className="w-full bg-white text-black hover:bg-gray-200">
+          <Link href={ 
+            inProduction
+                ? isYearly 
+                  ? item.production.yearlyCheckoutLink 
+                  : item.production.monthlyCheckoutLink 
+                :
+                  isYearly 
+                  ? item.development.yearlyCheckoutLink 
+                  : item.development.monthlyCheckoutLink
+            } data-polar-checkout data-polar-checkout-theme="dark" className={ buttonVariants( { variant: "default" } )} >
               {item.btn}
-            </Button>
+          </Link>
+
           </CardHeader>
           <CardContent className="space-y-6 mt-14">
             <ul className="space-y-2.5">
