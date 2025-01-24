@@ -10,8 +10,8 @@ export default function CommunityPage() {
             <div>
                 <div className="my-6">
                     <h1 className="text-3xl font-bold text-center">Join The Community</h1>
-                    <p className="text-center text-gray-400">
-                        join the community to get help, share ideas, and stay up-to-date
+                    <p className="text-center text-primary/70">
+                        Join the community to get help, share ideas, and stay up-to-date
                         with
                     </p>
                 </div>
@@ -32,7 +32,7 @@ export default function CommunityPage() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <Button variant="outline" className="hover:bg-outline">Join our Discord</Button>
+                                <Button variant="default">Join our Discord</Button>
                             </Link>
                         </CardContent>
                     </Card>
@@ -51,7 +51,7 @@ export default function CommunityPage() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <Button variant="outline">Follow @Plura</Button>
+                                <Button variant="default">Follow @Plura</Button>
                             </Link>
                         </CardContent>
                     </Card>
