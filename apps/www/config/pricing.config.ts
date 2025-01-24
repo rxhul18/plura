@@ -23,8 +23,16 @@ export const pricingCardConfig = [
       "Available in TypeScript and JavaScript",
       "Cancel anytime",
     ],
-    monthlyCheckoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_6W9GB9WuXlKKCn9WfYRLY0nESFVXkYgXhpaq74eziFb/redirect",
-    yearlyCheckoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_6W9GB9WuXlKKCn9WfYRLY0nESFVXkYgXhpaq74eziFb/redirect"
+    mode: {
+      development: {
+        monthlyCheckoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_6W9GB9WuXlKKCn9WfYRLY0nESFVXkYgXhpaq74eziFb/redirect",
+        yearlyCheckoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_6W9GB9WuXlKKCn9WfYRLY0nESFVXkYgXhpaq74eziFb/redirect",
+      },
+      production: {
+        monthlyCheckoutLink: "",
+        yearlyCheckoutLink: "",
+      },
+    },
   },
 
   {
@@ -52,7 +60,17 @@ export const pricingCardConfig = [
       "Cancel anytime",
     ],
     monthlyCheckoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_YVEPwZdFl4pi6HOQSwWnujPkz3ZAILQb9rS9r22NEPg/redirect",
-    yearlyCheckoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_b7DUCWnEtHjEbpLMUWW1r75RNRvfMxqrLcFrx4Abs4o/redirect"
+    yearlyCheckoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_b7DUCWnEtHjEbpLMUWW1r75RNRvfMxqrLcFrx4Abs4o/redirect",
+    mode: {
+      development: {
+        monthlyCheckoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_YVEPwZdFl4pi6HOQSwWnujPkz3ZAILQb9rS9r22NEPg/redirect",
+        yearlyCheckoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_b7DUCWnEtHjEbpLMUWW1r75RNRvfMxqrLcFrx4Abs4o/redirect",
+      },
+      production: {
+        monthlyCheckoutLink: "",
+        yearlyCheckoutLink: "",
+      },
+    },
   },
 
   {
@@ -80,6 +98,16 @@ export const pricingCardConfig = [
       "Cancel anytime",
     ],
     monthlyCheckoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_js6sVSuksNqZMN6pVGKPl6Vk38sMyTpXnEMB41H2UyH/redirect",
-    yearlyCheckoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_7WZRA6WybipfkQ8gcAw15M76VfeyL41Shoqjj2rr96P/redirect"
+    yearlyCheckoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_7WZRA6WybipfkQ8gcAw15M76VfeyL41Shoqjj2rr96P/redirect",
+    mode: {
+      development: {
+        monthlyCheckoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_js6sVSuksNqZMN6pVGKPl6Vk38sMyTpXnEMB41H2UyH/redirect",
+        yearlyCheckoutLink: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_7WZRA6WybipfkQ8gcAw15M76VfeyL41Shoqjj2rr96P/redirect",
+      },
+      production: {
+        monthlyCheckoutLink: "",
+        yearlyCheckoutLink: "",
+      },
+    },
   },
 ];

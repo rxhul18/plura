@@ -10,6 +10,8 @@ import Link from 'next/link';
 import { PolarEmbedCheckout } from '@polar-sh/checkout/embed'
 import { useEffect } from 'react'
 
+const inProduction = process.env.NODE_ENV === "production";
+
 export interface PCards {
   isYearly: boolean;
   items: Array<{
@@ -27,6 +29,16 @@ export interface PCards {
     benifits: string[];
     monthlyCheckoutLink: string,
     yearlyCheckoutLink: string;
+    mode: {
+      development: {
+        monthlyCheckoutLink: string,
+        yearlyCheckoutLink: string
+      },
+      production: {
+        monthlyCheckoutLink: string,
+        yearlyCheckoutLink: string
+      }
+    }
   }>;
 }
 
@@ -95,7 +107,16 @@ export default function PricingCards({ isYearly, items }: PCards) {
               </div>
             </div>
 
-          <Link href={ isYearly ? item.yearlyCheckoutLink : item.monthlyCheckoutLink } data-polar-checkout data-polar-checkout-theme="dark" className={ buttonVariants( { variant: "default" } )} >
+          <Link href={ 
+            inProduction
+                ? isYearly 
+                  ? item.mode.production.yearlyCheckoutLink 
+                  : item.mode.production.monthlyCheckoutLink 
+                :
+                  isYearly 
+                  ? item.mode.development.yearlyCheckoutLink 
+                  : item.mode.development.monthlyCheckoutLink
+            } data-polar-checkout data-polar-checkout-theme="dark" className={ buttonVariants( { variant: "default" } )} >
               {item.btn}
           </Link>
 
