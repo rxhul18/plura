@@ -103,7 +103,7 @@ export function AppSidebar() {
   const path = usePathname();
   const {state} = useSidebar();
   return (
-    <Sidebar collapsible="icon" variant="inset">
+    <Sidebar collapsible="icon" variant="floating">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
