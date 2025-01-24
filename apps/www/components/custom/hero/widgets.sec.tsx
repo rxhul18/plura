@@ -13,7 +13,6 @@ import {
   SectionHeaderHeading,
 } from "../text-wrappers";
 import { siteConfig } from "@/config/site.config";
-import { cn } from "@/lib/utils";
 
 const widgetCards = [
   {
