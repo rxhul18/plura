@@ -1,13 +1,15 @@
 import { zValidator } from "@hono/zod-validator";
 import { prisma } from "@plura/db";
 import { Hono } from "hono";
-import { projectSchema } from "@repo/types";
+import { projectApiSchema, projectSchema } from "@repo/types";
 import { auth } from "@plura/auth";
 import { cache } from "@plura/cache";
 import { nanoid } from "nanoid";
+import { checkLogin } from "@/app/actions/checkLogin";
 
 const CACHE_EXPIRY = 300;
 const app = new Hono()
+  .use(checkLogin)
   .get("/workspace/:workspaceId", async (c) => {
     const session = await auth.api.getSession({
       headers: c.req.raw.headers,
@@ -28,9 +30,53 @@ const app = new Hono()
           createdAt: "asc",
         },
       });
-      return c.json(projects[0], 200);
+      return c.json(projects, 200);
     } catch (error) {
       return c.json({ message: "Error fetching projects", status: 400 }, 400);
+    }
+  })
+  .get("/:projectid", async (c) => {
+    const session = await auth.api.getSession({
+      headers: c.req.raw.headers,
+    });
+    if (!session) {
+      return c.json({ message: "Unauthorized", status: 401 }, 401);
+    }
+    const projectId = c.req.param("projectid");
+    if (!projectId) {
+      return c.json({ message: "Missing project id", status: 400 }, 400);
+    }
+    try {
+      const project = await prisma.project.findUnique({
+        where: {
+          id: projectId,
+        },
+      });
+      return c.json(project, 200);
+    } catch (error) {
+      return c.json({ message: "Error fetching project", status: 400 }, 400);
+    }
+  })
+  .patch("/:projectid", zValidator("json", projectApiSchema), async (c) => {
+    const session = await auth.api.getSession({
+      headers: c.req.raw.headers,
+    });
+    if (!session) {
+      return c.json({ message: "Unauthorized", status: 401 }, 401);
+    }
+    const projectId = c.req.param("projectid");
+    const body = c.req.valid("json");
+    if (!projectId) {
+      return c.json({ message: "Missing project id", status: 400 }, 400);
+    }
+    try {
+      const project = await prisma.project.update({
+        where: { id: projectId },
+        data: { apiKey: body.apiKey },
+      });
+      return c.json(project, 200);
+    } catch (error) {
+      return c.json({ message: "Error fetching project", status: 400 }, 400);
     }
   })
   .post("/", zValidator("json", projectSchema), async (c) => {

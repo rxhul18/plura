@@ -25,7 +25,6 @@ model User {
   feedbacks      Feedback[]
   role          String      @default("user")
   normalizedEmail String    @unique
-
   @@unique([email])
   @@map("user")
 }
@@ -104,6 +103,7 @@ model Project {
   userId       String
   user         User @relation(fields: [userId], references: [id], onDelete: Cascade)
   workflows    Workflow[]
+  apiKey        String  @default("")
 }
 
 model Workflow {
