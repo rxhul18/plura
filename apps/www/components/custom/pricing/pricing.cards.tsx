@@ -29,15 +29,13 @@ export interface PCards {
     benifits: string[];
     monthlyCheckoutLink: string,
     yearlyCheckoutLink: string;
-    mode: {
-      development: {
-        monthlyCheckoutLink: string,
-        yearlyCheckoutLink: string
-      },
-      production: {
-        monthlyCheckoutLink: string,
-        yearlyCheckoutLink: string
-      }
+    development: {
+      monthlyCheckoutLink: string,
+      yearlyCheckoutLink: string
+    },
+    production: {
+      monthlyCheckoutLink: string,
+      yearlyCheckoutLink: string
     }
   }>;
 }
@@ -64,7 +62,7 @@ export default function PricingCards({ isYearly, items }: PCards) {
             </div>
             <p className="text-xs inline-flex gap-1">
               Billed
-              <TextMorph>{isYearly ? "Yearly" : "Monthly"}</TextMorph>
+              <TextMorph>{ isYearly ? "Yearly" : "Monthly"}</TextMorph>
             </p>
             <div className="flex flex-row items-center gap-2 pt-4 pb-6">
               <span className="text-7xl font-bold tracking-tight">
@@ -110,12 +108,12 @@ export default function PricingCards({ isYearly, items }: PCards) {
           <Link href={ 
             inProduction
                 ? isYearly 
-                  ? item.mode.production.yearlyCheckoutLink 
-                  : item.mode.production.monthlyCheckoutLink 
+                  ? item.production.yearlyCheckoutLink 
+                  : item.production.monthlyCheckoutLink 
                 :
                   isYearly 
-                  ? item.mode.development.yearlyCheckoutLink 
-                  : item.mode.development.monthlyCheckoutLink
+                  ? item.development.yearlyCheckoutLink 
+                  : item.development.monthlyCheckoutLink
             } data-polar-checkout data-polar-checkout-theme="dark" className={ buttonVariants( { variant: "default" } )} >
               {item.btn}
           </Link>
