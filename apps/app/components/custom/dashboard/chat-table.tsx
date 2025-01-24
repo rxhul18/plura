@@ -45,7 +45,7 @@ export const Chats: React.FC<ChatsProps> = ({ chats }) => {
                       </div>
                     </div>
                   </TableCell>
-                  <TableCell className="hidden text-slate-200 md:table-cell">
+                  <TableCell className="hidden md:table-cell">
                     {chat.status2}
                   </TableCell>
                   <TableCell>
@@ -72,7 +72,7 @@ export const Chats: React.FC<ChatsProps> = ({ chats }) => {
       </div>
       <div className="text-center">
         <button
-          className="p-2 border rounded-lg text-slate-200 text-sm w-full bg-card"
+          className="p-2 border rounded-lg text-sm w-full bg-card"
           onClick={() => setIsDropdownOpen((prev) => !prev)}>
           {isDropdownOpen ? "View Less" : "View More"}
         </button>

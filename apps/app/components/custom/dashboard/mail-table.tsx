@@ -29,7 +29,7 @@ export const MailTable = ({ mails }: MailTableProps) => {
             {(isDropdownOpen ? mails : mails.slice(0, 5)).map((mail) => (
               <TableRow key={mail.id}>
                 <TableCell className="px-2 md:px-4">{mail.Email}</TableCell>
-                <TableCell className="hidden text-slate-200 md:table-cell">
+                <TableCell className="hidden md:table-cell">
                   {mail.Source}
                 </TableCell>
                 <TableCell>{mail.date}</TableCell>
@@ -40,7 +40,7 @@ export const MailTable = ({ mails }: MailTableProps) => {
       </div>
       <div className="text-center">
         <button
-          className="py-2 border w-full text-slate-200 text-sm rounded-xl bg-card"
+          className="py-2 border w-full text-sm rounded-xl bg-card"
           onClick={() => setIsDropdownOpen((prev) => !prev)}
         >
           {isDropdownOpen ? "View Less" : "View More"}

@@ -40,7 +40,7 @@ import QuickActionButton from "./quick-action-btn";
 const items = [
   {
     title: "Dashboard",
-    url: "/home",
+    url: "/dashboard",
     icon: Layers2,
   },
   {
