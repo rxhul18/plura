@@ -11,7 +11,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { DateRange } from 'react-day-picker';
 
 export default function page() {
-    const [dateRange, setDateRange] = useState<{ from: Date | null; to: Date | null }>({ from: null, to: null });
+    const [dateRange, setDateRange] = useState<DateRange>({ from: undefined, to: undefined });
 
     // Logs the selected range to the console
     const handleDateSelect = (range: DateRange | undefined) => {
