@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import React, { useState } from 'react'
-import { format } from "date-fns";
+import { addDays, format } from "date-fns";
 import { CalendarIcon, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -11,7 +11,11 @@ import { Calendar } from '@/components/ui/calendar';
 import { DateRange } from 'react-day-picker';
 
 export default function page() {
-    const [dateRange, setDateRange] = useState<DateRange>({ from: undefined, to: undefined });
+
+    const [dateRange, setDateRange] = useState<DateRange>({
+        from: addDays(new Date(),-6),
+        to: new Date(),
+    });
 
     // Logs the selected range to the console
     const handleDateSelect = (range: DateRange | undefined) => {
@@ -40,9 +44,9 @@ export default function page() {
                 <div className="block md:flex items-center space-x-0 md:space-x-3">
                     <div className='flex items-center my-6 md:my-0 space-x-3 md:mb-0'>
                         <p className='text-muted-foreground text-sm'>Filter by</p>
-                        <Button variant="outline" className="border-dashed bg-secondary text-primary">
+                        {/* <Button variant="outline" className="border-dashed bg-secondary text-primary">
                             Projects
-                        </Button>
+                        </Button> */}
                         <Popover>
                             <PopoverTrigger asChild>
                                 <Button variant="outline" className="flex items-center space-x-2 bg-secondary border-dashed text-primary">
