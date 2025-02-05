@@ -16,7 +16,35 @@ export default function page() {
         from: addDays(new Date(),-6),
         to: new Date(),
     });
+    const [loading, setLoading] = useState(false);
 
+    const handleRefresh = () => {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+        }, 1200);
+    }
+
+    const analyticsData = [
+        { action: "Send analytics group identify event", target: "-", date: "05 Feb 2025, 12:50:34" },
+        { action: "Send analytics group identify event", target: "-", date: "05 Feb 2025, 12:50:23" },
+        { action: "Send analytics group reset event", target: "-", date: "05 Feb 2025, 12:50:21" },
+        { action: "Send analytics group identify event", target: "-", date: "05 Feb 2025, 12:50:20" },
+        { action: "Send analytics group reset event", target: "-", date: "05 Feb 2025, 12:49:46" },
+        { action: "Send analytics group identify event", target: "-", date: "05 Feb 2025, 12:49:43" },
+        { action: "Send analytics group identify event", target: "-", date: "05 Feb 2025, 12:49:19" },
+        { action: "Send analytics group identify event", target: "-", date: "05 Feb 2025, 12:49:16" },
+        { action: "Send analytics group identify event", target: "-", date: "05 Feb 2025, 12:49:04" },
+        { action: "Send analytics group identify event", target: "-", date: "04 Feb 2025, 23:03:32" },
+        { action: "Send analytics group reset event", target: "-", date: "04 Feb 2025, 23:03:31" },
+        { action: "Send analytics group identify event", target: "-", date: "30 Jan 2025, 18:15:10" },
+        { action: "Send analytics group identify event", target: "-", date: "28 Jan 2025, 15:42:55" },
+        { action: "Send analytics group reset event", target: "-", date: "25 Jan 2025, 09:23:12" },
+        { action: "Send analytics group identify event", target: "-", date: "22 Jan 2025, 14:35:48" },
+        { action: "Send analytics group reset event", target: "-", date: "20 Jan 2025, 20:17:30" },
+      ];
+      
+      console.log(analyticsData);
     // Logs the selected range to the console
     const handleDateSelect = (range: DateRange | undefined) => {
         if (range) {
@@ -66,8 +94,8 @@ export default function page() {
                     <span className="text-muted-foreground text-sm">Viewing 0 logs in total</span>
                 </div>
 
-                <Button variant="default" className="text-secondary border flex items-center space-x-2 my-6 md:my-0">
-                    <RefreshCw className="w-4 h-4" />
+                <Button variant="default" className={`text-secondary border flex items-center space-x-2 my-6 md:my-0 ${loading?"opacity-[0.30]":""}`} onClick={handleRefresh}>
+                    <RefreshCw className={`w-4 h-4 ${loading?"animate-spin":""}`} />
                     <span>Refresh</span>
                 </Button>
             </div>
